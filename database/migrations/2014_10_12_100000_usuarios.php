@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('usuarios', function (Blueprint $table) {
             $table->unsignedInteger('id_usuario')->autoIncrement();
-            $table->string('nombre_susuario');
+            $table->string('nombre_usuario');
             $table->string('user_usuario');
             $table->string('email_usuario')->unique();
             $table->string('password_usuario');
