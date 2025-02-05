@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Request\Usuarios_requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Hash;
 
 class registroUsuarioRequest extends FormRequest
 {
@@ -34,7 +35,7 @@ class registroUsuarioRequest extends FormRequest
             'nombre_usuario'            => $this->nombre,
             'user_usuario'              => $this->user,
             'email_usuario'             => $this->emailUsuario,
-            'password_usuario'          => $this->password,
+            'password_usuario'          => Hash::make($this->password),
         ]);
     }
 
