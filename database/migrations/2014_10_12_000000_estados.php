@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -16,8 +17,8 @@ return new class extends Migration
             $table->string('nombre_estado');
             $table->string('descripcion_estado');
             $table->char('estado', 1)->default(1);
-            $table->datetime('fecha_creacion_estado');
-            $table->datetime('fecha_actualizacion_estado');
+            $table->datetime('fecha_creacion_estado')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->datetime('fecha_actualizacion_estado')->default(DB::raw('CURRENT_TIMESTAMP'));
         });
     }
 

@@ -16,9 +16,13 @@ class UsuariosModel extends Authenticatable
     public $timestamps = false;
     protected $primaryKey = 'id_usuario';
 
+    const CREATED_AT = 'fecha_creacion_usuario';
+    const UPDATED_AT = 'fecha_actualizacion_usuario';
+
     protected $fillable = [
         'nombre_usuario',
         'user_usuario',
+        'identificacion_usuario',
         'email_usuario',
         'password_usuario',
         'fecha_creacion_usuario',

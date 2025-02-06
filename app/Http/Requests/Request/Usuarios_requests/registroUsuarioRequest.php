@@ -25,24 +25,29 @@ class registroUsuarioRequest extends FormRequest
         return [
             'nombre'    => ['required', 'string'],
             'user'      => ['required'],
+            'identificacion' => ['required', 'numeric'],
             'emailUsuario'     => ['required', 'email'],
-            'password'  => ['required', 'string', 'min:10', 'max:10'],
+            /* 'password'  => ['required', 'string', 'min:10', 'max:10'], */
         ];
     }
 
     protected function prepareForValidation() {
         $this->merge([
             'nombre_usuario'            => $this->nombre,
-            'user_usuario'              => $this->user,
+            'identificacion_usuario'    => $this->identificacion,
             'email_usuario'             => $this->emailUsuario,
-            'password_usuario'          => Hash::make($this->password),
+            'user_usuario'              => $this->user,
+            'password_usuario'          => Hash::make($this->identificacion),
         ]);
     }
 
     public function messages() {
         return [
-            'nombre.string'         => 'El atributo nombre solo acepta letras',
-            'nombre.required'       => 'El atributo nombre es requerido',
+            'nombre.string'                 => 'El atributo nombre solo acepta letras',
+            'nombre.required'               => 'El atributo nombre es requerido',
+
+            'identificacion.numeric'        => 'El atributo identificacion solo acepta numeros',
+            'identificacion.required'       => 'El atributo identificacion es requerido',
 
             'user.required'         => 'El atributo usuario es requerido',
 

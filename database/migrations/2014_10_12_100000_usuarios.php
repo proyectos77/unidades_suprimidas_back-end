@@ -14,13 +14,14 @@ return new class extends Migration
         Schema::create('usuarios', function (Blueprint $table) {
             $table->unsignedInteger('id_usuario')->autoIncrement();
             $table->string('nombre_usuario');
-            $table->string('user_usuario');
+            $table->string('identificacion_usuario');
             $table->string('email_usuario')->unique();
+            $table->string('user_usuario');
             $table->string('password_usuario');
             $table->rememberToken();
-            $table->datetime('fecha_creacion_usuario');
-            $table->datetime('fecha_actualizacion_usuario');
-            $table->unsignedInteger('id_estado');
+            $table->timestamp('fecha_creacion_usuario')->useCurrent();
+            $table->timestamp('fecha_actualizacion_usuario')->useCurrent()->useCurrentOnUpdate();
+            $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });
     }
