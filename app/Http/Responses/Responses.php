@@ -17,24 +17,24 @@
             return response()->json($respuesta, $statusCode);
         }
 
-        static function error($statusCode, $titulo, $mensaje, $icono, $error ){
+        static function error($statusCode, $titulo, $mensaje, $error ){
             $respuesta = [
                 'statusCode'    => $statusCode,
                 'titulo'        => $titulo,
                 'mensaje'       => $mensaje,
-                'icono'         => $icono,
+                'icono'         => 'error',
                 'data'          => $error
             ];
 
             return response()->json($respuesta, $statusCode);
         }
 
-        static function warning($statusCode, $titulo, $mensaje, $icono, $data = null) {
+        static function warning($statusCode, $titulo, $mensaje,  $data = []) {
             $respuesta = [
                 'statusCode'    => $statusCode,
                 'titulo'        => $titulo,
                 'mensaje'       => $mensaje,
-                'icono'         => $icono,
+                'icono'         => 'warning',
                 'data'          => $data
             ];
 

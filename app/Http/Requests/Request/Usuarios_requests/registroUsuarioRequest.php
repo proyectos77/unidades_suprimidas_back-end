@@ -2,60 +2,65 @@
 
 namespace App\Http\Requests\Request\Usuarios_requests;
 
+use App\Http\Responses\Responses;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class registroUsuarioRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            'nombre'    => ['required', 'string'],
-            'user'      => ['required'],
-            'identificacion' => ['required', 'numeric'],
-            'emailUsuario'     => ['required', 'email'],
-            /* 'password'  => ['required', 'string', 'min:10', 'max:10'], */
+            'nombre'            => 'required|string',
+            'user'              => 'required',
+            'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario',
+            'emailUsuario'      => 'required|email|unique:usuarios,email_usuario',
+            'password_usuario'  => 'required|min:6',
         ];
     }
 
-    protected function prepareForValidation() {
+    protected function prepareForValidation()
+    {
         $this->merge([
-            'nombre_usuario'            => $this->nombre,
-            'identificacion_usuario'    => $this->identificacion,
-            'email_usuario'             => $this->emailUsuario,
-            'user_usuario'              => $this->user,
-            'password_usuario'          => Hash::make($this->identificacion),
+            'nombre_usuario'         => $this->nombre,
+            'identificacion_usuario' => $this->identificacion,
+            'email_usuario'          => $this->emailUsuario,
+            'user_usuario'           => $this->user,
+            'password_usuario'       => Hash::make($this->identificacion),
         ]);
     }
 
-    public function messages() {
+    public function messages()
+    {
         return [
-            'nombre.string'                 => 'El atributo nombre solo acepta letras',
-            'nombre.required'               => 'El atributo nombre es requerido',
+            'nombre.string'               => 'El atributo nombre solo acepta letras',
+            'nombre.required'             => 'El atributo nombre es requerido',
 
-            'identificacion.numeric'        => 'El atributo identificacion solo acepta numeros',
-            'identificacion.required'       => 'El atributo identificacion es requerido',
+            'identificacion.numeric'      => 'El atributo identificacion solo acepta números',
+            'identificacion.required'     => 'El atributo identificacion es requerido',
+            'identificacion.unique'       => 'El número de identificación ya se encuentra registrado',
 
-            'user.required'         => 'El atributo usuario es requerido',
+            'user.required'               => 'El atributo usuario es requerido',
 
-            'email.string'          => 'El atributo email no es de tipo email',
-            'enail.required'        => 'El atributo emailUsuario es obligatorio',
-            'email.unique'          => ['El email ya se encuentra registrado' => 'error'],
+            'emailUsuario.email'          => 'El atributo email no es válido',
+            'emailUsuario.required'       => 'El atributo emailUsuario es obligatorio',
+            'emailUsuario.unique'         => 'El email ya se encuentra registrado',
 
-            'passUsuario.required'  => 'El atributo contraseña es requerido',
+            'password_usuario.required'   => 'El atributo contraseña es requerido',
         ];
+    }
+
+    public function failedValidation(Validator $validator) {
+
+        $response = Responses::warning(422, 'Error de validaciones', 'Error en la validacion de los datos',  $validator->errors());
+
+        throw new HttpResponseException($response);
     }
 }
