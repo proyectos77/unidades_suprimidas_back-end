@@ -4,8 +4,7 @@
 
     use App\Http\Requests\Request\Usuarios_requests\registroUsuarioRequest;
     use App\Http\Responses\Responses;
-    use App\Models\UsuariosModel;
-
+    use App\Models\Usuarios\UsuariosModel;
     use Exception;
     class registroUsuarioServices
     {

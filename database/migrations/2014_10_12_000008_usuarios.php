@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('password_usuario');
             $table->unsignedInteger('id_tipo_usuario');
             $table->foreign('id_tipo_usuario')->references('id_tipo_usuario')->on('tipo_usuarios')->onDelete('cascade');
+            $table->unsignedInteger('id_cargo');
+            $table->foreign('id_cargo')->references('id_cargo')->on('cargos')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamp('fecha_creacion_usuario')->useCurrent();
             $table->timestamp('fecha_actualizacion_usuario')->useCurrent()->useCurrentOnUpdate();

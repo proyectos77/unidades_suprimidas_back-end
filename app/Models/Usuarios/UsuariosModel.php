@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Usuarios;
 
+use App\Models\Cargos\CargosModel;
+use App\Models\Estados\EstadosModell;
+use App\Models\TipoUsuario\TipoUsuarioModell;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,6 +27,8 @@ class UsuariosModel extends Authenticatable
         'identificacion_usuario',
         'email_usuario',
         'password_usuario',
+        'id_tipo_usuario',
+        'id_cargo',
         'fecha_creacion_usuario',
         'fecha_actualizacion_usuario',
         'id_estado'
@@ -56,6 +60,18 @@ class UsuariosModel extends Authenticatable
     }
 
 
+    //Conexion con las llaves foraneas
 
+    public function estados() {
+        return $this->belongsTo(EstadosModell::class, 'id_estado', 'id_estado');
+    }
+
+    public function cargos() {
+        return $this->belongsTo(CargosModel::class, 'id_cargo', 'id_cargo');
+    }
+
+    public function tipoUsuario() {
+        return $this->belongsTo(TipoUsuarioModell::class, 'id_tipo_usuario', 'id_tipo_usuario');
+    }
 
 }

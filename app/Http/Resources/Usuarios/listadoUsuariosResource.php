@@ -16,11 +16,14 @@ class listadoUsuariosResource extends ResourceCollection
     {
         return $this->collection->map(function ($usuario) {
             return [
-                'id'      => $usuario->id_usuario,
-                'nombre'  => $usuario->nombre_usuario,
-                'email'   => $usuario->email_usuario,
-                'usuario' => $usuario->user_usuario,
-                'estado'  => $usuario->id_estado,
+                'id'            => $usuario->id_usuario,
+                'nombre'        => $usuario->nombre_usuario,
+                'identificacion' => $usuario->identificacion_usuario,
+                'email'         => $usuario->email_usuario,
+                'usuario'       => $usuario->user_usuario,
+                'estado'        => $usuario->estados->nombre_estado,
+                'cargo'         => $usuario->cargos->nombre_cargo,
+                'tipoUsuario'   => $usuario->tipoUsuario->nombre_tipo_usuario
             ];
         })->toArray();
     }
