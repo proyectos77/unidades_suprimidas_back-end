@@ -20,7 +20,7 @@ use App\Models\Usuarios\UsuariosModel;
 
                 $data = new listadoUsuariosResource($usuarios);
 
-                return  Responses::success('200', 'Consulta realizada', 'La consulta se ha ralizado con exito', 'success', $data);
+                return  Responses::success(200, 'Consulta realizada', 'La consulta se ha ralizado con exito', 'success', $data);
 
             } catch (\Exception $e) {
                 return Responses::error(500, 'Error consulta', 'Error al realizar la consulta.', $e->getMessage());

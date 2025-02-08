@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth\authController;
+use App\Http\Controllers\Cargos\CargosController;
+use App\Http\Controllers\TiposUsuarios\tipoUsuariosController;
 use App\Http\Controllers\Usuarios\usuarioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -21,9 +23,13 @@ use Illuminate\Support\Facades\Route;
 });
  */
 
-    Route::apiResource('usuarios', usuarioController::class);
 
-    Route::post('login', [authController::class, 'login']);
+
+    Route::post('login', [authController::class, 'login']); //login
+
+    Route::apiResource('usuarios', usuarioController::class); //Usuarios
+    Route::apiResource('tipoUsuarios', tipoUsuariosController::class); //tipoUsuarios
+    Route::apiResource('cargos', CargosController::class); //tipoUsuarios
 
     Route::middleware('auth:sanctum')->group(function () {
         Route::get('logout', [authController::class, 'logout']);
