@@ -19,7 +19,7 @@ class registroUsuarioRequest extends FormRequest
     {
         return [
             'nombre'            => 'required|string',
-            'user'              => 'required',
+            'user'              => 'required|unique:usuarios,user_usuario',
             'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario',
             'emailUsuario'      => 'required|email|unique:usuarios,email_usuario',
             'password_usuario'  => 'required|min:6',
@@ -52,6 +52,7 @@ class registroUsuarioRequest extends FormRequest
             'identificacion.unique'         => 'El número de identificación ya se encuentra registrado',
 
             'user.required'                 => 'El atributo usuario es requerido',
+            'user.unique'         => 'El usuario ya se encuentra registrado',
 
             'emailUsuario.email'            => 'El atributo email no es válido',
             'emailUsuario.required'         => 'El atributo emailUsuario es obligatorio',
@@ -69,7 +70,9 @@ class registroUsuarioRequest extends FormRequest
 
     public function failedValidation(Validator $validator) {
 
-        $response = Responses::warning(422, 'Error de validaciones', 'Error en la validacion de los datos',  $validator->errors());
+        $errores = $validator->errors()->all();
+        $erroresTexto = implode(', ', $errores);
+        $response = Responses::warning(422, 'Error de validaciones', $erroresTexto,  $validator->errors());
 
         throw new HttpResponseException($response);
     }

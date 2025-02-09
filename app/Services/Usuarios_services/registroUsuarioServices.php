@@ -6,21 +6,23 @@
     use App\Http\Responses\Responses;
     use App\Models\Usuarios\UsuariosModel;
     use Exception;
+    use Illuminate\Support\Facades\DB;
+
     class registroUsuarioServices
     {
         public function gestionRegistroUsuario(registroUsuarioRequest $request) {
-           try {
 
-                $usuario = UsuariosModel::create($request->all());
+            DB::beginTransaction();
 
-                if (!$usuario) {
-                    throw new \InvalidArgumentException('No se pudo realizar el registro');
-                }
+            try {
+                    $usuario = UsuariosModel::create($request->all());
 
-                return Responses::success(200, 'Registro realizado', 'Se realizo el registro del usuario correctamente', 'success', $usuario);
+                    DB::commit();
+                    return Responses::success(200, 'Registro realizado', 'Se realizo el registro del usuario correctamente', 'success', $usuario);
 
-            }  catch (Exception $e) {
-                return Responses::error(500, 'Error de registro', 'Por favor intente mas tarde', $e->getMessage());
-           }
+                }  catch (Exception $e) {
+                    DB::rollBack();
+                    return Responses::error(500, 'Error de registro', 'Por favor intente mas tarde', $e->getMessage());
+            }
         }
     }
