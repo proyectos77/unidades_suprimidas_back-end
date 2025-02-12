@@ -3,13 +3,15 @@
 namespace App\Http\Requests\Request\Usuarios_requests;
 
 use App\Http\Responses\Responses;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class registroUsuarioRequest extends FormRequest
+class actualizarUsuarioRequest extends FormRequest
 {
+    /**
+     * Determine if the user is authorized to make this request.
+     */
     public function authorize(): bool
     {
         return true;
@@ -17,27 +19,45 @@ class registroUsuarioRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'nombre'            => 'required|string',
-            'user'              => 'required|unique:usuarios,user_usuario',
-            'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario',
-            'emailUsuario'      => 'required|email|unique:usuarios,email_usuario',
-            'tipoUsuario'       => 'required|numeric',
-            'cargo'             => 'required|numeric'
-        ];
+
+        $method = $this->method();
+
+        if ($method === 'PUT') {
+            return [
+                'nombre'            => 'required|string',
+                'user'              => 'required|unique:usuarios,user_usuario,' . $this->route('id'),
+                'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario,' . $this->route('id'),
+                'emailUsuario'      => 'required|email|unique:usuarios,email_usuario,' . $this->route('id'),
+                'tipoUsuario'       => 'required|numeric',
+                'cargo'             => 'required|numeric'
+            ];
+        }elseif ($method === 'PATCH') {
+            return [
+                'nombre'            => 'sometimes|string',
+                'user'              => 'sometimes|unique:usuarios,user_usuario,' . $this->route('id'),
+                'identificacion'    => 'sometimes|numeric|unique:usuarios,identificacion_usuario,' . $this->route('id'),
+                'emailUsuario'      => 'sometimes|email|unique:usuarios,email_usuario,' . $this->route('id'),
+                'tipoUsuario'       => 'sometimes|numeric',
+                'cargo'             => 'sometimes|numeric'
+            ];
+        }
+
     }
 
     protected function prepareForValidation()
     {
-        $this->merge([
-            'nombre_usuario'            => $this->nombre,
-            'identificacion_usuario'    => $this->identificacion,
-            'email_usuario'             => $this->emailUsuario,
-            'user_usuario'              => $this->user,
-            'password_usuario'          => Hash::make($this->identificacion),
-            'id_tipo_usuario'           => $this->tipoUsuario,
-            'id_cargo'                  => $this->cargo
-        ]);
+        $data = [
+            'nombre_usuario' => $this->nombre ?? null,
+            'identificacion_usuario' => $this->identificacion ?? null,
+            'email_usuario' => $this->emailUsuario ?? null,
+            'user_usuario' => $this->user ?? null,
+            'id_tipo_usuario' => $this->tipoUsuario ?? null,
+            'id_cargo' => $this->cargo ?? null,
+        ];
+
+        $this->merge(array_filter($data, function ($value) {
+            return !is_null($value);
+        }));
     }
 
     public function messages()
