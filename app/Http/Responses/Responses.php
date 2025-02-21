@@ -51,4 +51,17 @@
 
             return response()->json($respuesta, $statusCode);
         }
+
+        static function successListado($statusCode, $titulo, $mensaje, $data, $infoPagination){
+            $respuesta = [
+                'statusCode'        => $statusCode,
+                'titulo'            => $titulo,
+                'mensaje'           => $mensaje,
+                'icono'             => 'success',
+                'data'              => $data,
+                'infoPagination'   => $infoPagination
+            ];
+
+            return response()->json($respuesta, $statusCode);
+        }
     }

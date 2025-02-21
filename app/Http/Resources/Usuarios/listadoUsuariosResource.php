@@ -23,7 +23,7 @@ class listadoUsuariosResource extends ResourceCollection
                 'usuario'       => $usuario->user_usuario,
                 'estado'        => $usuario->estados->nombre_estado,
                 'cargo'         => $usuario->cargos->nombre_cargo,
-                'tipoUsuario'   => $usuario->tipoUsuario->nombre_tipo_usuario
+                'tipoUsuario'   => $usuario->tipoUsuario->nombre_tipo_usuario,
             ];
         })->toArray();
     }

@@ -32,5 +32,5 @@ use Illuminate\Support\Facades\Route;
     Route::apiResource('cargos', CargosController::class); //tipoUsuarios
 
     Route::middleware('auth:sanctum')->group(function () {
-        Route::get('logout', [authController::class, 'logout']);
+    Route::get('logout', [authController::class, 'logout']);
     });

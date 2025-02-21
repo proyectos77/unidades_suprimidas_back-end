@@ -2,6 +2,7 @@
 
 namespace App\Services\Usuarios_services;
 
+use App\Helpers\generalHelper;
 use App\Http\Resources\Usuarios\listadoUsuariosResource;
 use App\Http\Responses\Responses;
 use App\Models\Usuarios\UsuariosModel;
@@ -12,19 +13,22 @@ use App\Models\Usuarios\UsuariosModel;
 
             try {
 
-                $usuarios = UsuariosModel::with('cargos')->with('tipoUsuario')->with('estados')->get();
+                $usuarios = UsuariosModel::with(['cargos','tipoUsuario','estados'])->paginate(1);
 
                 if ($usuarios->isEmpty()) {
                     return  Responses::success('200', 'Sin resultados', 'No se encontraron usuarios', 'success');
                 }
 
                 $data = new listadoUsuariosResource($usuarios);
+                $infoPagination = generalHelper::infoPagination($usuarios->total(), $usuarios->perPage(), $usuarios->currentPage(), $usuarios->lastPage());
 
-                return  Responses::success(200, 'Consulta realizada', 'La consulta se ha ralizado con exito', 'success', $data);
+                return  Responses::successListado(200, 'Consulta realizada', 'La consulta se ha ralizado con exito', $data, $infoPagination);
 
             } catch (\Exception $e) {
                 return Responses::error(500, 'Error consulta', 'Error al realizar la consulta.', $e->getMessage());
             }
 
         }
+
+
     }
