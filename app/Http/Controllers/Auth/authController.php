@@ -13,14 +13,17 @@ class authController extends Controller
 
 
         if (!Auth::attempt(['user_usuario' => $request->user_usuario, 'password' => $request->password_usuario])) {
-            return response()->json(['message' => 'Credenciales incorrectas'], 401);
+            return response()->json(['mensaje' => 'El usuario o la contraseña no coincide.',
+                                    'accessToken' => '',       // Token generado
+                                    'token_type' => '',      // Tipo de token
+                                    'usuario' => [], 401]);
         }
 
         $usuario = UsuariosModel::where('user_usuario', $request['user_usuario'])->firstOrFail();
         $token = $usuario->createToken('auth_token')->plainTextToken;
 
         return response()->json([
-            'mensaje' => 'Hola ' . $usuario->nombre_usuario,
+            'mensaje' => 'Bienbenido ' . $usuario->nombre_usuario,
             'accessToken' => $token,       // Token generado
             'token_type' => 'Bearer',      // Tipo de token
             'usuario' => [                 // Información del usuario
