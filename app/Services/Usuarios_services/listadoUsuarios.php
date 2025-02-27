@@ -13,7 +13,7 @@ use App\Models\Usuarios\UsuariosModel;
 
             try {
 
-                $usuarios = UsuariosModel::with(['cargos','tipoUsuario','estados'])->paginate(1);
+                $usuarios = UsuariosModel::with(['cargos','tipoUsuario','estados'])->paginate(10);
 
                 if ($usuarios->isEmpty()) {
                     return  Responses::success('200', 'Sin resultados', 'No se encontraron usuarios', 'success');
