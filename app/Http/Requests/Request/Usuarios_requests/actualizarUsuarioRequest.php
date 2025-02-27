@@ -29,7 +29,7 @@ class actualizarUsuarioRequest extends FormRequest
                 'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario,' . $this->route('id'),
                 'emailUsuario'      => 'required|email|unique:usuarios,email_usuario,' . $this->route('id'),
                 'tipoUsuario'       => 'required|numeric',
-                'cargo'             => 'required|numeric'
+                'cargo'             => 'required|numeric',
             ];
         }elseif ($method === 'PATCH') {
             return [
@@ -38,7 +38,8 @@ class actualizarUsuarioRequest extends FormRequest
                 'identificacion'    => 'sometimes|numeric|unique:usuarios,identificacion_usuario,' . $this->route('id'),
                 'emailUsuario'      => 'sometimes|email|unique:usuarios,email_usuario,' . $this->route('id'),
                 'tipoUsuario'       => 'sometimes|numeric',
-                'cargo'             => 'sometimes|numeric'
+                'cargo'             => 'sometimes|numeric',
+                'estado'            => 'sometimes|numeric'
             ];
         }
 
@@ -53,6 +54,7 @@ class actualizarUsuarioRequest extends FormRequest
             'user_usuario' => $this->user ?? null,
             'id_tipo_usuario' => $this->tipoUsuario ?? null,
             'id_cargo' => $this->cargo ?? null,
+            'estado_usuario' => $this->estado ?? null
         ];
 
         $this->merge(array_filter($data, function ($value) {
