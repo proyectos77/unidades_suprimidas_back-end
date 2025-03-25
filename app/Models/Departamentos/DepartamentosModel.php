@@ -3,6 +3,7 @@
 namespace App\Models\Departamentos;
 
 use App\Models\Estados\EstadosModell;
+use App\Models\Municipios\MunicipiosModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,5 +27,9 @@ class DepartamentosModel extends Model
 
     public function estados() {
         return $this->belongsTo(EstadosModell::class, 'id_estado', 'id_estado');
+    }
+
+    public function municipios() {
+        return $this->hasMany(MunicipiosModel::class, 'id_departamento');
     }
 }
