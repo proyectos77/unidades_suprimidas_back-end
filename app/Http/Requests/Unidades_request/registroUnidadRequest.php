@@ -14,7 +14,7 @@ class registroUnidadRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -48,14 +48,14 @@ class registroUnidadRequest extends FormRequest
             'nombre.string'                 => 'El atributo nombre solo acepta letras',
             'nombre.required'               => 'El atributo nombre es requerido',
 
-            'sigla.required'                => 'El atributo identificacion es requerido',
-            'sigla.unique'                  => 'El número de identificación ya se encuentra registrado',
+            'sigla.required'                => 'El atributo sigla es requerido',
+            'sigla.unique'                  => 'La sigla ya se encuentra registrada',
 
-            'padreUnidad.required'          => 'El atributo usuario es requerido',
-            'padreUnidad.unique'            => 'El usuario ya se encuentra registrado',
+            'padreUnidad.required'          => 'El atributo padre unidad es requerido',
+            'padreUnidad.string'            => 'El atributo padre unidad',
 
-            'cargo.required'                => 'El cargo del usuario es obligatorio',
-            'cargo.numeric'                 => 'El cargo solo acepta numero'
+            'idMunicipio.required'          => 'El municipio es obligatorio',
+            'idMunicipio.numeric'           => 'El municipio solo acepta numero'
         ];
     }
 
