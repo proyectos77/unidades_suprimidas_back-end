@@ -31,7 +31,7 @@ class actualizarUsuarioRequest extends FormRequest
             return [
                 'nombre'            => 'required|string',
                 'user'              => 'required|unique:usuarios,user_usuario,' . $id . ',id_usuario',
-                'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario,' . $id . ',id_usuario',
+                'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario,' . $id . ', id_usuario',
                 'emailUsuario'      => 'required|email|unique:usuarios,email_usuario,' . $id . ',id_usuario',
                 'tipoUsuario'       => 'required|numeric',
                 'cargo'             => 'required|numeric',
