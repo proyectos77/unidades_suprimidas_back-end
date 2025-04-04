@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
         Route::apiResource('cargos', CargosController::class); //tipoUsuarios
         Route::apiResource('unidades', unidadesController::class);
         Route::apiResource('detalleUnidad', DetalleUnidadController::class);
+        Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
 
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
 

@@ -33,8 +33,9 @@ class DetalleUnidadController extends Controller
         //
     }
 
-    public function destroy(string $id)
-    {
+    public function destroy(string $id){
         //
     }
+
+
 }
