@@ -2,6 +2,7 @@
 
 namespace App\Models\Unidades;
 
+use App\Models\DetalleUnidad\DetalleUnidadModel;
 use App\Models\Estados\EstadosModell;
 use App\Models\Municipios\MunicipiosModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -34,5 +35,9 @@ class UnidadesModel extends Model
 
     public function municipio() {
         return $this->belongsTo(MunicipiosModel::class, 'id_municipio', 'id_municipio');
+    }
+    
+    public function detalleUnidad() {
+        return $this->belongsTo(DetalleUnidadModel::class, 'id_unidad', 'id_unidad');
     }
 }
