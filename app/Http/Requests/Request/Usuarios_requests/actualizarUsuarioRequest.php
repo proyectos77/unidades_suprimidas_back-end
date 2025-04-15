@@ -15,28 +15,33 @@ class actualizarUsuarioRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
+
     }
 
     public function rules(): array
     {
+
+
+        $id = request()->route('usuario'); // Capturar el ID de la ruta
+        /* dd($id); */
 
         $method = $this->method();
 
         if ($method === 'PUT') {
             return [
                 'nombre'            => 'required|string',
-                'user'              => 'required|unique:usuarios,user_usuario,' . $this->route('id'),
-                'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario,' . $this->route('id'),
-                'emailUsuario'      => 'required|email|unique:usuarios,email_usuario,' . $this->route('id'),
+                'user'              => 'required|unique:usuarios,user_usuario,' . $id . ',id_usuario',
+                'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario,' . $id . ', id_usuario',
+                'emailUsuario'      => 'required|email|unique:usuarios,email_usuario,' . $id . ',id_usuario',
                 'tipoUsuario'       => 'required|numeric',
                 'cargo'             => 'required|numeric',
             ];
         }elseif ($method === 'PATCH') {
             return [
                 'nombre'            => 'sometimes|string',
-                'user'              => 'sometimes|unique:usuarios,user_usuario,' . $this->route('id'),
-                'identificacion'    => 'sometimes|numeric|unique:usuarios,identificacion_usuario,' . $this->route('id'),
-                'emailUsuario'      => 'sometimes|email|unique:usuarios,email_usuario,' . $this->route('id'),
+                'user'              => 'sometimes|unique:usuarios,user_usuario,' . $id . ',id_usuario',
+                'identificacion'    => 'sometimes|numeric|unique:usuarios,identificacion_usuario,' . $id . ',id_usuario',
+                'emailUsuario'      => 'sometimes|email|unique:usuarios,email_usuario,' . $id . ',id_usuario',
                 'tipoUsuario'       => 'sometimes|numeric',
                 'cargo'             => 'sometimes|numeric',
                 'estado'            => 'sometimes|numeric'

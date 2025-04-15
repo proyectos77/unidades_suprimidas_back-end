@@ -19,7 +19,7 @@ use GuzzleHttp\Psr7\Response;
                 }
 
                 $data = new listadoTipoUsuariosResource($tipoUsuarios);
-                return Responses::success(200, 'Consulta realizada', 'Laconsulta se ha realizado con exito', 'success', $data);
+                return Responses::success(200, 'Consulta realizada', 'La consulta se ha realizado con exito', 'success', $data);
 
             } catch (\Exception $e) {
                 return Responses::error(500, 'Error de consulta', 'Error al realizar la consulta', $e->getMessage());

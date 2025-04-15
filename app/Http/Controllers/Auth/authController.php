@@ -19,7 +19,7 @@ class authController extends Controller
                                     'usuario' => [], 401]);
         }
 
-        $usuario = UsuariosModel::where('user_usuario', $request['user_usuario'])->firstOrFail();
+        $usuario = UsuariosModel::with('tipoUsuario')->where('user_usuario', $request['user_usuario'])->firstOrFail();
         $token = $usuario->createToken('auth_token')->plainTextToken;
 
         return response()->json([
@@ -29,7 +29,9 @@ class authController extends Controller
             'usuario' => [                 // Información del usuario
                 'id' => $usuario->id_usuario,
                 'nombre' => $usuario->nombre_usuario,
-                'email' => $usuario->email_usuario
+                'email' => $usuario->email_usuario,
+                'rol' => $usuario->tipoUsuario->nombre_tipo_usuario
+
             ]
         ]);
     }

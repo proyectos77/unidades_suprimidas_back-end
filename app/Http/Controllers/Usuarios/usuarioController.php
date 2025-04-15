@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Usuarios;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Request\Usuarios_requests\actualizarUsuarioRequest;
 use App\Http\Requests\Request\Usuarios_requests\registroUsuarioRequest;
-use App\Services\Usuarios_services\actualizarUsuariosServices;
+use App\Services\Usuarios_services\ActualizarUsuariosServices;
 use App\Services\Usuarios_services\listadoUsuarios;
 use App\Services\Usuarios_services\registroUsuarioServices;
-use Illuminate\Http\Request;
 
 class usuarioController extends Controller
 {
@@ -36,7 +35,6 @@ class usuarioController extends Controller
 
     public function update(actualizarUsuarioRequest $request, string $id){
         return $this->actualizarUsuario->actualizarUsuario($request, $id);
-
     }
 
     public function destroy(string $id){

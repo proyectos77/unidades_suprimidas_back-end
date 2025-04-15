@@ -2,23 +2,19 @@
 
     namespace App\Services\Usuarios_services;
 
-use App\Http\Resources\Usuarios\actualizarUsuarioResource;
-use App\Http\Responses\Responses;
-use App\Models\Usuarios\UsuariosModel;
-use Illuminate\Support\Facades\DB;
+    use App\Http\Resources\Usuarios\actualizarUsuarioResource;
+    use App\Http\Responses\Responses;
+    use App\Models\Usuarios\UsuariosModel;
+    use Illuminate\Support\Facades\DB;
 
-    class actualizarUsuariosServices
+    class ActualizarUsuariosServices
     {
         public function actualizarUsuario($request, $id) {
             DB::beginTransaction();
 
             try {
-                $usuarioValidado = $this->validacionDeUsusario($id);
 
-                if (!$usuarioValidado) {
-                    return Responses::warning(200, 'Sin resultado', 'Usuario no encontrado', '');
-                }
-
+                $usuarioValidado = $this->validarUsuario($id);
                 $usuarioValidado->fill($request->all());
                 $usuarioValidado->save();
 
@@ -27,17 +23,13 @@ use Illuminate\Support\Facades\DB;
                 return Responses::success(200, 'Actualizado', 'Usuario actualizado correctamente', 'success', new actualizarUsuarioResource($usuarioValidado));
 
             } catch (\Exception $e) {
+                DB::rollBack();
                 return Responses::error(500, 'Error', 'Error al actualizar el usuario intentelo mas tarde.', $e->getMessage());
             }
-
         }
 
-        protected function validacionDeUsusario($id) {
-            try {
-                return UsuariosModel::findOrfail($id);
-            } catch (\Exception $e) {
-                return false;
-            }
+        protected function validarUsuario($id) {
+            return UsuariosModel::findOrFail($id);
         }
 
     }
