@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Archivo\ArchivoController;
 use App\Http\Controllers\Auth\authController;
 use App\Http\Controllers\Cargos\CargosController;
 use App\Http\Controllers\Departamentos\departamentosController;
@@ -36,6 +37,7 @@ use Illuminate\Support\Facades\Route;
         Route::apiResource('unidades', unidadesController::class);
         Route::apiResource('detalleUnidad', DetalleUnidadController::class);
         Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
+        Route::apiResource('registroArchivo', ArchivoController::class);
 
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
 
