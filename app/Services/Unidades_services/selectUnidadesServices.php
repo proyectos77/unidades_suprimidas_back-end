@@ -10,7 +10,7 @@ use App\Models\Unidades\UnidadesModel;
     {
         public function listadoCompletoUnidades() {
             try {
-                $unidades = UnidadesModel::all();
+                $unidades = UnidadesModel::doesntHAve('detalleUnidad')->with('detalleUnidad')->get();
                 $data = new listSelectResource($unidades);
                 return Responses::success(200, 'Consulta realizada', 'Consulta realizada con exito', 'success', $data);
 

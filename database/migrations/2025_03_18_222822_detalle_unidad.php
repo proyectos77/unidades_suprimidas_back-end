@@ -26,6 +26,7 @@ return new class extends Migration
             $table->timestamp('fecha_actualizacion_detalle')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
+
         });
     }
 
