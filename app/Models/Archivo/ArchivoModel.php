@@ -22,6 +22,7 @@ class ArchivoModel extends Model
         'numero_folios_archivo',
         'fecha_creacion_archivo',
         'fecha_actualizacion_archivo',
+        'id_detalle',
         'id_estado'
     ];
 

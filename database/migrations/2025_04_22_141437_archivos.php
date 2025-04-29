@@ -13,7 +13,7 @@ return new class extends Migration
             $table->unsignedInteger('id_archivo')->autoIncrement();
             $table->integer('numero_cajas_archivos');
             $table->integer('numero_carpetas_archivo');
-            $table->date('numero_folios_archivo');
+            $table->integer('numero_folios_archivo');
             $table->unsignedInteger('id_detalle');
             $table->foreign('id_detalle')->references('id_detalle')->on('detalle_unidad')->onDelete('cascade');
             $table->timestamp('fecha_creacion_archivo')->useCurrent();

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DetalleUnidad_request\registroDetalleUnidadRequest;
 use App\Http\Requests\DetalleUnidad_request\updateDetalleUnidadRequest;
 use App\Services\DetalleUnidad_services\actualizarDetalleUnidadServices;
+use App\Services\DetalleUnidad_services\gestionDetalleUnidadServices;
 use App\Services\DetalleUnidad_services\registroDetalleUnidadServices;
+use Illuminate\Http\Request;
 
 class DetalleUnidadController extends Controller
 {
@@ -14,7 +16,7 @@ class DetalleUnidadController extends Controller
     protected $registroDetalle;
     protected $updateDetalle;
 
-    public function __construct(registroDetalleUnidadServices $registroDetalle, actualizarDetalleUnidadServices $updateDetalle) {
+    public function __construct(gestionDetalleUnidadServices $registroDetalle, actualizarDetalleUnidadServices $updateDetalle) {
         $this->registroDetalle = $registroDetalle;
         $this->updateDetalle = $updateDetalle;
     }
@@ -25,7 +27,7 @@ class DetalleUnidadController extends Controller
 
     public function store(registroDetalleUnidadRequest $request){
 
-        return $this->registroDetalle->registroDetalleUnidad($request);
+        return $this->registroDetalle->gestionRegistroDetalleUnidad($request);
     }
 
     public function show(string $id){

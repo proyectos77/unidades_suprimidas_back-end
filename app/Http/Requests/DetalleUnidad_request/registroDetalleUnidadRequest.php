@@ -32,7 +32,10 @@ class registroDetalleUnidadRequest extends FormRequest
             'puestoMandoAdelantado'             =>  'required|string',
             'puestoMandoAtrasado'               =>  'required|string',
             'observacion'                       =>  'required|string',
-            'idUnidad'                          =>  'required|numeric|unique:detalle_unidad,id_unidad'
+            'idUnidad'                          =>  'required|numeric|unique:detalle_unidad,id_unidad',
+            'numero_cajas'                      => 'required|integer',
+            'numero_carpetas'                   => 'required|integer',
+            'numero_folio'                      => 'required|integer'
         ];
     }
 
@@ -45,7 +48,10 @@ class registroDetalleUnidadRequest extends FormRequest
             'puesto_mando_adelantado_detalle'           =>  $this->puestoMandoAdelantado,
             'puesto_mando_atrasado_detalle'             =>  $this->puestoMandoAtrasado,
             'observacion_detalle'                       =>  $this->observacion,
-            'id_unidad'                                 =>  $this->idUnidad
+            'id_unidad'                                 =>  $this->idUnidad,
+            'numero_cajas_archivos'                     => $this->numero_cajas,
+            'numero_carpetas_archivo'                   => $this->numero_carpetas,
+            'numero_folios_archivo'                     => $this->numero_folio,
         ]);
     }
 
@@ -61,7 +67,15 @@ class registroDetalleUnidadRequest extends FormRequest
             'puestoMandoAtrasado.required'              =>  'El atributo puesto de mando atrasado es requerido',
             'observacion.required'                      =>  'El atributo observacion es requerido',
             'idUnidad.required'                         =>  'El atributo id unidad es requerido',
-            'idUnidad.unique'                           =>  'Ya existe detalle para esta unidad'
+            'idUnidad.unique'                           =>  'Ya existe detalle para esta unidad',
+            'numero_cajas.integer'                      => 'El atributo numero de cajas  acepta solo numeros',
+            'numero_cajas.required'                     => 'El atributo numero de cajas es requerido',
+
+            'numero_carpetas.integer'                   => 'El atributo numero de carpetas solo acepta numeros',
+            'numero_carpetas.required'                  => 'El atributo numero de carpetas es requerido',
+
+            'numero_folio.integer'                      => 'El atributo numero de folios  solo acepta numeros',
+            'numero_folio.required'                     => 'El atributo numero de folios es requerido',
         ];
     }
 
