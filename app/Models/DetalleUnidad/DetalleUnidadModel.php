@@ -2,6 +2,7 @@
 
 namespace App\Models\DetalleUnidad;
 
+use App\Models\Archivo\ArchivoModel;
 use App\Models\Estados\EstadosModell;
 use App\Models\Unidades\UnidadesModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,7 @@ class DetalleUnidadModel extends Model
     const UPDATED_AT = 'fecha_actualizacion_detalle';
 
     protected $fillable = [
+        
         'acto_administrativo_creacion_detalle',
         'acto_administrativo_desactivacion_detalle',
         'fecha_creacion_unidad_detalle',
@@ -38,5 +40,9 @@ class DetalleUnidadModel extends Model
 
     public function municipio() {
         return $this->belongsTo(UnidadesModel::class, 'id_unidad', 'id_unidad');
+    }
+
+    public function archivo(){
+        return $this->hasOne(ArchivoModel::class, 'id_detalle', 'id_detalle');
     }
 }
