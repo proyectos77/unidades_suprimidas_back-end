@@ -64,4 +64,13 @@
 
             return response()->json($respuesta, $statusCode);
         }
+
+        static function respuestaListadoUnCampo($statusCode, $data = []){
+            $respuesta = [
+                'statusCode'    => $statusCode,
+                'data'          => $data
+            ];
+
+            return response()->json($respuesta, $statusCode);
+        }
     }

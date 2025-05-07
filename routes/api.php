@@ -9,6 +9,7 @@ use App\Http\Controllers\Municipios\municipiosController;
 use App\Http\Controllers\TiposUsuarios\tipoUsuariosController;
 use App\Http\Controllers\Unidades\unidadesController;
 use App\Http\Controllers\Usuarios\usuarioController;
+use App\Http\Controllers\Utilidades\utilController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,7 +38,9 @@ use Illuminate\Support\Facades\Route;
         Route::apiResource('unidades', unidadesController::class);
         Route::apiResource('detalleUnidad', DetalleUnidadController::class);
         Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
+        Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
         Route::apiResource('registroArchivo', ArchivoController::class);
+        Route::get('anios', [utilController::class, 'listAnio']);
 
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
 

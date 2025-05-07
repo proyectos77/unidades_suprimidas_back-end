@@ -15,4 +15,9 @@
                 "totalPaginas" => $totalPaginas
             ];
         }
+
+        public static function listAnios() {
+            $years = range(date('Y'), 1990);
+            return $years;
+        }
     }

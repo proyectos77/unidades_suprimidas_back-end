@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Unidades_request\actualizarUnidadRequest;
 use App\Http\Requests\Unidades_request\registroUnidadRequest;
 use App\Services\Unidades_services\getInformacionUnidad;
+use App\Services\Unidades_services\listadoUnidadesConDetalleServices;
 use App\Services\Unidades_services\listadoUnidadesServices;
 use App\Services\Unidades_services\registroUnidadesServices;
 use App\Services\Unidades_services\selectUnidadesServices;
@@ -18,19 +19,22 @@ class unidadesController extends Controller
     protected $actualizarUnidades;
     protected $selectUnidad;
     protected $informacionUnidad;
+    protected $selectUndiadesConDetalle;
 
     public function __construct(
         registroUnidadesServices $registroUnidades,
         listadoUnidadesServices $listadoUnidades,
         updateUnidadServices $actualizarUnidades,
         selectUnidadesServices $selectUnidades,
-        getInformacionUnidad $informacionUnidad
+        getInformacionUnidad $informacionUnidad,
+        listadoUnidadesConDetalleServices $selectUndiadesConDetalle
     ) {
         $this->registroUnidades = $registroUnidades;
         $this->listadoUnidades = $listadoUnidades;
         $this->actualizarUnidades = $actualizarUnidades;
         $this->selectUnidad = $selectUnidades;
         $this->informacionUnidad = $informacionUnidad;
+        $this->selectUndiadesConDetalle = $selectUndiadesConDetalle;
     }
 
     public function index()
@@ -58,8 +62,11 @@ class unidadesController extends Controller
         //
     }
 
-    public function selectListUnidades()
-    {
+    public function selectListUnidades(){
         return $this->selectUnidad->listadoCompletoUnidades();
+    }
+
+    public function selectListUnidadesConDetalle(){
+        return $this->selectUndiadesConDetalle->listadoUnidadesConDetalle();
     }
 }
