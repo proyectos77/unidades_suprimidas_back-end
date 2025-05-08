@@ -20,13 +20,14 @@ class DetalleUnidadModel extends Model
     const UPDATED_AT = 'fecha_actualizacion_detalle';
 
     protected $fillable = [
-        
+
         'acto_administrativo_creacion_detalle',
         'acto_administrativo_desactivacion_detalle',
         'fecha_creacion_unidad_detalle',
         'fecha_desactivacion_unidad_detalle',
         'puesto_mando_adelantado_detalle',
         'puesto_mando_atrasado_detalle',
+        'plan_reorganizacion_diorg_detalle',
         'observacion_detalle',
         'id_unidad',
         'fecha_creacion_detalle',

@@ -25,10 +25,11 @@ class registroArchivoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'numero_cajas'      => 'required|integer',
-            'numero_carpetas'   => 'required|unique:unidades,sigla_unidad',
-            'numero_folio'      => 'required|integer',
-            'id_detalle'        => 'required|integer'
+            'numero_cajas'          => 'required|integer',
+            'numero_carpetas'       => 'required|unique:unidades,sigla_unidad',
+            'numero_folio'          => 'required|integer',
+            'anio_registro_archivo' => 'required|integer',
+            'id_detalle'            => 'required|integer'
         ];
     }
 
@@ -44,17 +45,20 @@ class registroArchivoRequest extends FormRequest
     public function messages()
     {
         return [
-            'numero_cajas.integer'       => 'El atributo numero de cajas  acepta solo numeros',
-            'numero_cajas.required'      => 'El atributo numero de cajas es requerido',
+            'numero_cajas.integer'              => 'El atributo numero de cajas  acepta solo numeros',
+            'numero_cajas.required'             => 'El atributo numero de cajas es requerido',
 
-            'numero_carpetas.integer'    => 'El atributo numero de carpetas solo acepta numeros',
-            'numero_carpetas.required'   => 'El atributo numero de carpetas es requerido',
+            'numero_carpetas.integer'           => 'El atributo numero de carpetas solo acepta numeros',
+            'numero_carpetas.required'          => 'El atributo numero de carpetas es requerido',
 
-            'numero_folio.integer'       => 'El atributo numero de folios  solo acepta numeros',
-            'numero_folio.required'      => 'El atributo numero de folios es requerido',
+            'numero_folio.integer'              => 'El atributo numero de folios  solo acepta numeros',
+            'numero_folio.required'             => 'El atributo numero de folios es requerido',
 
-            'id_detalle.integer'          => 'El atributo id detalle numeros',
-            'id_detalle.required'         => 'El atributo id detalle es requerido',
+            'id_detalle.integer'                => 'El atributo id detalle numeros',
+            'id_detalle.required'               => 'El atributo id detalle es requerido',
+
+            'anio_registro_archivo.integer'     => 'El atributo año solo acepta numeros',
+            'anio_registro_archivo.required'    => 'El atributo año es requerido',
         ];
     }
 

@@ -14,7 +14,7 @@ class ArchivoController extends Controller
 
     public function __construct(registroArchivoUnidadServices $registroArchivo) {
         $this->registroArchivo = $registroArchivo;
-        $this->middleware('auth:sanctum')->only("store");
+        /* $this->middleware('auth:sanctum')->only("store"); */
     }
 
     public function index(){
