@@ -7,6 +7,7 @@ use App\Http\Controllers\Departamentos\departamentosController;
 use App\Http\Controllers\DetalleUnidad\DetalleUnidadController;
 use App\Http\Controllers\Municipios\municipiosController;
 use App\Http\Controllers\TiposUsuarios\tipoUsuariosController;
+use App\Http\Controllers\Transferencias\transferenciasController;
 use App\Http\Controllers\Unidades\unidadesController;
 use App\Http\Controllers\Usuarios\usuarioController;
 use App\Http\Controllers\Utilidades\utilController;
@@ -41,6 +42,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
         Route::apiResource('registroArchivo', ArchivoController::class);
         Route::get('anios', [utilController::class, 'listAnio']);
+        Route::apiResource('transferencia', transferenciasController::class);
 
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
 

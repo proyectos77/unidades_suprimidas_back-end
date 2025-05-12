@@ -16,7 +16,7 @@ class DetalleUnidadController extends Controller
     protected $registroDetalle;
     protected $updateDetalle;
 
-    public function __construct(gestionDetalleUnidadServices $registroDetalle, actualizarDetalleUnidadServices $updateDetalle) {
+    public function __construct(registroDetalleUnidadServices $registroDetalle, actualizarDetalleUnidadServices $updateDetalle) {
         $this->registroDetalle = $registroDetalle;
         $this->updateDetalle = $updateDetalle;
     }
@@ -27,7 +27,7 @@ class DetalleUnidadController extends Controller
 
     public function store(registroDetalleUnidadRequest $request){
 
-        return $this->registroDetalle->gestionRegistroDetalleUnidad($request);
+        return $this->registroDetalle->registroDetalleUnidad($request);
     }
 
     public function show(string $id){

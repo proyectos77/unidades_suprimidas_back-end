@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transferencias', function (Blueprint $table) {
             $table->unsignedInteger('id_transferencia')->autoIncrement();
             $table->integer('cantidad_cajas_transferencia');
-            $table->integer('cantodad_carpetas_transferencia');
+            $table->integer('cantidad_carpetas_transferencia');
             $table->integer('cantidad_folios_transferencia');
             $table->string('porcentaje_transferencia');
             $table->unsignedInteger('id_archivo');
