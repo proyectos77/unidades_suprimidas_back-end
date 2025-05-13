@@ -23,6 +23,7 @@ class transferenciasController extends Controller
     }
 
     public function store(registroTransferenciaRequest $request){
+
         return $this->registroTransferencia->registroSolicitudTransferencia($request);
     }
 

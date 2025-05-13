@@ -24,6 +24,8 @@ class registroTransferenciaRequest extends FormRequest
             'cantidad_carpetas'   => 'required|numeric',
             'cantidad_folios'     => 'required|numeric',
             'id_archivo'          => 'required|numeric',
+            'documentos'          => 'required|array',
+            'documentos.*'        => 'required|file|mimes:pdf,docx,jpg,png|max:10240' // máximo 10MB
         ];
     }
 
@@ -33,7 +35,9 @@ class registroTransferenciaRequest extends FormRequest
             'cantidad_cajas_transferencia'      => $this->cantidad_cajas,
             'cantidad_carpetas_transferencia'   => $this->cantidad_carpetas,
             'cantidad_folios_transferencia'     => $this->cantidad_folios,
-            'id_archivo'                        => $this->id_archivo
+            'id_archivo'                        => $this->id_archivo,
+            'documentos'                        => $this->documentos,
+
         ]);
     }
 
@@ -51,6 +55,8 @@ class registroTransferenciaRequest extends FormRequest
 
             'id_archivo.required'          => 'El atributo id_archivo es requerido',
             'id_archivo.numeric'           => 'El atributo id_archivo solo acepta números',
+
+            'documentos.required'           => 'El atributo documentos es requerido',
         ];
     }
 
