@@ -31,6 +31,7 @@ class registroDetalleUnidadRequest extends FormRequest
             'fechaDesactivacionUnidad'          =>  'required|date',
             'puestoMandoAdelantado'             =>  'required|string',
             'puestoMandoAtrasado'               =>  'required|string',
+            'planReorganizacionDiorg'           =>  'required|string',
             'observacion'                       =>  'required|string',
             'idUnidad'                          =>  'required|numeric|unique:detalle_unidad,id_unidad',
         ];
@@ -44,6 +45,7 @@ class registroDetalleUnidadRequest extends FormRequest
             'fecha_desactivacion_unidad_detalle'        =>  $this->fechaDesactivacionUnidad,
             'puesto_mando_adelantado_detalle'           =>  $this->puestoMandoAdelantado,
             'puesto_mando_atrasado_detalle'             =>  $this->puestoMandoAtrasado,
+            'plan_reorganizacion_diorg_detalle'         =>  $this->planReorganizacionDiorg,
             'observacion_detalle'                       =>  $this->observacion,
             'id_unidad'                                 =>  $this->idUnidad,
         ]);
@@ -59,6 +61,7 @@ class registroDetalleUnidadRequest extends FormRequest
             'fechaDesactivacionUnidad.date'             =>  'El atributo fecha desactivacion unidad espera una fecha',
             'puestoMandoAdelantado.required'            =>  'El atributo puesto de mando adelantado es requerido',
             'puestoMandoAtrasado.required'              =>  'El atributo puesto de mando atrasado es requerido',
+            'planReorganizacionDiorg.required'         =>  'El atributo plan de reorganizacion diorg es requerido',
             'observacion.required'                      =>  'El atributo observacion es requerido',
             'idUnidad.required'                         =>  'El atributo id unidad es requerido',
             'idUnidad.unique'                           =>  'Ya existe detalle para esta unidad',
