@@ -35,7 +35,7 @@ use Illuminate\Support\Facades\DB;
                     DB::rollBack();
                     return Responses::error(500, 'Error', 'Error al realizar el registro', $e->getMessage());
                 }
-
+                                
         }
 
     }

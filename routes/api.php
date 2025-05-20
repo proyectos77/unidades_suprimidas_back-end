@@ -40,6 +40,7 @@ use Illuminate\Support\Facades\Route;
         Route::apiResource('detalleUnidad', DetalleUnidadController::class);
         Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
         Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
+        Route::get('selectUnidadesArchivo', [unidadesController::class, 'selectListUnidadesArchivo']);
         Route::apiResource('registroArchivo', ArchivoController::class);
         Route::get('anios', [utilController::class, 'listAnio']);
         Route::apiResource('transferencia', transferenciasController::class);
