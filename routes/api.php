@@ -34,15 +34,24 @@ use Illuminate\Support\Facades\Route;
         Route::post('login', [authController::class, 'login']); //login
 
         Route::apiResource('usuarios', usuarioController::class); //Usuarios
+
         Route::apiResource('tipoUsuarios', tipoUsuariosController::class); //tipoUsuarios
+
         Route::apiResource('cargos', CargosController::class); //tipoUsuarios
+
         Route::apiResource('unidades', unidadesController::class);
-        Route::apiResource('detalleUnidad', DetalleUnidadController::class);
         Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
         Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
         Route::get('selectUnidadesArchivo', [unidadesController::class, 'selectListUnidadesArchivo']);
+
+        Route::apiResource('detalleUnidad', DetalleUnidadController::class);
+
         Route::apiResource('registroArchivo', ArchivoController::class);
+
         Route::get('anios', [utilController::class, 'listAnio']);
+
+        Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'listArchivoPorUnidad']);
+
         Route::apiResource('transferencia', transferenciasController::class);
 
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
