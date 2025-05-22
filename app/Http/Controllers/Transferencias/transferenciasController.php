@@ -23,8 +23,8 @@ class transferenciasController extends Controller
     }
 
     public function store(registroTransferenciaRequest $request){
-
-        return $this->registroTransferencia->registroSolicitudTransferencia($request);
+        $usuario = $request->user();
+        return $this->registroTransferencia->registroSolicitudTransferencia($request, $usuario);
     }
 
     public function show(string $id){
