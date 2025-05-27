@@ -22,7 +22,7 @@ class UnidadesModel extends Model
     protected $fillable = [
         'nombre_unidad',
         'sigla_unidad',
-        'padre_unidad',
+        'unidad_que_asume_archivo_unidad',
         'id_municipio',
         'fecha_creacion_unidad',
         'fecha_actualizacion_unidad',
@@ -36,7 +36,7 @@ class UnidadesModel extends Model
     public function municipio() {
         return $this->belongsTo(MunicipiosModel::class, 'id_municipio', 'id_municipio');
     }
-    
+
     public function detalleUnidad() {
         return $this->belongsTo(DetalleUnidadModel::class, 'id_unidad', 'id_unidad');
     }
