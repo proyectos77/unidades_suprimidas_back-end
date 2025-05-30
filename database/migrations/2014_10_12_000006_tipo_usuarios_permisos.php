@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreign('id_tipo_usuario')->references('id_tipo_usuario')->on('tipo_usuarios')->onDelete('cascade');
             $table->unsignedInteger('id_permiso');
             $table->foreign('id_permiso')->references('id_permiso')->on('permisos')->onDelete('cascade');
-            $table->timestamp('fecha_creacion_usuario')->useCurrent();
-            $table->timestamp('fecha_actualizacion_usuario')->useCurrent()->useCurrentOnUpdate();
+            $table->dateTime('fecha_creacion_usuario')->useCurrent();
+            $table->dateTime('fecha_actualizacion_usuario')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });

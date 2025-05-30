@@ -49,7 +49,7 @@ CREATE TABLE `failed_jobs` (
   `queue` text NOT NULL,
   `payload` longtext NOT NULL,
   `exception` longtext NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `failed_at` dateTime NOT NULL DEFAULT current_dateTime()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -87,7 +87,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 CREATE TABLE `password_reset_tokens` (
   `user_usuario` varchar(255) NOT NULL,
   `token` varchar(255) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
+  `created_at` dateTime NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -118,10 +118,10 @@ CREATE TABLE `personal_access_tokens` (
   `name` varchar(255) NOT NULL,
   `token` varchar(64) NOT NULL,
   `abilities` text DEFAULT NULL,
-  `last_used_at` timestamp NULL DEFAULT NULL,
-  `expires_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `last_used_at` dateTime NULL DEFAULT NULL,
+  `expires_at` dateTime NULL DEFAULT NULL,
+  `created_at` dateTime NULL DEFAULT NULL,
+  `updated_at` dateTime NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------

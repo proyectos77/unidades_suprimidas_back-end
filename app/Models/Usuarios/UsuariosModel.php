@@ -15,7 +15,7 @@ class UsuariosModel extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     protected $table = 'usuarios';
-    public $timestamps = false;
+    public $dateTimes = false;
     protected $primaryKey = 'id_usuario';
 
     const CREATED_AT = 'fecha_creacion_usuario';

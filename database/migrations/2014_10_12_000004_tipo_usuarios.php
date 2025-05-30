@@ -14,15 +14,15 @@ return new class extends Migration
         Schema::create('tipo_usuarios', function (Blueprint $table) {
             $table->unsignedInteger('id_tipo_usuario')->autoIncrement();
             $table->string('nombre_tipo_usuario');
-            $table->timestamp('fecha_creacion_tipo_usuario')->useCurrent();
-            $table->timestamp('fecha_actualizacion_tipo_usuario')->useCurrent()->useCurrentOnUpdate();
+            $table->dateTime('fecha_creacion_tipo_usuario')->useCurrent();
+            $table->dateTime('fecha_actualizacion_tipo_usuario')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });
     }
 
     /**
-     * Reverse the migrations.
+     * Reverse the migrations.  
      */
     public function down(): void
     {

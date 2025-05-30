@@ -9,7 +9,7 @@ class DocumentoTransferenciaModel extends Model
 {
     use HasFactory;
     protected $table = 'documentos_transferencias';
-    public $timestamps = false;
+    public $dateTimes = false;
     protected $primaryKey = 'id_documento_transferencia';
 
     protected $fillable = [

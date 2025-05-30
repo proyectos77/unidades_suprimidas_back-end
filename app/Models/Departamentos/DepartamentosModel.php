@@ -12,7 +12,7 @@ class DepartamentosModel extends Model
     use HasFactory;
 
     protected $table = 'departamentos';
-    public $timestamps = false;
+    public $dateTimes = false;
     protected $primaryKey = 'id_departamento';
 
     const CREATED_AT = 'fecha_creacion_departamento';

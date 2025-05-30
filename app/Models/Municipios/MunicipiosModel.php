@@ -12,7 +12,7 @@ class MunicipiosModel extends Model
     use HasFactory;
 
     protected $table = 'municipios';
-    public $timestamps = false;
+    public $dateTimes = false;
     protected $primaryKey = 'id_municipio';
 
     const CREATED_AT = 'fecha_creacion_municipio';

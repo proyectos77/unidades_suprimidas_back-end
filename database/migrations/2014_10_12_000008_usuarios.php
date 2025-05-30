@@ -23,8 +23,8 @@ return new class extends Migration
             $table->unsignedInteger('id_cargo');
             $table->foreign('id_cargo')->references('id_cargo')->on('cargos')->onDelete('cascade');
             $table->rememberToken();
-            $table->timestamp('fecha_creacion_usuario')->useCurrent();
-            $table->timestamp('fecha_actualizacion_usuario')->useCurrent()->useCurrentOnUpdate();
+            $table->dateTime('fecha_creacion_usuario')->useCurrent();
+            $table->dateTime('fecha_actualizacion_usuario')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });

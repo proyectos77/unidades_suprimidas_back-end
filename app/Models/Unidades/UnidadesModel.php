@@ -13,7 +13,7 @@ class UnidadesModel extends Model
     use HasFactory;
 
     protected $table = 'unidades';
-    public $timestamps = false;
+    public $dateTimes = false;
     protected $primaryKey = 'id_unidad';
 
     const CREATED_AT = 'fecha_creacion_unidad';

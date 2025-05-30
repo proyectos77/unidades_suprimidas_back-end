@@ -12,7 +12,7 @@ class ArchivoModel extends Model
     use HasFactory;
 
     protected $table = 'archivo';
-    public $timestamps = false;
+    public $dateTimes = false;
     protected $primaryKey = 'id_archivo';
 
     const CREATED_AT = 'fecha_creacion_archivo';
