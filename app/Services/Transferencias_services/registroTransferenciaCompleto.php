@@ -2,10 +2,10 @@
 
     namespace App\Services\Transferencias_services;
 
-use App\Http\Responses\Responses;
-use App\Services\Documentos_services\registroDocumentosService;
-use App\Services\DocumentosTransferencias_services\documentosTransferencias;
-use Illuminate\Support\Facades\DB;
+    use App\Http\Responses\Responses;
+    use App\Services\Documentos_services\registroDocumentosService;
+    use App\Services\DocumentosTransferencias_services\documentosTransferencias;
+    use Illuminate\Support\Facades\DB;
 
     class registroTransferenciaCompleto{
 
@@ -13,7 +13,8 @@ use Illuminate\Support\Facades\DB;
         private $registroDocumentos;
         private $registroDocumentosTransferencia;
 
-        public function __construct(registroTransferencia $registroTransferencia, registroDocumentosService $registroDocumentos, documentosTransferencias $registroDocumentosTransferencia) {
+        public function __construct(
+            registroTransferencia $registroTransferencia, registroDocumentosService $registroDocumentos, documentosTransferencias $registroDocumentosTransferencia) {
             $this->registroTransferencia = $registroTransferencia;
             $this->registroDocumentos = $registroDocumentos;
             $this->registroDocumentosTransferencia = $registroDocumentosTransferencia;
@@ -35,7 +36,7 @@ use Illuminate\Support\Facades\DB;
                     DB::rollBack();
                     return Responses::error(500, 'Error', 'Error al realizar el registro', $e->getMessage());
                 }
-                                
+
         }
 
     }
