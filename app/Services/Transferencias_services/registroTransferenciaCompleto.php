@@ -2,18 +2,10 @@
 
     namespace App\Services\Transferencias_services;
 
-<<<<<<< HEAD
     use App\Http\Responses\Responses;
     use App\Services\Documentos_services\registroDocumentosService;
     use App\Services\DocumentosTransferencias_services\documentosTransferencias;
     use Illuminate\Support\Facades\DB;
-=======
-use App\Http\Responses\Responses;
-use App\Services\Documentos_services\registroDocumentosService;
-use App\Services\DocumentosTransferencias_services\documentosTransferencias;
-use App\Services\SolicitudTransferencia\registroSolicitudTransferencia;
-use Illuminate\Support\Facades\DB;
->>>>>>> JMontero-Dev
 
     class registroTransferenciaCompleto{
 
@@ -21,6 +13,7 @@ use Illuminate\Support\Facades\DB;
         private $registroDocumentos;
         private $registroDocumentosTransferencia;
         private $registroSolicitudTransferencia;
+<<<<<<< HEAD
 
         public function __construct(
             registroTransferencia $registroTransferencia,
@@ -32,6 +25,15 @@ use Illuminate\Support\Facades\DB;
         public function __construct(
             registroTransferencia $registroTransferencia, registroDocumentosService $registroDocumentos, documentosTransferencias $registroDocumentosTransferencia) {
 =======
+>>>>>>> JMontero-Dev
+=======
+
+        public function __construct(
+            registroTransferencia $registroTransferencia,
+            registroDocumentosService $registroDocumentos,
+            documentosTransferencias $registroDocumentosTransferencia,
+            registroSolicitudTransferencia $registroSolicitudTransferencia) {
+
 >>>>>>> JMontero-Dev
             $this->registroTransferencia = $registroTransferencia;
             $this->registroDocumentos = $registroDocumentos;
@@ -58,12 +60,15 @@ use Illuminate\Support\Facades\DB;
             }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                     return Responses::success(200, 'Registro', 'Registro de transferencia exitoso', 'success', $documentos);
                 } catch (\Exception $e) {
                     DB::rollBack();
                     return Responses::error(500, 'Error', 'Error al realizar el registro', $e->getMessage());
                 }
 
+=======
+>>>>>>> JMontero-Dev
 =======
 >>>>>>> JMontero-Dev
         }
