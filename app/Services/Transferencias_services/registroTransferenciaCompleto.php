@@ -2,11 +2,11 @@
 
     namespace App\Services\Transferencias_services;
 
-    use App\Http\Responses\Responses;
-    use App\Services\Documentos_services\registroDocumentosService;
-    use App\Services\DocumentosTransferencias_services\documentosTransferencias;
-    use App\Services\SolicitudTransferencia\registroSolicitudTransferencia;
-    use Illuminate\Support\Facades\DB;
+use App\Http\Responses\Responses;
+use App\Services\Documentos_services\registroDocumentosService;
+use App\Services\DocumentosTransferencias_services\documentosTransferencias;
+use App\Services\SolicitudTransferencia\registroSolicitudTransferencia;
+use Illuminate\Support\Facades\DB;
 
     class registroTransferenciaCompleto{
 
