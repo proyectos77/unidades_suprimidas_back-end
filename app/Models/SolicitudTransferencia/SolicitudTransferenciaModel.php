@@ -2,6 +2,9 @@
 
 namespace App\Models\SolicitudTransferencia;
 
+use App\Models\Estados\EstadosModell;
+use App\Models\Transferencias\TransferenciasModel;
+use App\Models\Usuarios\UsuariosModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,4 +29,24 @@ class SolicitudTransferenciaModel extends Model
             'observacion_solicitud_transferencia',
             'id_estado',
         ];
+
+        public function estadoSolicitud(){
+            return $this->belongsTo(EstadosModell::class, 'estado_solicitud_transferencia', 'id_estado');
+        }
+
+        public function estado(){
+            return $this->belongsTo(EstadosModell::class, 'id_estado', 'id_estado');
+        }
+
+        public function usuarioSolicitante() {
+            return $this->belongsTo(UsuariosModel::class, 'id_usuario_solicitante_solicitud_transferencia', 'id_usuario');
+        }
+
+        public function usuarioRevisor() {
+            return $this->belongsTo(UsuariosModel::class, 'id_usuario_revisor_solicitud_transferencia', 'id_usuario');
+        }
+
+        public function transferencia() {
+            return $this->belongsTo(TransferenciasModel::class, 'id_transferencia', 'id_transferencia');
+        }
 }

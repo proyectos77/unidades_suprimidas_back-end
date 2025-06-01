@@ -6,6 +6,7 @@ use App\Http\Controllers\Cargos\CargosController;
 use App\Http\Controllers\Departamentos\departamentosController;
 use App\Http\Controllers\DetalleUnidad\DetalleUnidadController;
 use App\Http\Controllers\Municipios\municipiosController;
+use App\Http\Controllers\SolicitudTransferencia\SolicitudTransferencia;
 use App\Http\Controllers\TiposUsuarios\tipoUsuariosController;
 use App\Http\Controllers\Transferencias\transferenciasController;
 use App\Http\Controllers\Unidades\unidadesController;
@@ -52,7 +53,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'listArchivoPorUnidad']);
 
-
+        Route::apiResource('solicitudesTransferencias', SolicitudTransferencia::class);
 
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
 

@@ -12,7 +12,7 @@ use Carbon\Carbon;
                     'id_transferencia' => $transferencia->id_transferencia,
                     'fecha_inicio_solicitud_transferencia' => Carbon::now(),
                     'id_usuario_solicitante_solicitud_transferencia' => $usuario->id_usuario,
-                    'estado_solicitud_transferencia' => 4,
+                    'estado_solicitud_transferencia' => 3,
                 ]);
 
                  if(!$solicitud){

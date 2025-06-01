@@ -2,6 +2,7 @@
 
 namespace App\Models\Transferencias;
 
+use App\Models\Archivo\ArchivoModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -22,4 +23,9 @@ class TransferenciasModel extends Model
         'porcentaje_transferencia',
         'id_archivo',
     ];
+
+    public function archivo()
+    {
+        return $this->belongsTo(ArchivoModel::class, 'id_archivo', 'id_archivo');
+    }
 }
