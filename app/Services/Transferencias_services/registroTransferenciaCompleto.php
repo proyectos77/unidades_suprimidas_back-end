@@ -5,6 +5,7 @@
     use App\Http\Responses\Responses;
     use App\Services\Documentos_services\registroDocumentosService;
     use App\Services\DocumentosTransferencias_services\documentosTransferencias;
+    use App\Services\SolicitudTransferencia\registroSolicitudTransferencia;
     use Illuminate\Support\Facades\DB;
 
     class registroTransferenciaCompleto{
@@ -13,7 +14,6 @@
         private $registroDocumentos;
         private $registroDocumentosTransferencia;
         private $registroSolicitudTransferencia;
-<<<<<<< HEAD
 
         public function __construct(
             registroTransferencia $registroTransferencia,
@@ -21,20 +21,6 @@
             documentosTransferencias $registroDocumentosTransferencia,
             registroSolicitudTransferencia $registroSolicitudTransferencia) {
 
-<<<<<<< HEAD
-        public function __construct(
-            registroTransferencia $registroTransferencia, registroDocumentosService $registroDocumentos, documentosTransferencias $registroDocumentosTransferencia) {
-=======
->>>>>>> JMontero-Dev
-=======
-
-        public function __construct(
-            registroTransferencia $registroTransferencia,
-            registroDocumentosService $registroDocumentos,
-            documentosTransferencias $registroDocumentosTransferencia,
-            registroSolicitudTransferencia $registroSolicitudTransferencia) {
-
->>>>>>> JMontero-Dev
             $this->registroTransferencia = $registroTransferencia;
             $this->registroDocumentos = $registroDocumentos;
             $this->registroDocumentosTransferencia = $registroDocumentosTransferencia;
@@ -59,18 +45,6 @@
                 return Responses::error(500, 'Error', 'Error al realizar el registro', $e->getMessage());
             }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    return Responses::success(200, 'Registro', 'Registro de transferencia exitoso', 'success', $documentos);
-                } catch (\Exception $e) {
-                    DB::rollBack();
-                    return Responses::error(500, 'Error', 'Error al realizar el registro', $e->getMessage());
-                }
-
-=======
->>>>>>> JMontero-Dev
-=======
->>>>>>> JMontero-Dev
         }
 
     }
