@@ -52,7 +52,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'listArchivoPorUnidad']);
 
-        Route::apiResource('transferencia', transferenciasController::class);
+
 
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
 
@@ -60,4 +60,5 @@ use Illuminate\Support\Facades\Route;
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('logout', [authController::class, 'logout']);
+            Route::apiResource('transferencia', transferenciasController::class);
         });

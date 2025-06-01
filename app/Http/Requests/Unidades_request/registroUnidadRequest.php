@@ -27,7 +27,7 @@ class registroUnidadRequest extends FormRequest
         return [
             'nombre'            => 'required|string',
             'sigla'             => 'required|unique:unidades,sigla_unidad',
-            'padreUnidad'       => 'required|string',
+            'unidad_que_asume'  => 'required|string',
             'idMunicipio'       => 'required|numeric',
         ];
     }
@@ -35,10 +35,10 @@ class registroUnidadRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'nombre_unidad'     => $this->nombre,
-            'sigla_unidad'      => $this->sigla,
-            'padre_unidad'      => $this->padreUnidad,
-            'id_municipio'      => $this->idMunicipio,
+            'nombre_unidad'                     => $this->nombre,
+            'sigla_unidad'                      => $this->sigla,
+            'unidad_que_asume_archivo_unidad'   => $this->unidad_que_asume,
+            'id_municipio'                      => $this->idMunicipio,
         ]);
     }
 
@@ -51,8 +51,8 @@ class registroUnidadRequest extends FormRequest
             'sigla.required'                => 'El atributo sigla es requerido',
             'sigla.unique'                  => 'La sigla ya se encuentra registrada',
 
-            'padreUnidad.required'          => 'El atributo padre unidad es requerido',
-            'padreUnidad.string'            => 'El atributo padre unidad',
+            'unidad_que_asume.required'          => 'El atributo padre unidad es requerido',
+            'unidad_que_asume.string'            => 'El atributo padre unidad',
 
             'idMunicipio.required'          => 'El municipio es obligatorio',
             'idMunicipio.numeric'           => 'El municipio solo acepta numero'
