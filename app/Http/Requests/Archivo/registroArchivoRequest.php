@@ -28,6 +28,8 @@ class registroArchivoRequest extends FormRequest
             'numero_cajas'          => 'required|integer',
             'numero_carpetas'       => 'required|unique:unidades,sigla_unidad',
             'numero_folio'          => 'required|integer',
+            'numero_tomos'          => 'nullable|integer',
+            'otros'                 => 'nullable|integer',
             'anio_registro_archivo' => 'required|integer',
             'id_detalle'            => 'required|integer'
         ];
@@ -37,8 +39,11 @@ class registroArchivoRequest extends FormRequest
     {
         $this->merge([
             'numero_cajas_archivos'     => $this->numero_cajas,
-            'numero_carpetas_archivo'      => $this->numero_carpetas,
-            'numero_folios_archivo'      => $this->numero_folio,
+            'numero_carpetas_archivo'   => $this->numero_carpetas,
+            'numero_folios_archivo'     => $this->numero_folio,
+            'numero_tomos_archivo'              => $this->numero_tomos,
+            'numero_otros_archivo'             => $this->otros,
+            'anio_registro_archivo'     => $this->anio_registro_archivo,
         ]);
     }
 

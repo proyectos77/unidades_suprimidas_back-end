@@ -14,6 +14,8 @@ return new class extends Migration
             $table->integer('numero_cajas_archivos');
             $table->integer('numero_carpetas_archivo');
             $table->integer('numero_folios_archivo');
+            $table->integer('numero_tomos_archivo')->nullable();
+            $table->integer('numero_otros_archivo')->nullable();
             $table->string('anio_registro_archivo');
             $table->unsignedInteger('id_detalle');
             $table->foreign('id_detalle')->references('id_detalle')->on('detalle_unidad')->onDelete('cascade');

@@ -22,6 +22,8 @@ class ArchivoModel extends Model
         'numero_cajas_archivos',
         'numero_carpetas_archivo',
         'numero_folios_archivo',
+        'numero_tomos_archivo',
+        'numero_otros_archivo',
         'anio_registro_archivo',
         'id_detalle',
         'id_estado'
