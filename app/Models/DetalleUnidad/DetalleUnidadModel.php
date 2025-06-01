@@ -13,7 +13,7 @@ class DetalleUnidadModel extends Model
     use HasFactory;
 
     protected $table = 'detalle_unidad';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $primaryKey = 'id_detalle';
 
     const CREATED_AT = 'fecha_creacion_detalle';
@@ -30,8 +30,6 @@ class DetalleUnidadModel extends Model
         'plan_reorganizacion_diorg_detalle',
         'observacion_detalle',
         'id_unidad',
-        'fecha_creacion_detalle',
-        'fecha_actualizacion_detalle',
         'id_estado'
     ];
 

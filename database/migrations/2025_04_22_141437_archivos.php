@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('anio_registro_archivo');
             $table->unsignedInteger('id_detalle');
             $table->foreign('id_detalle')->references('id_detalle')->on('detalle_unidad')->onDelete('cascade');
-            $table->timestamp('fecha_creacion_archivo')->useCurrent();
-            $table->timestamp('fecha_actualizacion_archivo')->useCurrent()->useCurrentOnUpdate();
+            $table->datetime('fecha_creacion_archivo')->useCurrent();
+            $table->datetime('fecha_actualizacion_archivo')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });

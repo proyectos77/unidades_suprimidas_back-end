@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('porcentaje_transferencia');
             $table->unsignedInteger('id_archivo');
             $table->foreign('id_archivo')->references('id_archivo')->on('archivo')->onDelete('cascade');
-            $table->timestamp('fecha_creacion_transferencia')->useCurrent();
-            $table->timestamp('fecha_actualizacion_transferencia')->useCurrent()->useCurrentOnUpdate();
+            $table->datetime('fecha_creacion_transferencia')->useCurrent();
+            $table->datetime('fecha_actualizacion_transferencia')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });

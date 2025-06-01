@@ -12,7 +12,7 @@ class DepartamentosModel extends Model
     use HasFactory;
 
     protected $table = 'departamentos';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $primaryKey = 'id_departamento';
 
     const CREATED_AT = 'fecha_creacion_departamento';
@@ -20,8 +20,6 @@ class DepartamentosModel extends Model
 
     protected $fillable = [
         'nombre_departamento',
-        'fecha_creacion_departamento',
-        'fecha_actualizacion_departamento',
         'id_estado'
     ];
 

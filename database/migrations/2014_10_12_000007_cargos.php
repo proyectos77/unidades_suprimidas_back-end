@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nombre_cargo');
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
-            $table->timestamp('fecha_creacion_cargo')->useCurrent();
-            $table->timestamp('fecha_actualizacion_cargo')->useCurrent()->useCurrentOnUpdate();
+            $table->datetime('fecha_creacion_cargo')->useCurrent();
+            $table->datetime('fecha_actualizacion_cargo')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

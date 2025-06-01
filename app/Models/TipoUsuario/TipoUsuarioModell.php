@@ -11,13 +11,12 @@ class TipoUsuarioModell extends Model
 
     protected $table = 'tipo_usuarios';
     protected $primaryKey = 'id_tipo_usuario';
+    public $timestamps = true;
     const CREATED_AT = 'fecha_creacion_tipo_usuario';
     const UPDATED_AT = 'fecha_actualizacion_tipo_usuario';
 
     protected $fillable = [
         'nombre_tipo_usuario',
         'id_estado',
-        'fecha_creacion_estado',
-        'fecha_actualizacion_estado',
     ];
 }

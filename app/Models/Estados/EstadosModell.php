@@ -11,6 +11,7 @@ class EstadosModell extends Model
 
     protected $table = 'estados';
     protected $primaryKey = 'id_estado';
+    public $timestamps = true;
     const CREATED_AT = 'fecha_creacion_estado';
     const UPDATED_AT = 'fecha_actualizacion_estado';
 
@@ -18,7 +19,5 @@ class EstadosModell extends Model
         'nombre_estado',
         'descripcion_estado',
         'estado',
-        'fecha_creacion_estado',
-        'fecha_actualizacion_estado',
     ];
 }

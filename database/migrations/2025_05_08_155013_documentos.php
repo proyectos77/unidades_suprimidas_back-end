@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('url_documento');
             $table->string('extension_documento');
             $table->string('tipo_documento');
-            $table->timestamp('fecha_creacion_documentos')->useCurrent();
-            $table->timestamp('fecha_actualizacion_documentos')->useCurrent()->useCurrentOnUpdate();
+            $table->datetime('fecha_creacion_documentos')->useCurrent();
+            $table->datetime('fecha_actualizacion_documentos')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });

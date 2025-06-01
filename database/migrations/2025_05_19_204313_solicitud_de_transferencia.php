@@ -24,8 +24,8 @@ return new class extends Migration
             $table->foreign('id_usuario_revisor_solicitud_transferencia')->references('id_usuario')->on('usuarios')->onDelete('cascade')->name('sol_trans_usuario_revisor_fk');
             $table->date('fecha_fin_solicitud_transferencia')->nullable();
             $table->string('observacion_solicitud_transferencia')->nullable();
-             $table->timestamp('fecha_creacion_solicitud_transferencia')->useCurrent();
-            $table->timestamp('fecha_actualizacion_solicitud_transferencia')->useCurrent()->useCurrentOnUpdate();
+            $table->datetime('fecha_creacion_solicitud_transferencia')->useCurrent();
+            $table->datetime('fecha_actualizacion_solicitud_transferencia')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade')->name('sol_trans_estado_general_fk');
         });

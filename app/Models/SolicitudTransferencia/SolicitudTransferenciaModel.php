@@ -10,7 +10,7 @@ class SolicitudTransferenciaModel extends Model
     use HasFactory;
 
         protected $table = 'solicitud_transferencias';
-        public $timestamps = false;
+        public $timestamps = true;
         protected $primaryKey = 'id_solicitud_transferencia';
 
         const CREATED_AT = 'fecha_creacion_solicitud_transferencia';

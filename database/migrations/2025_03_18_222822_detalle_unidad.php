@@ -23,8 +23,8 @@ return new class extends Migration
             $table->text('observacion_detalle');
             $table->unsignedInteger('id_unidad')->default(1);
             $table->foreign('id_unidad')->references('id_unidad')->on('unidades')->onDelete('cascade');
-            $table->timestamp('fecha_creacion_detalle')->useCurrent();
-            $table->timestamp('fecha_actualizacion_detalle')->useCurrent()->useCurrentOnUpdate();
+            $table->datetime('fecha_creacion_detalle')->useCurrent();
+            $table->datetime('fecha_actualizacion_detalle')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
 

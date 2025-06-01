@@ -16,8 +16,8 @@ return new class extends Migration
             $table->string('nombre_municipio');
             $table->unsignedInteger('id_departamento')->default(1);
             $table->foreign('id_departamento')->references('id_departamento')->on('departamentos')->onDelete('cascade');
-            $table->timestamp('fecha_creacion_municipio')->useCurrent();
-            $table->timestamp('fecha_actualizacion_municipio')->useCurrent()->useCurrentOnUpdate();
+            $table->datetime('fecha_creacion_municipio')->useCurrent();
+            $table->datetime('fecha_actualizacion_municipio')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });

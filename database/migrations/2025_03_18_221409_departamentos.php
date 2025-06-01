@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('departamentos', function (Blueprint $table) {
             $table->unsignedInteger('id_departamento')->autoIncrement();
             $table->string('nombre_departamento');
-            $table->timestamp('fecha_creacion_departamento')->useCurrent();
-            $table->timestamp('fecha_actualizacion_departamento')->useCurrent()->useCurrentOnUpdate();
+            $table->datetime('fecha_creacion_departamento')->useCurrent();
+            $table->datetime('fecha_actualizacion_departamento')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });

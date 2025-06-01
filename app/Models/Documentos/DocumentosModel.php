@@ -9,7 +9,7 @@ class DocumentosModel extends Model
 {
     use HasFactory;
     protected $table = 'documentos';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $primaryKey = 'id_documento';
 
     const CREATED_AT = 'fecha_creacion_documentos';
@@ -20,8 +20,6 @@ class DocumentosModel extends Model
         'nombre_documento',
         'url_documento',
         'extension_documento',
-        'fecha_creacion_documentos',
-        'fecha_actualizacion_documentos',
         'id_estado'
     ];
 }

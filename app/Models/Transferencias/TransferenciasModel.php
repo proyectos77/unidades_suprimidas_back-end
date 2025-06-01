@@ -11,6 +11,7 @@ class TransferenciasModel extends Model
 
     protected $table = 'transferencias';
     protected $primaryKey = 'id_transferencia';
+    public $timestamps = true;
     const CREATED_AT = 'fecha_creacion_transferencia';
     const UPDATED_AT = 'fecha_actualizacion_transferencia';
 
@@ -20,7 +21,5 @@ class TransferenciasModel extends Model
         'cantidad_folios_transferencia',
         'porcentaje_transferencia',
         'id_archivo',
-        'fecha_creacion_transferencia',
-        'fecha_actualizacion_transferencia'
     ];
 }

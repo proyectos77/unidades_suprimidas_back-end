@@ -11,13 +11,12 @@ class CargosModel extends Model
 
     protected $table = 'cargos';
     protected $primaryKey = 'id_cargo';
+    public $timestamps = true;
     const CREATED_AT = 'fecha_creacion_cargo';
     const UPDATED_AT = 'fecha_actualizacion_cargo';
 
     protected $fillable = [
         'nombre_cargo',
         'id_estado',
-        'fecha_creacion_estado',
-        'fecha_actualizacion_estado',
     ];
 }

@@ -12,7 +12,7 @@ class ArchivoModel extends Model
     use HasFactory;
 
     protected $table = 'archivo';
-    public $timestamps = false;
+    public $timestamps = true;
     protected $primaryKey = 'id_archivo';
 
     const CREATED_AT = 'fecha_creacion_archivo';
@@ -22,8 +22,6 @@ class ArchivoModel extends Model
         'numero_cajas_archivos',
         'numero_carpetas_archivo',
         'numero_folios_archivo',
-        'fecha_creacion_archivo',
-        'fecha_actualizacion_archivo',
         'anio_registro_archivo',
         'id_detalle',
         'id_estado'
