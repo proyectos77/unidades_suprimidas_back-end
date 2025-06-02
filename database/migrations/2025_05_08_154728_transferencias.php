@@ -16,6 +16,8 @@ return new class extends Migration
             $table->integer('cantidad_cajas_transferencia');
             $table->integer('cantidad_carpetas_transferencia');
             $table->integer('cantidad_folios_transferencia');
+            $table->integer('cantidad_tomos_transferencia')->nullable();
+            $table->integer('cantidad_otros_transferencia')->nullable();
             $table->string('porcentaje_transferencia');
             $table->unsignedInteger('id_archivo');
             $table->foreign('id_archivo')->references('id_archivo')->on('archivo')->onDelete('cascade');

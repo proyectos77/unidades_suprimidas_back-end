@@ -13,12 +13,14 @@ class registroArchivoUnidadServices
         try {
             $this->validarDetalle($dataRegistro['id_detalle']);
 
+            $this->validarAnio($dataRegistro['anio_registro_archivo'], $dataRegistro['id_detalle']);
+
             $archivo = ArchivoModel::create($dataRegistro->all());
 
             return Responses::success(200, 'Registro realizado', 'Se realizo el registro del archivo de la unidad', 'success', $archivo);
 
         } catch (\Exception $e) {
-            return Responses::error(500, 'Error de registro', 'Por favor intente mas tarde', $e->getMessage());
+            return Responses::error(500, 'Error de registro', $e->getMessage(), $e->getMessage());
         }
     }
 
@@ -30,6 +32,15 @@ class registroArchivoUnidadServices
         }
 
         return $detalle->id_detalle;
+    }
+
+    protected function validarAnio($anio, $idDetalle) {
+        $anio = ArchivoModel::where('anio_registro_archivo', $anio, )->where('id_detalle',  $idDetalle)->first();
+        if ($anio) {
+            throw new \Exception("El año ya existe en el archivo");
+        }
+
+        return $anio;
     }
 }
 

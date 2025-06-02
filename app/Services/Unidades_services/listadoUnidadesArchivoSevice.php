@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\DB;
                             ->from('transferencias')
                             ->join('solicitud_transferencias', 'transferencias.id_transferencia', '=', 'solicitud_transferencias.id_transferencia')
                             ->whereColumn('transferencias.id_archivo', 'archivo.id_archivo')
-                            ->where('solicitud_transferencias.estado_solicitud_transferencia', '!=6')
+                            ->where('solicitud_transferencias.estado_solicitud_transferencia', '!=5')
                             ->groupBy('transferencias.id_archivo')
                             ->havingRaw('SUM(transferencias.porcentaje_transferencia) < 100');
                     });

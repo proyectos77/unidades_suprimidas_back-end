@@ -23,6 +23,8 @@ class registroTransferenciaRequest extends FormRequest
             'cantidad_cajas'      => 'required|numeric',
             'cantidad_carpetas'   => 'required|numeric',
             'cantidad_folios'     => 'required|numeric',
+            'cantidad_tomos'      => 'nullable',
+            'cantidad_otros'      => 'nullable',
             'id_archivo'          => 'required|numeric',
             'documentos'          => 'required|array',
             'documentos.*'        => 'required|file|mimes:pdf,docx,jpg,png|max:10240' // máximo 10MB
@@ -35,6 +37,8 @@ class registroTransferenciaRequest extends FormRequest
             'cantidad_cajas_transferencia'      => $this->cantidad_cajas,
             'cantidad_carpetas_transferencia'   => $this->cantidad_carpetas,
             'cantidad_folios_transferencia'     => $this->cantidad_folios,
+            'cantidad_tomos_transferencia'      => $this->cantidad_tomos === 'null' ? null : $this->cantidad_tomos,
+            'cantidad_otros_transferencia'      => $this->cantidad_otros === 'null' ? null : $this->cantidad_otros,
             'id_archivo'                        => $this->id_archivo,
             'documentos'                        => $this->documentos,
 

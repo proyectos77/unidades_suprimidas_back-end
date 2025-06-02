@@ -42,7 +42,7 @@ use Illuminate\Support\Facades\DB;
                 return Responses::success(200, 'Registro', 'Registro de transferencia exitoso', 'success', $documentos);
             } catch (\Exception $e) {
                 DB::rollBack();
-                return Responses::error(500, 'Error', 'Error al realizar el registro', $e->getMessage());
+                return Responses::error(500, 'Error',  $e->getMessage(), $e->getMessage());
             }
 
         }

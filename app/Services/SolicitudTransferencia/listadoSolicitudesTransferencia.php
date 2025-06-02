@@ -3,13 +3,15 @@
     namespace App\Services\SolicitudTransferencia;
 
 use App\Http\Resources\SolicitudesTransferencias\solicitudesTransferenciasResource;
+use App\Http\Responses\Responses;
 use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
 
     class listadoSolicitudesTransferencia
     {
         public function getListadoSolicitudesTransferencias() {
 
-            $solicitudes = SolicitudTransferenciaModel::with([
+            try {
+                $solicitudes = SolicitudTransferenciaModel::with([
                 'estadoSolicitud',
                 'estado',
                 'usuarioSolicitante',
@@ -17,10 +19,11 @@ use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
                 'transferencia.archivo.detalleUnidad.unidad'
             ])->get();
 
-
             $data = new solicitudesTransferenciasResource($solicitudes);
+            return Responses::success(200, 'Consulta realizada', 'Consulta realizada con éxito','success', $data);
 
-            return $data;
-            /* return response()->json($solicitudes); */
+            } catch (\Exception $e) {
+                return Responses::error(500, 'Error en la consulta', 'Error al realizar la consulta', $e);
+            }
         }
     }
