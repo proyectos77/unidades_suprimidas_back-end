@@ -2,6 +2,7 @@
 
     namespace App\Services\SolicitudTransferencia;
 
+use App\Helpers\generalHelper;
 use App\Http\Resources\SolicitudesTransferencias\solicitudesTransferenciasResource;
 use App\Http\Responses\Responses;
 use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
@@ -17,10 +18,12 @@ use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
                 'usuarioSolicitante',
                 'usuarioRevisor',
                 'transferencia.archivo.detalleUnidad.unidad'
-            ])->get();
+            ])->paginate(10);
 
             $data = new solicitudesTransferenciasResource($solicitudes);
-            return Responses::success(200, 'Consulta realizada', 'Consulta realizada con éxito','success', $data);
+            $dataPaginacion = generalHelper::infoPagination($solicitudes->total(), $solicitudes->perPage(), $solicitudes->currentPage(), $solicitudes->lastPage());
+
+            return Responses::successListado(200, 'Consulta realizada', 'Consulta realizada con éxito', $data, $dataPaginacion);
 
             } catch (\Exception $e) {
                 return Responses::error(500, 'Error en la consulta', 'Error al realizar la consulta', $e);
