@@ -3,6 +3,7 @@
 namespace App\Models\Transferencias;
 
 use App\Models\Archivo\ArchivoModel;
+use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -28,4 +29,10 @@ class TransferenciasModel extends Model
     {
         return $this->belongsTo(ArchivoModel::class, 'id_archivo', 'id_archivo');
     }
+
+    public function solicitudes()
+    {
+        return $this->hasMany(SolicitudTransferenciaModel::class, 'id_transferencia', 'id_transferencia');
+    }
+
 }

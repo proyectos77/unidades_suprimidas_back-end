@@ -19,7 +19,7 @@ class listadoUnidadesResource extends ResourceCollection
                 'id_unidad'         => $unidades->id_unidad,
                 'nombre'            => $unidades->nombre_unidad,
                 'sigla'             => $unidades->sigla_unidad,
-                'padre'             => $unidades->padre_unidad,
+                'unidad_que_asume_archivo_unidad'             => $unidades->unidad_que_asume_archivo_unidad,
                 'departamento'      => $unidades->municipio->departamentos->nombre_departamento,
                 'idDepartamento'    => $unidades->municipio->departamentos->id_departamento,
                 'municipio'         => $unidades->municipio->nombre_municipio,

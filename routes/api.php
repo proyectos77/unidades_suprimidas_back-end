@@ -52,6 +52,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('anios', [utilController::class, 'listAnio']);
 
         Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'listArchivoPorUnidad']);
+        Route::get('archivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'archivoPorUnidad']);
 
         Route::apiResource('solicitudesTransferencias', SolicitudTransferencia::class);
 

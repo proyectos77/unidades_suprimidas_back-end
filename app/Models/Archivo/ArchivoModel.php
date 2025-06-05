@@ -4,6 +4,7 @@ namespace App\Models\Archivo;
 
 use App\Models\DetalleUnidad\DetalleUnidadModel;
 use App\Models\Estados\EstadosModell;
+use App\Models\Transferencias\TransferenciasModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -35,5 +36,10 @@ class ArchivoModel extends Model
 
     public function detalleUnidad() {
         return $this->hasOne(DetalleUnidadModel::class, 'id_detalle', 'id_detalle');
+    }
+
+    public function transferencias()
+    {
+        return $this->hasMany(TransferenciasModel::class, 'id_archivo', 'id_archivo');
     }
 }

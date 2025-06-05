@@ -55,7 +55,7 @@ class actualizarUnidadRequest extends FormRequest
         $data = [
             'nombre_unidad' => $this->nombre ?? null,
             'sigla_unidad' => $this->sigla ?? null,
-            'padre_unidad' => $this->padreUnidad ?? null,
+            'unidad_que_asume_archivo_unidad' => $this->padreUnidad ?? null,
             'id_municipio' => $this->idMunicipio ?? null,
             'id_estado'     => $this->estado ?? null
         ];
