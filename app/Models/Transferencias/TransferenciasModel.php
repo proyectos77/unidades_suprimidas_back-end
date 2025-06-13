@@ -21,6 +21,8 @@ class TransferenciasModel extends Model
         'cantidad_cajas_transferencia',
         'cantidad_carpetas_transferencia',
         'cantidad_folios_transferencia',
+        'cantidad_tomos_transferencia',
+        'cantidad_otros_transferencia',
         'porcentaje_transferencia',
         'id_archivo',
     ];

@@ -11,29 +11,23 @@ use Illuminate\Support\Facades\DB;
     {
         function gatAllUnidadesArchivo(){
     try {
-          $unidades = UnidadesModel::whereHas('detalleUnidad.archivo', function ($query) {
-                $query->where(function ($archivoQuery) {
-                    // No hay ninguna transferencia asociada al archivo
-                    $archivoQuery->whereNotExists(function ($sub1) {
-                        $sub1->select(DB::raw(1))
-                            ->from('transferencias')
-                            ->whereColumn('transferencias.id_archivo', 'archivo.id_archivo');
-                    });
+          $unidades = UnidadesModel::whereHas('detalleUnidad.archivo', function ($archivoQuery) {
+            $archivoQuery->where(function ($query) {
+                // Archivos SIN transferencias
+                $query->whereDoesntHave('transferencias');
 
-                    // O hay transferencias pero la suma de porcentaje es < 100
-                    $archivoQuery->orWhereExists(function ($sub2) {
-                        $sub2->select(DB::raw(1))
-                            ->from('transferencias')
-                            ->join('solicitud_transferencias', 'transferencias.id_transferencia', '=', 'solicitud_transferencias.id_transferencia')
-                            ->whereColumn('transferencias.id_archivo', 'archivo.id_archivo')
-                            ->where('solicitud_transferencias.estado_solicitud_transferencia', '!=5')
-                            ->groupBy('transferencias.id_archivo')
-                            ->havingRaw('SUM(transferencias.porcentaje_transferencia) < 100');
-                    });
+                // Archivos CON transferencias pero suma de porcentaje < 100 y estado != 5
+                $query->orWhereHas('transferencias', function ($q) {
+                    $q->join('solicitud_transferencias', 'transferencias.id_transferencia', '=', 'solicitud_transferencias.id_transferencia')
+                      ->where('solicitud_transferencias.estado_solicitud_transferencia', '!=', 5)
+                      ->select('transferencias.id_archivo')
+                      ->groupBy('transferencias.id_archivo')
+                      ->havingRaw('SUM(transferencias.porcentaje_transferencia) < 100');
                 });
-            })
-            ->with(['detalleUnidad.archivo'])
-            ->get();
+            });
+        })
+        ->with(['detalleUnidad.archivo'])
+        ->get();
 
             $data = new listSelectUnidadesConArchivoResource($unidades);
 

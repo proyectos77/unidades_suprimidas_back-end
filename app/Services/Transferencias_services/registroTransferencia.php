@@ -10,7 +10,6 @@ use App\Models\Transferencias\TransferenciasModel;
     {
         public function registroTransferencia($data){
 
-
                 $this->validarArchivo($data->id_archivo);
 
                 $data['porcentaje_transferencia'] =  $this->calcularPorcentaje($data->id_archivo, $data->cantidad_cajas, $data->cantidad_carpetas, $data->cantidad_folios, $data->cantidad_tomos, $data->cantidad_otros);
