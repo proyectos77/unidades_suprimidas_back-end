@@ -15,6 +15,8 @@ class DatabaseSeeder extends Seeder
             EstadoSeeder::class,
             TipoUsuarioSeeder::class,
             CargoSeeder::class,
+            Usuarios::class,
+            departamentosMunicipios::class
         ]);
     }
 }
