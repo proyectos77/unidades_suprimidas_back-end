@@ -27,6 +27,7 @@ class solicitudesTransferenciasResource extends ResourceCollection
                 'porcentajeTransferencia' => $solicitud->transferencia?->porcentaje_transferencia ?? null,
                 'anio' => $solicitud->transferencia?->archivo?->anio_registro_archivo ?? null,
                 'unidad' => $solicitud->transferencia?->archivo?->detalleUnidad?->unidad?->nombre_unidad ?? null,
+                'seccion' => $solicitud->transferencia?->seccion_transferencia
             ];
         })->toArray();
     }
