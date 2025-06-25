@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Departamentos\DepartamentosModel;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -50,7 +51,7 @@ class departamentosMunicipios extends Seeder
             'Vichada' => ['Puerto Carreño', 'Cumaribo', 'La Primavera', 'Santa Rosalía']
         ];
 
-        foreach ($departamentosMunicipios as $departamento => $municipios) {
+        /* foreach ($departamentosMunicipios as $departamento => $municipios) {
             $departamentoId = DB::table('departamentos')->insertGetId([
                 'nombre_departamento' => $departamento,
                 'id_estado' => 1,
@@ -67,8 +68,27 @@ class departamentosMunicipios extends Seeder
                     'fecha_actualizacion_municipio' => $now,
                 ]);
             }
+        } */
+
+        foreach ($departamentosMunicipios as $departamento => $municipios) {
+            $nuevo = new DepartamentosModel(); // 👈 Asegúrate que esté en singular
+            $nuevo->nombre_departamento = $departamento;
+            $nuevo->id_estado = 1;
+            $nuevo->fecha_creacion_departamento = $now;
+            $nuevo->fecha_actualizacion_departamento = $now;
+            $nuevo->save();
+
+            $departamentoId = $nuevo->id_departamento;
+
+            foreach ($municipios as $municipio) {
+                DB::table('municipios')->insert([
+                    'nombre_municipio' => $municipio,
+                    'id_departamento' => $departamentoId,
+                    'id_estado' => 1,
+                    'fecha_creacion_municipio' => $now,
+                    'fecha_actualizacion_municipio' => $now,
+                ]);
+            }
         }
     }
 }
-
-

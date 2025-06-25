@@ -21,6 +21,7 @@ class UnidadesModel extends Model
 
     protected $fillable = [
         'nombre_unidad',
+        'unidad_superior_jerarquicamente_unidad',
         'sigla_unidad',
         'unidad_que_asume_archivo_unidad',
         'id_municipio',

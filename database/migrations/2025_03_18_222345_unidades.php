@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('unidades', function (Blueprint $table) {
             $table->unsignedInteger('id_unidad')->autoIncrement();
             $table->string('nombre_unidad');
+            $table->string('unidad_superior_jerarquicamente_unidad');
             $table->string('sigla_unidad', 20);
             $table->string('unidad_que_asume_archivo_unidad');
             $table->unsignedInteger('id_municipio')->default(1);

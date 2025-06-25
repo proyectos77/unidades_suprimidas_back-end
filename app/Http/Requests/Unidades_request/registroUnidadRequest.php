@@ -26,6 +26,7 @@ class registroUnidadRequest extends FormRequest
     {
         return [
             'nombre'            => 'required|string',
+            'division'          => 'required|string',
             'sigla'             => 'required|unique:unidades,sigla_unidad',
             'unidad_que_asume'  => 'required|string',
             'idMunicipio'       => 'required|numeric',
@@ -35,10 +36,11 @@ class registroUnidadRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'nombre_unidad'                     => $this->nombre,
-            'sigla_unidad'                      => $this->sigla,
-            'unidad_que_asume_archivo_unidad'   => $this->unidad_que_asume,
-            'id_municipio'                      => $this->idMunicipio,
+            'nombre_unidad'                             => $this->nombre,
+            'unidad_superior_jerarquicamente_unidad'    => $this->division,
+            'sigla_unidad'                              => $this->sigla,
+            'unidad_que_asume_archivo_unidad'           => $this->unidad_que_asume,
+            'id_municipio'                              => $this->idMunicipio,
         ]);
     }
 

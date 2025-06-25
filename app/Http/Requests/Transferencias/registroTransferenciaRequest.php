@@ -21,9 +21,11 @@ class registroTransferenciaRequest extends FormRequest
     {
         return [
             'cantidad_cajas'      => 'required|numeric',
+            'seccion'            => 'required|string',
+            'serie'               => 'required|string',
+            'subserie'            => 'required|string',
             'cantidad_carpetas'   => 'required|numeric',
             'cantidad_folios'     => 'required|numeric',
-            'cantidad_tomos'      => 'nullable',
             'cantidad_otros'      => 'nullable',
             'id_archivo'          => 'required|numeric',
             'documentos'          => 'required|array',
@@ -35,9 +37,11 @@ class registroTransferenciaRequest extends FormRequest
     {
         $this->merge([
             'cantidad_cajas_transferencia'      => $this->cantidad_cajas,
+            'seccion_transferencia'             => $this->seccion,
+            'serie_transferencia'               => $this->serie,
+            'subserie_transferencia'            => $this->subserie,
             'cantidad_carpetas_transferencia'   => $this->cantidad_carpetas,
             'cantidad_folios_transferencia'     => $this->cantidad_folios,
-            'cantidad_tomos_transferencia'      => $this->cantidad_tomos === 'null' ? null : $this->cantidad_tomos,
             'cantidad_otros_transferencia'      => $this->cantidad_otros === 'null' ? null : $this->cantidad_otros,
             'id_archivo'                        => $this->id_archivo,
             'documentos'                        => $this->documentos,

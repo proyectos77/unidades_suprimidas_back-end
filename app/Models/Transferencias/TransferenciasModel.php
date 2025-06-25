@@ -18,6 +18,9 @@ class TransferenciasModel extends Model
     const UPDATED_AT = 'fecha_actualizacion_transferencia';
 
     protected $fillable = [
+        'seccion_transferencia',
+        'serie_transferencia',
+        'subserie_transferencia',
         'cantidad_cajas_transferencia',
         'cantidad_carpetas_transferencia',
         'cantidad_folios_transferencia',

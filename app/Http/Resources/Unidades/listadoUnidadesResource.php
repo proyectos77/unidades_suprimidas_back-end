@@ -18,6 +18,7 @@ class listadoUnidadesResource extends ResourceCollection
             return [
                 'id_unidad'         => $unidades->id_unidad,
                 'nombre'            => $unidades->nombre_unidad,
+                'unidad_superior_jerarquicamente'          => $unidades->unidad_superior_jerarquicamente_unidad,
                 'sigla'             => $unidades->sigla_unidad,
                 'unidad_que_asume_archivo_unidad'             => $unidades->unidad_que_asume_archivo_unidad,
                 'departamento'      => $unidades->municipio->departamentos->nombre_departamento,

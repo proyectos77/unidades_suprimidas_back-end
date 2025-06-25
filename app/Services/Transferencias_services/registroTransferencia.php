@@ -1,10 +1,9 @@
 <?php
 
     namespace App\Services\Transferencias_services;
-
-use App\Http\Responses\Responses;
-use App\Models\Archivo\ArchivoModel;
-use App\Models\Transferencias\TransferenciasModel;
+    use App\Http\Responses\Responses;
+    use App\Models\Archivo\ArchivoModel;
+    use App\Models\Transferencias\TransferenciasModel;
 
     class registroTransferencia
     {
@@ -12,7 +11,7 @@ use App\Models\Transferencias\TransferenciasModel;
 
                 $this->validarArchivo($data->id_archivo);
 
-                $data['porcentaje_transferencia'] =  $this->calcularPorcentaje($data->id_archivo, $data->cantidad_cajas, $data->cantidad_carpetas, $data->cantidad_folios, $data->cantidad_tomos, $data->cantidad_otros);
+                $data['porcentaje_transferencia'] =  $this->calcularPorcentaje($data->id_archivo, $data->cantidad_cajas, $data->cantidad_carpetas, $data->cantidad_folios, $data->cantidad_otros);
 
                 $registro = TransferenciasModel::create($data->all());
 
@@ -36,7 +35,7 @@ use App\Models\Transferencias\TransferenciasModel;
 
         }
 
-        private function calcularPorcentaje($idArchivo, $cantidadCajasTransferencia, $cantidadCarpetas, $cantidadFolios, $cantidadTomos, $cantidadOtros){
+        private function calcularPorcentaje($idArchivo, $cantidadCajasTransferencia, $cantidadCarpetas, $cantidadFolios, $cantidadOtros){
             $cantidades = ArchivoModel::find($idArchivo);
 
             $porcentaje = ($cantidadCajasTransferencia / $cantidades->numero_cajas_archivos) * 100;
@@ -45,11 +44,6 @@ use App\Models\Transferencias\TransferenciasModel;
                 $porcentaje > 100 ||
                 $cantidadCarpetas > $cantidades->numero_carpetas_archivo ||
                 $cantidadFolios > $cantidades->numero_folios_archivo ||
-                (
-                    !is_null($cantidades->numero_tomos_archivo) &&
-                    !is_null($cantidadTomos) &&
-                    $cantidadTomos > $cantidades->numero_tomos_archivo
-                ) ||
                 (
                     !is_null($cantidades->numero_otros_archivo) &&
                     !is_null($cantidadOtros) &&
