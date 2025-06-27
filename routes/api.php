@@ -54,6 +54,9 @@ use Illuminate\Support\Facades\Route;
         Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'listArchivoPorUnidad']);
         Route::get('archivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'archivoPorUnidad']);
 
+        Route::get('listadoTransferenciasPorArchivo/{idArchivo}', [transferenciasController::class, 'listadoTransferenciaPorArchivo']);
+
+
         Route::apiResource('solicitudesTransferencias', SolicitudTransferencia::class);
 
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);

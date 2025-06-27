@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Transferencias;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Transferencias\registroTransferenciaRequest;
+use App\Services\Transferencias_services\listadoTransferenciasPorArchivoService;
 use App\Services\Transferencias_services\registroTransferencia;
 use App\Services\Transferencias_services\registroTransferenciaCompleto;
 use Illuminate\Http\Request;
@@ -12,10 +13,12 @@ class transferenciasController extends Controller
 {
 
     private $registroTransferencia;
+    private $listadoDeTransferencias;
 
-    public function __construct(registroTransferenciaCompleto $registroTransferencia)
+    public function __construct(registroTransferenciaCompleto $registroTransferencia, listadoTransferenciasPorArchivoService $listadoTransferencias)
     {
         $this->registroTransferencia = $registroTransferencia;
+        $this->listadoDeTransferencias = $listadoTransferencias;
     }
 
     public function index(){
@@ -37,5 +40,9 @@ class transferenciasController extends Controller
 
     public function destroy(string $id){
         //
+    }
+
+    public function listadoTransferenciaPorArchivo($idArchivo){
+        return $this->listadoDeTransferencias->getAllTransferencias($idArchivo);
     }
 }
