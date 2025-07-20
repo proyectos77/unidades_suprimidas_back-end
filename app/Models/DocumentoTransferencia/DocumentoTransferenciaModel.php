@@ -2,6 +2,7 @@
 
 namespace App\Models\DocumentoTransferencia;
 
+use App\Models\Documentos\DocumentosModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,4 +18,8 @@ class DocumentoTransferenciaModel extends Model
         'id_transferencia',
         'id_estado'
     ];
+
+    public function documento(){
+        return $this->belongsTo(DocumentosModel::class, 'id_documento', 'id_documento');
+    }
 }

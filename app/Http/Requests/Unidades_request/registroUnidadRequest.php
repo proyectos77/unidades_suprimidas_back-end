@@ -30,6 +30,7 @@ class registroUnidadRequest extends FormRequest
             'sigla'             => 'required|unique:unidades,sigla_unidad',
             'unidad_que_asume'  => 'required|string',
             'idMunicipio'       => 'required|numeric',
+            'estado'            => 'sometimes|boolean',
         ];
     }
 
@@ -41,6 +42,7 @@ class registroUnidadRequest extends FormRequest
             'sigla_unidad'                              => $this->sigla,
             'unidad_que_asume_archivo_unidad'           => $this->unidad_que_asume,
             'id_municipio'                              => $this->idMunicipio,
+            'id_estado'                                 => $this->estado == false ? 1 : 6,
         ]);
     }
 

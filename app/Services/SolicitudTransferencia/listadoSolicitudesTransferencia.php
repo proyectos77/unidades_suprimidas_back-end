@@ -17,8 +17,11 @@ use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
                 'estado',
                 'usuarioSolicitante',
                 'usuarioRevisor',
-                'transferencia.archivo.detalleUnidad.unidad'
+                'transferencia.archivo.detalleUnidad.unidad',
+                'transferencia.detalleTransferencias'
             ])->paginate(10);
+
+            /* return response()->json($solicitudes); */
 
             $data = new solicitudesTransferenciasResource($solicitudes);
             $dataPaginacion = generalHelper::infoPagination($solicitudes->total(), $solicitudes->perPage(), $solicitudes->currentPage(), $solicitudes->lastPage());

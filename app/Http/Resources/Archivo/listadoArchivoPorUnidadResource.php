@@ -32,17 +32,21 @@ class listadoArchivoPorUnidadResource extends ResourceCollection
                 ];
 
                 foreach ($archivo->transferencias as $transferencia) {
-                    $tieneSolicitudAprobada = collect($transferencia->solicitudes)->contains(fn($solicitud) => $solicitud['estado_solicitud_transferencia'] == 4);
+                    $tieneSolicitudAprobada = collect($transferencia->solicitudes)
+                        ->contains(fn($solicitud) => $solicitud['estado_solicitud_transferencia'] == 4);
 
                     if ($tieneSolicitudAprobada) {
-                        $transferenciaStats['cantidad_cajas_transferencia'] += $transferencia->cantidad_cajas_transferencia ?? 0;
-                        $transferenciaStats['cantidad_carpetas_transferencia'] += $transferencia->cantidad_carpetas_transferencia ?? 0;
-                        $transferenciaStats['cantidad_folios_transferencia'] += $transferencia->cantidad_folios_transferencia ?? 0;
-                        $transferenciaStats['porcentaje_transferencia'] += (float)$transferencia->porcentaje_transferencia ?? 0;
-                        $transferenciaStats['cantidad_tomos_transferencia'] += $transferencia->cantidad_tomos_transferencia ?? 0; // Asumiendo que tomos se relaciona con cajas
-                        $transferenciaStats['cantidad_otros_transferencia'] += $transferencia->cantidad_otros_transferencia ?? 0; // Asumiendo que otros se relaciona con carpetas
+                        foreach ($transferencia->detalleTransferencias as $detalle) {
+                            $transferenciaStats['cantidad_cajas_transferencia']      += $detalle->cantidad_cajas_detalle_transferencia ?? 0;
+                            $transferenciaStats['cantidad_carpetas_transferencia']   += $detalle->cantidad_carpetas_detalle_transferencia ?? 0;
+                            $transferenciaStats['cantidad_folios_transferencia']     += $detalle->cantidad_folios_detalle_transferencia ?? 0;
+                            $transferenciaStats['porcentaje_transferencia']          += (float)$detalle->porcentaje_detalle_transferencia ?? 0;
+                            $transferenciaStats['cantidad_tomos_transferencia']      += $detalle->cantidad_tomos_detalle_transferencia ?? 0;
+                            $transferenciaStats['cantidad_otros_transferencia']      += $detalle->cantidad_otros_detalle_transferencia ?? 0;
+                        }
                     }
                 }
+
 
                 $faltante = [
                     'cantidad_cajas_faltante' => $archivo->numero_cajas_archivos - $transferenciaStats['cantidad_cajas_transferencia'],

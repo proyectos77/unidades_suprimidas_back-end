@@ -3,28 +3,27 @@
 namespace App\Http\Controllers\SolicitudTransferencia;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SolicitudTransferencia\actualizarSolicitudRequest;
+use App\Services\SolicitudTransferencia\actualizarSolicitudTransferenciaService;
+use App\Services\SolicitudTransferencia\getInformacionSolicitudTransferencia;
 use App\Services\SolicitudTransferencia\listadoSolicitudesTransferencia;
 use Illuminate\Http\Request;
 
 class SolicitudTransferencia extends Controller
 {
     private $listadoSolicitudes;
+    private $actualizarSolicitud;
+    private $informacionSolicitud;
 
-    public function __construct(listadoSolicitudesTransferencia $listadoSolicitudes) {
+    public function __construct(listadoSolicitudesTransferencia $listadoSolicitudes, actualizarSolicitudTransferenciaService $actualizarSolicitud, getInformacionSolicitudTransferencia $informacionSolicitud) {
         $this->listadoSolicitudes = $listadoSolicitudes;
+        $this->actualizarSolicitud = $actualizarSolicitud;
+        $this->informacionSolicitud = $informacionSolicitud;
     }
 
     public function index()
     {
         return $this->listadoSolicitudes->getListadoSolicitudesTransferencias();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -38,25 +37,17 @@ class SolicitudTransferencia extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function show(string $id){
+        return $this->informacionSolicitud->getInformacion($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function update(actualizarSolicitudRequest $request, string $id){
+        return $this->actualizarSolicitud->actualizarSolicitud($request->all(), $id);
     }
 
     /**

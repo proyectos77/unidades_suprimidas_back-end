@@ -13,5 +13,15 @@ class TipoUsuarioSeeder extends Seeder
             'nombre_tipo_usuario' => 'superUsuario',
             'id_estado' => 1 // O el ID del estado correcto en la base de datos
         ]);
+
+         TipoUsuarioModell::create([
+            'nombre_tipo_usuario' => 'User',
+            'id_estado' => 1 // O el ID del estado correcto en la base de datos
+        ]);
+
+         TipoUsuarioModell::create([
+            'nombre_tipo_usuario' => 'Supervisor',
+            'id_estado' => 1 // O el ID del estado correcto en la base de datos
+        ]);
     }
 }

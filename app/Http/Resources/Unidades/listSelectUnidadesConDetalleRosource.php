@@ -17,7 +17,8 @@ class listSelectUnidadesConDetalleRosource extends ResourceCollection
         return $this->collection->map(function($unidades){
             return [
                 'id_detalle_unidad' => $unidades->detalleUnidad->id_detalle,
-                'nombre_unidad'     => $unidades->nombre_unidad
+                'nombre_unidad'     => $unidades->nombre_unidad,
+                'estado_unidad'   => $unidades->id_estado,
             ];
         })->toArray();
     }

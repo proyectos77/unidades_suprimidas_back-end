@@ -20,59 +20,58 @@ class registroTransferenciaRequest extends FormRequest
      public function rules(): array
     {
         return [
-            'cantidad_cajas'      => 'required|numeric',
-            'seccion'            => 'required|string',
-            'serie'               => 'required|string',
-            'subserie'            => 'required|string',
-            'cantidad_carpetas'   => 'required|numeric',
-            'cantidad_folios'     => 'required|numeric',
-            'cantidad_otros'      => 'nullable',
-            'id_archivo'          => 'required|numeric',
-            'documentos'          => 'required|array',
-            'documentos.*'        => 'required|file|mimes:pdf,docx,jpg,png|max:10240' // máximo 10MB
+            'transferencia.*.id_archivo' => 'required|numeric',
+
+            'detalles' => 'required|array|min:1',
+            'detalles.*.seccion'           => 'required|string',
+            'detalles.*.serie'             => 'required|string',
+            'detalles.*.subserie'          => 'required|string',
+            'detalles.*.cantidad_cajas'    => 'required|numeric',
+            'detalles.*.cantidad_carpetas' => 'required|numeric',
+            'detalles.*.cantidad_folios'   => 'required|numeric',
+            'detalles.*.cantidad_otros'    => 'nullable|numeric',
+
+            'documentos' => 'required|array|min:1',
+            'documentos.*' => 'required|file|mimes:pdf,docx,jpg,png|max:10240',
         ];
     }
 
     protected function prepareForValidation()
     {
-        $this->merge([
-            'cantidad_cajas_transferencia'      => $this->cantidad_cajas,
-            'seccion_transferencia'             => $this->seccion,
-            'serie_transferencia'               => $this->serie,
-            'subserie_transferencia'            => $this->subserie,
-            'cantidad_carpetas_transferencia'   => $this->cantidad_carpetas,
-            'cantidad_folios_transferencia'     => $this->cantidad_folios,
-            'cantidad_otros_transferencia'      => $this->cantidad_otros === 'null' ? null : $this->cantidad_otros,
-            'id_archivo'                        => $this->id_archivo,
-            'documentos'                        => $this->documentos,
-
-        ]);
+        // Si "detalles" viene como string JSON, lo decodificamos
+        if (is_string($this->detalles)) {
+            $this->merge([
+                'detalles' => json_decode($this->detalles, true),
+            ]);
+        }
     }
 
     public function messages()
     {
         return [
-            'cantidad_cajas.required'      => 'El atributo cantidad_cajas es requerido',
-            'cantidad_cajas.numeric'       => 'El atributo cantidad_cajas solo acepta números',
+            'id_archivo.required' => 'El campo id_archivo es obligatorio.',
+            'id_archivo.numeric' => 'El campo id_archivo debe ser numérico.',
 
-            'cantidad_carpetas.required'   => 'El atributo cantidad_carpetas es requerido',
-            'cantidad_carpetas.numeric'    => 'El atributo cantidad_carpetas solo acepta números',
+            'detalles.required' => 'Debe proporcionar al menos un detalle de transferencia.',
+            'detalles.*.seccion.required' => 'Cada detalle debe incluir una sección.',
+            'detalles.*.serie.required' => 'Cada detalle debe incluir una serie.',
+            'detalles.*.subserie.required' => 'Cada detalle debe incluir una subserie.',
+            'detalles.*.cantidad_cajas.required' => 'Cada detalle debe tener cantidad de cajas.',
+            'detalles.*.cantidad_carpetas.required' => 'Cada detalle debe tener cantidad de carpetas.',
+            'detalles.*.cantidad_folios.required' => 'Cada detalle debe tener cantidad de folios.',
 
-            'cantidad_folios.required'     => 'El atributo cantidad_folios es requerido',
-            'cantidad_folios.numeric'      => 'El atributo cantidad_folios solo acepta números',
-
-            'id_archivo.required'          => 'El atributo id_archivo es requerido',
-            'id_archivo.numeric'           => 'El atributo id_archivo solo acepta números',
-
-            'documentos.required'           => 'El atributo documentos es requerido',
+            'documentos.required' => 'Debe adjuntar al menos un documento.',
+            'documentos.*.file' => 'Cada documento debe ser un archivo válido.',
+            'documentos.*.mimes' => 'Los documentos deben ser pdf, docx, jpg o png.',
+            'documentos.*.max' => 'Cada archivo no debe superar los 10 MB.',
         ];
     }
 
-    public function failedValidation(Validator $validator) {
-
+    public function failedValidation(Validator $validator)
+    {
         $errores = $validator->errors()->all();
         $erroresTexto = implode(', ', $errores);
-        $response = Responses::warning(422, 'Error de validaciones', $erroresTexto,  $validator->errors());
+        $response = Responses::warning(422, 'Error de validaciones', $erroresTexto, $validator->errors());
 
         throw new HttpResponseException($response);
     }

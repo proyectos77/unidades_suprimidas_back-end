@@ -12,7 +12,7 @@ use App\Models\Transferencias\TransferenciasModel;
         function getAllTransferencias($idArchivo) {
 
             try {
-                $transferencias = TransferenciasModel::where('id_archivo', $idArchivo)->whereHas('solicitudes', function ($query) {
+                $transferencias = TransferenciasModel::with('detalleTransferencias')->where('id_archivo', $idArchivo)->whereHas('solicitudes', function ($query) {
                     $query->where('estado_solicitud_transferencia', 4);
                 })->paginate(10);
 

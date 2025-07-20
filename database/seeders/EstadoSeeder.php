@@ -38,5 +38,11 @@ class EstadoSeeder extends Seeder
             'descripcion_estado' => 'Solicitud rechazada por el revisor',
             'estado' => '0',
         ]);
+
+        EstadosModell::create([
+            'nombre_estado' => 'Suprimida',
+            'descripcion_estado' => 'Unidad Suprimida',
+            'estado' => '0',
+        ]);
     }
 }

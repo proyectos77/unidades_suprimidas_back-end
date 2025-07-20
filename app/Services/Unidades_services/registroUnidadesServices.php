@@ -10,7 +10,6 @@ use App\Models\Unidades\UnidadesModel;
     {
         public function registroUnidad($request) {
             DB::beginTransaction();
-
             try {
                 $unidad = UnidadesModel::create($request->all());
                 DB::commit();
