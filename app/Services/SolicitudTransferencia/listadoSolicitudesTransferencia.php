@@ -9,17 +9,25 @@ use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
 
     class listadoSolicitudesTransferencia
     {
-        public function getListadoSolicitudesTransferencias() {
+        public function getListadoSolicitudesTransferencias($idUsuario, $idTipoUsuario) {
 
             try {
-                $solicitudes = SolicitudTransferenciaModel::with([
-                'estadoSolicitud',
-                'estado',
-                'usuarioSolicitante',
-                'usuarioRevisor',
-                'transferencia.archivo.detalleUnidad.unidad',
-                'transferencia.detalleTransferencias'
-            ])->paginate(10);
+
+                $query = SolicitudTransferenciaModel::with([
+                    'estadoSolicitud',
+                    'estado',
+                    'usuarioSolicitante',
+                    'usuarioRevisor',
+                    'transferencia.archivo.detalleUnidad.unidad',
+                    'transferencia.detalleTransferencias'
+                ]);
+
+                if ($idTipoUsuario == 2) {
+                    $query->where('id_usuario_solicitante_solicitud_transferencia', $idUsuario);
+                }
+
+                $query->orderBy('id_solicitud_transferencia', 'desc');
+                $solicitudes = $query->paginate(10);
 
             /* return response()->json($solicitudes); */
 

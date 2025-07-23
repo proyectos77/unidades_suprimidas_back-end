@@ -23,7 +23,7 @@ class SolicitudTransferencia extends Controller
 
     public function index()
     {
-        return $this->listadoSolicitudes->getListadoSolicitudesTransferencias();
+
     }
 
     /**
@@ -56,5 +56,9 @@ class SolicitudTransferencia extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function listadoDeSolicitudesPorUsuario(String $idUsuario, String $idTipoUsuario) {
+        return $this->listadoSolicitudes->getListadoSolicitudesTransferencias($idUsuario, $idTipoUsuario);
     }
 }

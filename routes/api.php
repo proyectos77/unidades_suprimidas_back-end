@@ -61,6 +61,7 @@ use Illuminate\Support\Facades\Route;
 
 
         Route::apiResource('solicitudesTransferencias', SolicitudTransferencia::class);
+        Route::get('listadoSolicitudes/{idUsuario}/{idTipoUsuario}', [SolicitudTransferencia::class, 'listadoDeSolicitudesPorUsuario']);
 
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
 
