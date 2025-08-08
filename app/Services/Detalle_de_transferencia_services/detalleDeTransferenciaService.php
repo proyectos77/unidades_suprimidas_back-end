@@ -17,7 +17,7 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
 
                     $data['porcentaje_detalle_transferencia'] =  $this->calcularPorcentaje($transferencia->id_transferencia, $archivo, $value
                     ['cantidad_cajas'], $value['cantidad_carpetas'], $value['cantidad_folios'],
-                    $value['cantidad_otros']);
+                    $value['cantidad_otros'], $value['cantidad_tomos']);
 
                     /* var_dump($data['porcentaje_detalle_transferencia']);die(); */
                     $data['id_transferencia'] = $transferencia->id_transferencia;
@@ -31,6 +31,7 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
                         'cantidad_carpetas_detalle_transferencia' => $value['cantidad_carpetas'] ?? 0,
                         'cantidad_folios_detalle_transferencia' => $value['cantidad_folios'] ?? 0,
                         'cantidad_otros_detalle_transferencia' => $value['cantidad_otros'] ?? 0,
+                        'cantidad_tomos_detalle_transferencia' => $value['cantidad_tomos'] ?? 0,
                         'porcentaje_detalle_transferencia'     => $data['porcentaje_detalle_transferencia'] ?? 0,
                     ]);
 
@@ -57,7 +58,7 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
             return $archivo;
         }
 
-        private function calcularPorcentaje($idTransferencia, $cantidades, $cantidadCajasTransferencia, $cantidadCarpetas, $cantidadFolios, $cantidadOtros){
+        private function calcularPorcentaje($idTransferencia, $cantidades, $cantidadCajasTransferencia, $cantidadCarpetas, $cantidadFolios, $cantidadOtros, $cantidadTomos){
             // 1. Validar Cajas y calcular porcentaje, manejando la división por cero.
             $solicitudes = DetalleTransferenciaModel::where('id_transferencia', $idTransferencia)->get();
 
@@ -65,6 +66,7 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
             $totalCarpetas = $solicitudes->sum('cantidad_carpetas_transferencia');
             $totalFolios = $solicitudes->sum('cantidad_folios_transferencia');
             $totalOtros = $solicitudes->sum('cantidad_otros_transferencia');
+            $totalTomos = $solicitudes->sum('cantidad_tomos_transferencia');
 
              $sumaTransferida = $cantidadCajasTransferencia + $cantidadCarpetas + $cantidadFolios + $cantidadOtros;
 
@@ -90,6 +92,11 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
             // 4. Validar Otros (solo si ambos valores existen)
             if (!is_null($cantidades->numero_otros_archivo) && !is_null($cantidadOtros) && ($cantidadOtros + $totalOtros) > $cantidades->numero_otros_archivo) {
                 throw new \Exception("La cantidad de 'otros' ({$cantidadOtros}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de 'otros' ({$cantidades->numero_otros_archivo}).");
+            }
+
+            // 5. Validar Tomos (solo si ambos valores existen)
+            if (!is_null($cantidades->numero_tomos_archivo) && !is_null($cantidadTomos) && ($cantidadTomos + $totalTomos) > $cantidades->numero_tomos_archivo) {
+                throw new \Exception("La cantidad de 'tomos' ({$cantidadTomos}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de 'tomos' ({$cantidades->numero_tomos_archivo}).");
             }
 
             return round($porcentajeTotal, 2);

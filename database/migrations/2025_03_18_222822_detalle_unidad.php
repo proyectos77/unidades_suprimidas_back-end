@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('detalle_unidad', function (Blueprint $table) {
             $table->unsignedInteger('id_detalle')->autoIncrement();
-            $table->string('acto_administrativo_creacion_detalle', 100);
-            $table->string('acto_administrativo_desactivacion_detalle', 100);
+            $table->text('acto_administrativo_creacion_detalle');
+            $table->text('acto_administrativo_desactivacion_detalle');
             $table->date('fecha_creacion_unidad_detalle');
             $table->date('fecha_desactivacion_unidad_detalle');
-            $table->string('puesto_mando_adelantado_detalle');
-            $table->string('puesto_mando_atrasado_detalle');
-            $table->string('plan_reorganizacion_diorg_detalle');
+            $table->string('puesto_mando_adelantado_detalle')->nullable();
+            $table->string('puesto_mando_atrasado_detalle')->nullable();
+            $table->text('plan_reorganizacion_diorg_detalle');
             $table->text('observacion_detalle');
             $table->unsignedInteger('id_unidad')->default(1);
             $table->foreign('id_unidad')->references('id_unidad')->on('unidades')->onDelete('cascade');

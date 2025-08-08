@@ -29,6 +29,7 @@ class registroArchivoRequest extends FormRequest
             'numero_carpetas'       => 'required|unique:unidades,sigla_unidad',
             'numero_folio'          => 'required|integer',
             'otros'                 => 'nullable|integer',
+            'tomos'                 => 'nullable|integer',
             'anio_registro_archivo' => 'required|integer',
             'id_detalle'            => 'required|integer'
         ];
@@ -41,6 +42,7 @@ class registroArchivoRequest extends FormRequest
             'numero_carpetas_archivo'   => $this->numero_carpetas,
             'numero_folios_archivo'     => $this->numero_folio,
             'numero_otros_archivo'      => $this->otros,
+            'numero_tomos_archivo'      => $this->tomos,
             'anio_registro_archivo'     => $this->anio_registro_archivo,
         ]);
     }
@@ -62,6 +64,10 @@ class registroArchivoRequest extends FormRequest
 
             'anio_registro_archivo.integer'     => 'El atributo año solo acepta numeros',
             'anio_registro_archivo.required'    => 'El atributo año es requerido',
+
+            'otros.integer'                     => 'El atributo otros solo acepta numeros',
+            'tomos.integer'                     => 'El atributo tomos solo acepta numeros',
+
         ];
     }
 

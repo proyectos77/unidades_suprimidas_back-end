@@ -28,6 +28,7 @@ class DetalleTransferenciaModel extends Model
         'cantidad_tomos_detalle_transferencia',
         'cantidad_otros_detalle_transferencia',
         'porcentaje_detalle_transferencia',
+        'id_estado',
 
     ];
 
