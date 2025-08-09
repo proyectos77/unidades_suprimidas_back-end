@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 
             try {
                 $detalleValidado = $this->validarDetalleUnidad($id);
+                /* var_dump($detalleValidado);die(); */
                 $detalleValidado->fill($request->all());
                 $detalleValidado->save();
 

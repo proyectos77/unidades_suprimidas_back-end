@@ -4,6 +4,7 @@ use App\Http\Controllers\Archivo\ArchivoController;
 use App\Http\Controllers\Auth\authController;
 use App\Http\Controllers\Cargos\CargosController;
 use App\Http\Controllers\Departamentos\departamentosController;
+use App\Http\Controllers\Dependencias\DependenciasController;
 use App\Http\Controllers\DetalleTransferencia\detalleTransferenciaController;
 use App\Http\Controllers\DetalleUnidad\DetalleUnidadController;
 use App\Http\Controllers\Documentos\documentoController;
@@ -44,32 +45,32 @@ use Illuminate\Support\Facades\Route;
         Route::apiResource('cargos', CargosController::class); //tipoUsuarios
 
         Route::apiResource('unidades', unidadesController::class);
-        Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
-        Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
-        Route::get('selectUnidadesArchivo', [unidadesController::class, 'selectListUnidadesArchivo']);
+
+        Route::apiResource('solicitudesTransferencias', SolicitudTransferencia::class);
 
         Route::apiResource('detalleUnidad', DetalleUnidadController::class);
 
         Route::apiResource('registroArchivo', ArchivoController::class);
 
-        Route::get('anios', [utilController::class, 'listAnio']);
+        Route::apiResource('detalleTransferencia', detalleTransferenciaController::class);
 
+        Route::apiResource('documentosTransferencia', documentosTransferenciaController::class);
+
+        Route::apiResource('documento', documentoController::class);
+
+        Route::apiResource('dependencias', DependenciasController::class);
+
+        Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
+        Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
+        Route::get('selectUnidadesArchivo', [unidadesController::class, 'selectListUnidadesArchivo']);
+        Route::get('anios', [utilController::class, 'listAnio']);
         Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'listArchivoPorUnidad']);
         Route::get('archivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'archivoPorUnidad']);
-
         Route::get('listadoTransferenciasPorArchivo/{idArchivo}', [transferenciasController::class, 'listadoTransferenciaPorArchivo']);
-
-
-        Route::apiResource('solicitudesTransferencias', SolicitudTransferencia::class);
         Route::get('listadoSolicitudes/{idUsuario}/{idTipoUsuario}', [SolicitudTransferencia::class, 'listadoDeSolicitudesPorUsuario']);
-
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
-
         Route::get('municipios/{idDepartamento}', [municipiosController::class, 'getAllMunicipios']);
 
-        Route::apiResource('detalleTransferencia', detalleTransferenciaController::class);
-        Route::apiResource('documentosTransferencia', documentosTransferenciaController::class);
-        Route::apiResource('documento', documentoController::class);
 
         Route::middleware('auth:sanctum')->group(function () {
             Route::get('logout', [authController::class, 'logout']);

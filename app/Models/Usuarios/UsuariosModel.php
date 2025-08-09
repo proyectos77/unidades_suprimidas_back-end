@@ -29,7 +29,8 @@ class UsuariosModel extends Authenticatable
         'password_usuario',
         'id_tipo_usuario',
         'id_cargo',
-        'id_estado'
+        'id_estado',
+        'id_dependencia',
     ];
 
     /**
