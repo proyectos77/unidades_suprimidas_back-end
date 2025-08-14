@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Archivo;
+namespace App\Http\Requests\Archivos_request;
 
 use App\Http\Responses\Responses;
 use Illuminate\Contracts\Validation\Validator;

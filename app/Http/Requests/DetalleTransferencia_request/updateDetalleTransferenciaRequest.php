@@ -1,21 +1,20 @@
 <?php
 
-namespace App\Http\Requests\DetalleTransferencia;
+namespace App\Http\Requests\DetalleTransferencia_request;
 
 use App\Http\Responses\Responses;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class updateDetalleTransferenciaResource extends FormRequest
+class updateDetalleTransferenciaRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
-     public function rules(): array
+    public function rules(): array
     {
         $metodo = $this->method();
-
         if ($metodo == 'PATCH') {
             return [
                 'estado' => 'required|integer',
@@ -27,7 +26,7 @@ class updateDetalleTransferenciaResource extends FormRequest
                 'otros' => 'sometimes|integer',
                 'folios' => 'sometimes|integer',
             ];
-        }elseif ($metodo == 'PUT') {
+        } elseif ($metodo == 'PUT') {
             return [
                 'seccion'       => 'required|string',
                 'serie'         => 'required|string',
@@ -39,9 +38,7 @@ class updateDetalleTransferenciaResource extends FormRequest
                 'estado'        => 'sometimes|integer',
             ];
         }
-
-
-
+        return [];
     }
 
     protected function prepareForValidation()

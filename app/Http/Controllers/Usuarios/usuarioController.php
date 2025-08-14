@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Usuarios;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Request\Usuarios_requests\actualizarUsuarioRequest;
-use App\Http\Requests\Request\Usuarios_requests\registroUsuarioRequest;
+use App\Http\Requests\Usuarios_requests\actualizarUsuarioRequest;
+use App\Http\Requests\Usuarios_requests\registroUsuarioRequest;
 use App\Services\Usuarios_services\ActualizarUsuariosServices;
 use App\Services\Usuarios_services\listadoUsuarios;
 use App\Services\Usuarios_services\registroUsuarioServices;

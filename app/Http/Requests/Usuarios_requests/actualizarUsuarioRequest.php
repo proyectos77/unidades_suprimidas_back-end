@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Request\Usuarios_requests;
+namespace App\Http\Requests\Usuarios_requests;
 
 use App\Http\Responses\Responses;
 use Illuminate\Contracts\Validation\Validator;
@@ -20,23 +20,18 @@ class actualizarUsuarioRequest extends FormRequest
 
     public function rules(): array
     {
-
-
         $id = request()->route('usuario'); // Capturar el ID de la ruta
-        /* dd($id); */
-
         $method = $this->method();
-
         if ($method === 'PUT') {
             return [
                 'nombre'            => 'required|string',
                 'user'              => 'required|unique:usuarios,user_usuario,' . $id . ',id_usuario',
-                'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario,' . $id . ', id_usuario',
+                'identificacion'    => 'required|numeric|unique:usuarios,identificacion_usuario,' . $id . ',id_usuario',
                 'emailUsuario'      => 'required|email|unique:usuarios,email_usuario,' . $id . ',id_usuario',
                 'tipoUsuario'       => 'required|numeric',
                 'cargo'             => 'required|numeric',
             ];
-        }elseif ($method === 'PATCH') {
+        } elseif ($method === 'PATCH') {
             return [
                 'nombre'            => 'sometimes|string',
                 'user'              => 'sometimes|unique:usuarios,user_usuario,' . $id . ',id_usuario',
@@ -47,7 +42,7 @@ class actualizarUsuarioRequest extends FormRequest
                 'estado'            => 'sometimes|numeric'
             ];
         }
-
+        return [];
     }
 
     protected function prepareForValidation()

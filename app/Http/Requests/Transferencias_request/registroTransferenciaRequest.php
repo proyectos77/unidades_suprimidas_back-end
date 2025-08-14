@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Transferencias;
+namespace App\Http\Requests\Transferencias_request;
 
 use App\Http\Responses\Responses;
 use Illuminate\Contracts\Validation\Validator;

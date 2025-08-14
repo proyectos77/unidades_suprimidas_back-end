@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\SolicitudTransferencia;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SolicitudTransferencia\actualizarSolicitudRequest;
+use App\Http\Requests\SolicitudTransferencia_request\actualizarSolicitudRequest;
 use App\Services\SolicitudTransferencia\actualizarSolicitudTransferenciaService;
 use App\Services\SolicitudTransferencia\getInformacionSolicitudTransferencia;
 use App\Services\SolicitudTransferencia\listadoSolicitudesTransferencia;

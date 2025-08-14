@@ -2,7 +2,7 @@
 
     namespace App\Services\Usuarios_services;
 
-    use App\Http\Requests\Request\Usuarios_requests\registroUsuarioRequest;
+    use App\Http\Requests\Usuarios_requests\registroUsuarioRequest;
     use App\Http\Responses\Responses;
     use App\Models\Usuarios\UsuariosModel;
     use Exception;

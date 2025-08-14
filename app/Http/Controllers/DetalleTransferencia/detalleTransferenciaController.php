@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\DetalleTransferencia;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DetalleTransferencia\updateDetalleTransferenciaResource;
+use App\Http\Requests\DetalleTransferencia_request\updateDetalleTransferenciaRequest;
 use App\Services\Detalle_de_transferencia_services\editarDetalleTransferenciaService;
 use App\Services\Detalle_de_transferencia_services\listadoDetalleTransferenciaService;
 
@@ -60,7 +60,7 @@ class detalleTransferenciaController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(updateDetalleTransferenciaResource $request, string $id){
+    public function update(updateDetalleTransferenciaRequest $request, string $id){
         return $this->updateDetalleTransferencia->editarDetalle($id, $request);
     }
 

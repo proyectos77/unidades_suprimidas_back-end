@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Transferencias;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Transferencias\registroTransferenciaRequest;
+use App\Http\Requests\Transferencias_request\registroTransferenciaRequest;
 use App\Services\Transferencias_services\listadoTransferenciasPorArchivoService;
 use App\Services\Transferencias_services\registroTransferencia;
 use App\Services\Transferencias_services\registroTransferenciaCompleto;

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Archivo;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Archivo\registroArchivoRequest;
+use App\Http\Requests\Archivos_request\registroArchivoRequest;
 use App\Services\Archivo_services\listadoArchivoRegistradoPorUnidad;
 use App\Services\Archivo_services\listArchivoPorUnidadServices;
 use App\Services\Archivo_services\registroArchivoUnidadServices;
