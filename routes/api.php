@@ -60,6 +60,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiResource('dependencias', DependenciasController::class);
 
+
+
         Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
         Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
         Route::get('selectUnidadesArchivo', [unidadesController::class, 'selectListUnidadesArchivo']);
@@ -70,6 +72,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('listadoSolicitudes/{idUsuario}/{idTipoUsuario}', [SolicitudTransferencia::class, 'listadoDeSolicitudesPorUsuario']);
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
         Route::get('municipios/{idDepartamento}', [municipiosController::class, 'getAllMunicipios']);
+        Route::get('unidadesPorDependencia/{idDependencia}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
 
 
         Route::middleware('auth:sanctum')->group(function () {

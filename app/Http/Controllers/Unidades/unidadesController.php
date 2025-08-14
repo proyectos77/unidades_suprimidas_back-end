@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Unidades;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Unidades_request\actualizarUnidadRequest;
 use App\Http\Requests\Unidades_request\registroUnidadRequest;
+use App\Services\Unidades_services\getAllUnidadesPorDependenciaService;
 use App\Services\Unidades_services\getInformacionUnidad;
 use App\Services\Unidades_services\listadoUnidadesArchivoSevice;
 use App\Services\Unidades_services\listadoUnidadesConDetalleServices;
@@ -22,7 +23,7 @@ class unidadesController extends Controller
     protected $informacionUnidad;
     protected $selectUndiadesConDetalle;
     protected $selectUnidadesArchivo;
-
+    protected $getAllUnidadesPorDependencia;
     public function __construct(
         registroUnidadesServices $registroUnidades,
         listadoUnidadesServices $listadoUnidades,
@@ -30,7 +31,8 @@ class unidadesController extends Controller
         selectUnidadesServices $selectUnidades,
         getInformacionUnidad $informacionUnidad,
         listadoUnidadesConDetalleServices $selectUndiadesConDetalle,
-        listadoUnidadesArchivoSevice $selectUnidadesArchivo
+        listadoUnidadesArchivoSevice $selectUnidadesArchivo,
+        getAllUnidadesPorDependenciaService $getAllUnidadesPorDependencia
     ) {
         $this->registroUnidades = $registroUnidades;
         $this->listadoUnidades = $listadoUnidades;
@@ -39,6 +41,7 @@ class unidadesController extends Controller
         $this->informacionUnidad = $informacionUnidad;
         $this->selectUndiadesConDetalle = $selectUndiadesConDetalle;
         $this->selectUnidadesArchivo = $selectUnidadesArchivo;
+        $this->getAllUnidadesPorDependencia = $getAllUnidadesPorDependencia;
     }
 
     public function index()
@@ -76,5 +79,11 @@ class unidadesController extends Controller
 
     public function selectListUnidadesArchivo(){
         return $this->selectUnidadesArchivo->gatAllUnidadesArchivo();
+    }
+
+    public function getAllUnidadesPorDependencia($idDependencia)
+    {
+        return $this->getAllUnidadesPorDependencia->getAllUnidadesDependencia($idDependencia);
+
     }
 }

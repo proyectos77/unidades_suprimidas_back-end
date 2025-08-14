@@ -31,6 +31,7 @@ class registroUnidadRequest extends FormRequest
             'unidad_que_asume'  => 'required|string',
             'idMunicipio'       => 'required|numeric',
             'estado'            => 'sometimes|boolean',
+            'usuario'         => 'required|numeric',
         ];
     }
 
@@ -43,6 +44,7 @@ class registroUnidadRequest extends FormRequest
             'unidad_que_asume_archivo_unidad'           => $this->unidad_que_asume,
             'id_municipio'                              => $this->idMunicipio,
             'id_estado'                                 => $this->estado == false ? 1 : 6,
+            'id_usuario'                                => $this->usuario,
         ]);
     }
 
@@ -59,7 +61,10 @@ class registroUnidadRequest extends FormRequest
             'unidad_que_asume.string'            => 'El atributo padre unidad',
 
             'idMunicipio.required'          => 'El municipio es obligatorio',
-            'idMunicipio.numeric'           => 'El municipio solo acepta numero'
+            'idMunicipio.numeric'           => 'El municipio solo acepta numero',
+
+            'idUsuario.required'          => 'El usuario es obligatorio',
+            'idUsuario.numeric'           => 'El usuario solo acepta numero',
         ];
     }
 

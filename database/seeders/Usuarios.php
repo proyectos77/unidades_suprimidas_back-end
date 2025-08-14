@@ -21,8 +21,8 @@ class Usuarios extends Seeder
             'user_usuario' => 'admin',
             'password_usuario' => Hash::make('admin'),
             'id_tipo_usuario' => 1,
+            'id_dependencia' => 1,
             'id_cargo' => 1
         ]);
     }
 }
-    

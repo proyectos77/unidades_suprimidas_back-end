@@ -19,6 +19,12 @@ return new class extends Migration
             $table->string('unidad_que_asume_archivo_unidad');
             $table->unsignedInteger('id_municipio')->default(1);
             $table->foreign('id_municipio')->references('id_municipio')->on('municipios')->onDelete('cascade');
+
+
+            $table->unsignedInteger('id_usuario');
+            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->onDelete('cascade');
+
+
             $table->datetime('fecha_creacion_unidad')->useCurrent();
             $table->datetime('fecha_actualizacion_unidad')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);

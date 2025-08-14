@@ -5,6 +5,7 @@ namespace App\Models\Unidades;
 use App\Models\DetalleUnidad\DetalleUnidadModel;
 use App\Models\Estados\EstadosModell;
 use App\Models\Municipios\MunicipiosModel;
+use App\Models\Usuarios\UsuariosModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,7 +26,8 @@ class UnidadesModel extends Model
         'sigla_unidad',
         'unidad_que_asume_archivo_unidad',
         'id_municipio',
-        'id_estado'
+        'id_estado',
+        'id_usuario'
     ];
 
     public function estados() {
@@ -38,5 +40,9 @@ class UnidadesModel extends Model
 
     public function detalleUnidad() {
         return $this->belongsTo(DetalleUnidadModel::class, 'id_unidad', 'id_unidad');
+    }
+
+    public function usuario() {
+        return $this->belongsTo(UsuariosModel::class, 'id_usuario', 'id_usuario');
     }
 }
