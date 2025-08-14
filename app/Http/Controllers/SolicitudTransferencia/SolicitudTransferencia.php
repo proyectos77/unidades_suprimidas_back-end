@@ -9,7 +9,7 @@ use App\Services\SolicitudTransferencia\getInformacionSolicitudTransferencia;
 use App\Services\SolicitudTransferencia\listadoSolicitudesTransferencia;
 use Illuminate\Http\Request;
 
-class SolicitudTransferencia extends Controller
+class solicitudTransferencia extends Controller
 {
     private $listadoSolicitudes;
     private $actualizarSolicitud;

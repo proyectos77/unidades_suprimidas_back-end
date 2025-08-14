@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Services\cargos_services\listadoCargoServices;
 use Illuminate\Http\Request;
 
-class CargosController extends Controller
+class cargosController extends Controller
 {
 
     protected $listadoCargos;

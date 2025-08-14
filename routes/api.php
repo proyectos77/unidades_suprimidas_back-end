@@ -1,16 +1,16 @@
 <?php
 
-use App\Http\Controllers\Archivo\ArchivoController;
+use App\Http\Controllers\Archivo\archivoController;
 use App\Http\Controllers\Auth\authController;
-use App\Http\Controllers\Cargos\CargosController;
+use App\Http\Controllers\Cargos\cargosController;
 use App\Http\Controllers\Departamentos\departamentosController;
-use App\Http\Controllers\Dependencias\DependenciasController;
+use App\Http\Controllers\Dependencias\dependenciasController;
 use App\Http\Controllers\DetalleTransferencia\detalleTransferenciaController;
-use App\Http\Controllers\DetalleUnidad\DetalleUnidadController;
+use App\Http\Controllers\DetalleUnidad\detalleUnidadController;
 use App\Http\Controllers\Documentos\documentoController;
 use App\Http\Controllers\Documentos\documentosTransferenciaController;
 use App\Http\Controllers\Municipios\municipiosController;
-use App\Http\Controllers\SolicitudTransferencia\SolicitudTransferencia;
+use App\Http\Controllers\SolicitudTransferencia\solicitudTransferencia;
 use App\Http\Controllers\TiposUsuarios\tipoUsuariosController;
 use App\Http\Controllers\Transferencias\transferenciasController;
 use App\Http\Controllers\Unidades\unidadesController;
@@ -42,15 +42,15 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiResource('tipoUsuarios', tipoUsuariosController::class); //tipoUsuarios
 
-        Route::apiResource('cargos', CargosController::class); //tipoUsuarios
+    Route::apiResource('cargos', cargosController::class); //tipoUsuarios
 
         Route::apiResource('unidades', unidadesController::class);
 
-        Route::apiResource('solicitudesTransferencias', SolicitudTransferencia::class);
+    Route::apiResource('solicitudesTransferencias', solicitudTransferencia::class);
 
-        Route::apiResource('detalleUnidad', DetalleUnidadController::class);
+    Route::apiResource('detalleUnidad', detalleUnidadController::class);
 
-        Route::apiResource('registroArchivo', ArchivoController::class);
+    Route::apiResource('registroArchivo', archivoController::class);
 
         Route::apiResource('detalleTransferencia', detalleTransferenciaController::class);
 
@@ -58,7 +58,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiResource('documento', documentoController::class);
 
-        Route::apiResource('dependencias', DependenciasController::class);
+    Route::apiResource('dependencias', dependenciasController::class);
 
 
 
@@ -66,10 +66,10 @@ use Illuminate\Support\Facades\Route;
         Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
         Route::get('selectUnidadesArchivo', [unidadesController::class, 'selectListUnidadesArchivo']);
         Route::get('anios', [utilController::class, 'listAnio']);
-        Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'listArchivoPorUnidad']);
-        Route::get('archivoPorUnidad/{idDetalleUnidad}', [ArchivoController::class, 'archivoPorUnidad']);
+    Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'listArchivoPorUnidad']);
+    Route::get('archivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'archivoPorUnidad']);
         Route::get('listadoTransferenciasPorArchivo/{idArchivo}', [transferenciasController::class, 'listadoTransferenciaPorArchivo']);
-        Route::get('listadoSolicitudes/{idUsuario}/{idTipoUsuario}', [SolicitudTransferencia::class, 'listadoDeSolicitudesPorUsuario']);
+    Route::get('listadoSolicitudes/{idUsuario}/{idTipoUsuario}', [solicitudTransferencia::class, 'listadoDeSolicitudesPorUsuario']);
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
         Route::get('municipios/{idDepartamento}', [municipiosController::class, 'getAllMunicipios']);
         Route::get('unidadesPorDependencia/{idDependencia}', [unidadesController::class, 'getAllUnidadesPorDependencia']);

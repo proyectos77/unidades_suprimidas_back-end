@@ -9,7 +9,7 @@ use App\Services\Archivo_services\listArchivoPorUnidadServices;
 use App\Services\Archivo_services\registroArchivoUnidadServices;
 use Illuminate\Http\Request;
 
-class ArchivoController extends Controller
+class archivoController extends Controller
 {
 
     private $registroArchivo;

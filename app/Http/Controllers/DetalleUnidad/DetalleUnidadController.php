@@ -10,7 +10,7 @@ use App\Services\DetalleUnidad_services\gestionDetalleUnidadServices;
 use App\Services\DetalleUnidad_services\registroDetalleUnidadServices;
 use Illuminate\Http\Request;
 
-class DetalleUnidadController extends Controller
+class detalleUnidadController extends Controller
 {
 
     protected $registroDetalle;

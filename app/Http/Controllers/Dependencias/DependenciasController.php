@@ -7,7 +7,7 @@ use App\Services\Dependencia_services\listadoDependenciasHijasServices;
 use App\Services\Dependencia_services\listadoDependenciasPadreService;
 use Illuminate\Http\Request;
 
-class DependenciasController extends Controller
+class dependenciasController extends Controller
 {
 
     private $listadoDependenciasPadre;
