@@ -10,7 +10,9 @@ use App\Http\Controllers\DetalleUnidad\detalleUnidadController;
 use App\Http\Controllers\Documentos\documentoController;
 use App\Http\Controllers\Documentos\documentosTransferenciaController;
 use App\Http\Controllers\Municipios\municipiosController;
+use App\Http\Controllers\Serie\serieController;
 use App\Http\Controllers\SolicitudTransferencia\solicitudTransferencia;
+use App\Http\Controllers\Subserie\subserieController;
 use App\Http\Controllers\TiposUsuarios\tipoUsuariosController;
 use App\Http\Controllers\Transferencias\transferenciasController;
 use App\Http\Controllers\Unidades\unidadesController;
@@ -36,15 +38,15 @@ use Illuminate\Support\Facades\Route;
 
 
 
-        Route::post('login', [authController::class, 'login']); //login
+    Route::post('login', [authController::class, 'login']); //login
 
-        Route::apiResource('usuarios', usuarioController::class); //Usuarios
+    Route::apiResource('usuarios', usuarioController::class); //Usuarios
 
-        Route::apiResource('tipoUsuarios', tipoUsuariosController::class); //tipoUsuarios
+    Route::apiResource('tipoUsuarios', tipoUsuariosController::class); //tipoUsuarios
 
     Route::apiResource('cargos', cargosController::class); //tipoUsuarios
 
-        Route::apiResource('unidades', unidadesController::class);
+    Route::apiResource('unidades', unidadesController::class);
 
     Route::apiResource('solicitudesTransferencias', solicitudTransferencia::class);
 
@@ -52,16 +54,19 @@ use Illuminate\Support\Facades\Route;
 
     Route::apiResource('registroArchivo', archivoController::class);
 
-        Route::apiResource('detalleTransferencia', detalleTransferenciaController::class);
+    Route::apiResource('detalleTransferencia', detalleTransferenciaController::class);
 
-        Route::apiResource('documentosTransferencia', documentosTransferenciaController::class);
+    Route::apiResource('documentosTransferencia', documentosTransferenciaController::class);
 
-        Route::apiResource('documento', documentoController::class);
+    Route::apiResource('documento', documentoController::class);
 
     Route::apiResource('dependencias', dependenciasController::class);
 
 
 
+
+        Route::get('series/{anio}', [serieController::class, 'listadoSeriesPorAnio']);
+        Route::get('subseries/{idSerie}', [subserieController::class, 'listadoSubSeriesPorSerie']);
         Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
         Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
         Route::get('selectUnidadesArchivo', [unidadesController::class, 'selectListUnidadesArchivo']);

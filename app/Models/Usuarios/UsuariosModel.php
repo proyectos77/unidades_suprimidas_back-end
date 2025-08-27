@@ -3,6 +3,7 @@
 namespace App\Models\Usuarios;
 
 use App\Models\Cargos\CargosModel;
+use App\Models\Denpendencias\Dependencias;
 use App\Models\Estados\EstadosModell;
 use App\Models\TipoUsuario\TipoUsuarioModell;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -71,6 +72,10 @@ class UsuariosModel extends Authenticatable
 
     public function tipoUsuario() {
         return $this->belongsTo(TipoUsuarioModell::class, 'id_tipo_usuario', 'id_tipo_usuario');
+    }
+
+    public function dependencia() {
+        return $this->belongsTo(Dependencias::class, 'id_dependencia', 'id_dependencia');
     }
 
 }

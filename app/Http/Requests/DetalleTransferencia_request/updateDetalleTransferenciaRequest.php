@@ -29,8 +29,8 @@ class updateDetalleTransferenciaRequest extends FormRequest
         } elseif ($metodo == 'PUT') {
             return [
                 'seccion'       => 'required|string',
-                'serie'         => 'required|string',
-                'subserie'      => 'required|string',
+                'serie'         => 'required|integer',
+                'subserie'      => 'required|integer',
                 'cajas'         => 'required|integer',
                 'carpetas'      => 'required|integer',
                 'otros'         => 'required|integer',
@@ -45,8 +45,8 @@ class updateDetalleTransferenciaRequest extends FormRequest
     {
         $data = [
             'seccion_detalle_transferencia'             => $this->seccion ?? null,
-            'serie_detalle_transferencia'               => $this->serie ?? null,
-            'subserie_detalle_transferencia'            => $this->subserie ?? null,
+            'id_serie'               => $this->serie ?? null,
+            'id_subserie'            => $this->subserie ?? null,
             'cantidad_cajas_detalle_transferencia'      => $this->cajas ?? null,
             'cantidad_carpetas_detalle_transferencia'   => $this->carpetas ?? null,
             'cantidad_otros_detalle_transferencia'      => $this->otros ?? null,

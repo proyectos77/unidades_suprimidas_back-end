@@ -23,16 +23,16 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
                     $data['id_transferencia'] = $transferencia->id_transferencia;
 
                     $registro = DetalleTransferenciaModel::create([
-                        'id_transferencia'                     => $transferencia->id_transferencia ?? null,
-                        'seccion_detalle_transferencia'        => $value['seccion'] ?? null,
-                        'serie_detalle_transferencia'          => $value['serie'] ?? null,
-                        'subserie_detalle_transferencia'       => $value['subserie'] ?? null,
-                        'cantidad_cajas_detalle_transferencia' => $value['cantidad_cajas'] ?? 0,
-                        'cantidad_carpetas_detalle_transferencia' => $value['cantidad_carpetas'] ?? 0,
-                        'cantidad_folios_detalle_transferencia' => $value['cantidad_folios'] ?? 0,
-                        'cantidad_otros_detalle_transferencia' => $value['cantidad_otros'] ?? 0,
-                        'cantidad_tomos_detalle_transferencia' => $value['cantidad_tomos'] ?? 0,
-                        'porcentaje_detalle_transferencia'     => $data['porcentaje_detalle_transferencia'] ?? 0,
+                        'id_transferencia'                          => $transferencia->id_transferencia ?? null,
+                        'seccion_detalle_transferencia'             => $value['seccion'] ?? null,
+                        'id_serie'                                  => $value['serie'] ?? null,
+                        'id_subserie'                               => $value['subserie'] == 0 ? null : $value['subserie'],
+                        'cantidad_cajas_detalle_transferencia'      => $value['cantidad_cajas'] ?? 0,
+                        'cantidad_carpetas_detalle_transferencia'   => $value['cantidad_carpetas'] ?? 0,
+                        'cantidad_folios_detalle_transferencia'     => $value['cantidad_folios'] ?? 0,
+                        'cantidad_otros_detalle_transferencia'      => $value['cantidad_otros'] ?? 0,
+                        'cantidad_tomos_detalle_transferencia'      => $value['cantidad_tomos'] ?? 0,
+                        'porcentaje_detalle_transferencia'          => $data['porcentaje_detalle_transferencia'] ?? 0,
                     ]);
 
                     if(!$registro){

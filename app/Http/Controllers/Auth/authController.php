@@ -32,6 +32,7 @@ class authController extends Controller
                 'email' => $usuario->email_usuario,
                 'rol' => $usuario->tipoUsuario->nombre_tipo_usuario,
                 'idTipoUsuario' => $usuario->tipoUsuario->id_tipo_usuario,
+                'idDependencia' => $usuario->id_dependencia,
 
             ]
         ]);

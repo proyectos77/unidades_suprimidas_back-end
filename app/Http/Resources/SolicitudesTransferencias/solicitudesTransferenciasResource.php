@@ -58,6 +58,7 @@ class solicitudesTransferenciasResource extends ResourceCollection
                 'fechaFinSolicitud' => $solicitud->fecha_fin_solicitud_transferencia,
                 'anio' => $solicitud->transferencia?->archivo?->anio_registro_archivo ?? null,
                 'unidad' => $solicitud->transferencia?->archivo?->detalleUnidad?->unidad?->nombre_unidad ?? null,
+                'dependencia' => $solicitud->transferencia?->archivo?->detalleUnidad?->unidad?->usuario?->dependencia?->nombre_dependencia ?? null,
                 // Totales consolidados
                 'totalCajas' => $totales['cantidadCajas'],
                 'totalCarpetas' => $totales['cantidadCarpetas'],

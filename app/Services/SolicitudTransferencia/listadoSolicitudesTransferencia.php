@@ -18,7 +18,7 @@ use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
                     'estado',
                     'usuarioSolicitante',
                     'usuarioRevisor',
-                    'transferencia.archivo.detalleUnidad.unidad',
+                    'transferencia.archivo.detalleUnidad.unidad.usuario.dependencia',
                     'transferencia.detalleTransferencias'
                 ]);
 

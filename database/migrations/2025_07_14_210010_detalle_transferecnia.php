@@ -16,8 +16,10 @@ return new class extends Migration
             $table->unsignedInteger('id_transferencia');
             $table->foreign('id_transferencia')->references('id_transferencia')->on('transferencias')->onDelete('cascade');
             $table->string('seccion_detalle_transferencia');
-            $table->string('serie_detalle_transferencia');
-            $table->string('subserie_detalle_transferencia');
+            $table->unsignedInteger('id_serie')->nullable();
+            $table->foreign('id_serie')->references('id_serie')->on('series')->onDelete('cascade');
+            $table->unsignedInteger('id_subserie')->nullable();
+            $table->foreign('id_subserie')->references('id_subserie')->on('subseries')->onDelete('cascade');
             $table->integer('cantidad_cajas_detalle_transferencia');
             $table->integer('cantidad_carpetas_detalle_transferencia');
             $table->integer('cantidad_otros_detalle_transferencia')->nullable();
@@ -36,6 +38,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('detalle_transferencia');
     }
 };

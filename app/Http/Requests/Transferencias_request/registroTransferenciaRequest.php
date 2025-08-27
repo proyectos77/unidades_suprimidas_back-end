@@ -24,8 +24,8 @@ class registroTransferenciaRequest extends FormRequest
 
             'detalles' => 'required|array|min:1',
             'detalles.*.seccion'           => 'required|string',
-            'detalles.*.serie'             => 'required|string',
-            'detalles.*.subserie'          => 'required|string',
+            'detalles.*.serie'             => 'nullable|numeric',
+            'detalles.*.subserie'          => 'nullable|numeric',
             'detalles.*.cantidad_cajas'    => 'required|numeric',
             'detalles.*.cantidad_carpetas' => 'required|numeric',
             'detalles.*.cantidad_folios'   => 'required|numeric',
@@ -55,8 +55,6 @@ class registroTransferenciaRequest extends FormRequest
 
             'detalles.required' => 'Debe proporcionar al menos un detalle de transferencia.',
             'detalles.*.seccion.required' => 'Cada detalle debe incluir una sección.',
-            'detalles.*.serie.required' => 'Cada detalle debe incluir una serie.',
-            'detalles.*.subserie.required' => 'Cada detalle debe incluir una subserie.',
             'detalles.*.cantidad_cajas.required' => 'Cada detalle debe tener cantidad de cajas.',
             'detalles.*.cantidad_carpetas.required' => 'Cada detalle debe tener cantidad de carpetas.',
             'detalles.*.cantidad_folios.required' => 'Cada detalle debe tener cantidad de folios.',
