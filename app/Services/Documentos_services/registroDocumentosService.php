@@ -2,41 +2,73 @@
 
     namespace App\Services\Documentos_services;
 
+use App\Http\Responses\Responses;
 use App\Models\Documentos\DocumentosModel;
+use App\Models\DocumentoTransferencia\DocumentoTransferenciaModel;
 
     class registroDocumentosService
     {
-        public function gestionRegistro($data){
+        public function gestionRegistro($data, $op= null){
+
+            if ($op === 1) {
+                $idTransferencia = $data->id_transferencia;
+                $data = $data->allFiles();
+
+            }
+
+            // Si es un solo archivo (UploadedFile), lo meto en un array
+            if ($data instanceof \Illuminate\Http\UploadedFile) {
+                $data = [$data];
+            }
+
+            // Si viene como array asociativo de archivos (ej: ["documento" => UploadedFile])
+            if (is_array($data) && !array_is_list($data)) {
+                $data = array_values($data); // reindexa el array a 0,1,2...
+            }
 
             $documentos = [];
 
-            for ($i=0; $i < count($data); $i++) {
-               $documento = $this->registroDocumento($data[$i]);
-               array_push($documentos, $documento);
+            foreach ($data as $archivo) {
+                $documento = $this->registroDocumento($archivo, $op, $idTransferencia ?? null);
+                $documentos[] = $documento;
             }
 
-            return $documentos;
+            if ($op === 1) {
+                return Responses::success(200, 'Registro exitoso', 'Documentos registrados con éxito', 'success', $documentos);
+            }else{
+                return $documentos;
+            }
+
         }
 
-        private function registroDocumento($data){
-
-
+        private function registroDocumento($data, $op, $idTransferencia = null){
             $carpetaDestino = "documents";
             $nombreArchivo = pathinfo($data->getClientOriginalName(), PATHINFO_FILENAME);
             $extension = $data->getClientOriginalExtension();
 
-            $nombrePersonalizado = $nombreArchivo . '.' . $extension;
+            // Agregar fecha y hora al nombre del archivo
+            $fechaHora = date('Ymd_His');
+            $nombrePersonalizado = $nombreArchivo . '_' . $fechaHora . '.' . $extension;
 
             $ruta = $data->storeAs($carpetaDestino, $nombrePersonalizado, 'public');
 
             $documento = DocumentosModel::create(
-                ['nombre_documento' => $data->getClientOriginalName(),
-                'url_documento' => $ruta,
-                'extension_documento' => $data->getClientOriginalExtension(),]
+                [
+                    'nombre_documento' => $nombrePersonalizado,
+                    'url_documento' => $ruta,
+                    'extension_documento' => $extension,
+                ]
             );
 
             if(!$documento){
                 throw new \Exception('No se puedo realizar el registro del documento.');
+            }
+
+            if ($op === 1) {
+                DocumentoTransferenciaModel::create([
+                    'id_transferencia' => $idTransferencia,
+                    'id_documento' => $documento->id_documento,
+                ]);
             }
 
             return $documento;

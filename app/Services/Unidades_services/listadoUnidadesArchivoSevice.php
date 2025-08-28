@@ -5,12 +5,16 @@
 use App\Http\Resources\Unidades\listSelectUnidadesConArchivoResource;
 use App\Http\Responses\Responses;
 use App\Models\Unidades\UnidadesModel;
+use App\Models\Usuarios\UsuariosModel;
 use Illuminate\Support\Facades\DB;
 
     class listadoUnidadesArchivoSevice
     {
-       public function gatAllUnidadesArchivo(){
+       public function gatAllUnidadesArchivo($idDependencia){
             try {
+
+                $usuariosIds = UsuariosModel::where('id_dependencia', $idDependencia)->pluck('id_usuario');
+
                 $unidades = UnidadesModel::whereHas('detalleUnidad.archivo', function ($archivoQuery) {
                     $archivoQuery->where(function ($query) {
                         // Archivos SIN transferencias
@@ -27,6 +31,7 @@ use Illuminate\Support\Facades\DB;
                         });
                     });
                 })
+                ->whereIn('id_usuario', $usuariosIds)
                 ->with(['detalleUnidad.archivo'])
                 ->get();
 

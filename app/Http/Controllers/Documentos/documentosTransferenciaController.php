@@ -4,14 +4,16 @@ namespace App\Http\Controllers\Documentos;
 
 use App\Http\Controllers\Controller;
 use App\Services\DocumentosTransferencias_services\listadoDocumentosService;
+use App\Services\DocumentosTransferencias_services\updateDocumentoTransferencia;
 use Illuminate\Http\Request;
 
 class documentosTransferenciaController extends Controller
 {
     private $listadoDocumentos;
-
-    public function __construct(listadoDocumentosService $listadoDocumentos) {
+    private $eliminarDocumento;
+    public function __construct(listadoDocumentosService $listadoDocumentos, updateDocumentoTransferencia $eliminarDocumento) {
         $this->listadoDocumentos = $listadoDocumentos;
+        $this->eliminarDocumento = $eliminarDocumento;
     }
 
     public function index()
@@ -55,7 +57,7 @@ class documentosTransferenciaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return $this->eliminarDocumento->eliminarDocumentoTransferencia($id);
     }
 
     /**

@@ -5,12 +5,16 @@
 use App\Http\Resources\Unidades\listSelectResource;
 use App\Http\Responses\Responses;
 use App\Models\Unidades\UnidadesModel;
+use App\Models\Usuarios\UsuariosModel;
 
     class selectUnidadesServices
     {
-        public function listadoCompletoUnidades() {
+        public function listadoCompletoUnidades($idDependencia) {
             try {
-                $unidades = UnidadesModel::doesntHAve('detalleUnidad')->with('detalleUnidad')->get();
+
+                $usuariosIds = UsuariosModel::where('id_dependencia', $idDependencia)->pluck('id_usuario');
+
+                $unidades = UnidadesModel::doesntHave('detalleUnidad')->whereIn('id_usuario', $usuariosIds)->with('detalleUnidad')->get();
                 $data = new listSelectResource($unidades);
                 return Responses::success(200, 'Consulta realizada', 'Consulta realizada con exito', 'success', $data);
 

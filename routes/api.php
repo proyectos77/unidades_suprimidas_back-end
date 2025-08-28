@@ -67,9 +67,9 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('series/{anio}', [serieController::class, 'listadoSeriesPorAnio']);
         Route::get('subseries/{idSerie}', [subserieController::class, 'listadoSubSeriesPorSerie']);
-        Route::get('selectUnidades', [unidadesController::class, 'selectListUnidades']);
-        Route::get('selectUnidadConDetalle', [unidadesController::class, 'selectListUnidadesConDetalle']);
-        Route::get('selectUnidadesArchivo', [unidadesController::class, 'selectListUnidadesArchivo']);
+        Route::get('selectUnidades/{idDependencia}', [unidadesController::class, 'selectListUnidades']);
+        Route::get('selectUnidadConDetalle/{idDependencia}', [unidadesController::class, 'selectListUnidadesConDetalle']);
+        Route::get('selectUnidadesArchivo/{idDependencia}', [unidadesController::class, 'selectListUnidadesArchivo']);
         Route::get('anios', [utilController::class, 'listAnio']);
     Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'listArchivoPorUnidad']);
     Route::get('archivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'archivoPorUnidad']);

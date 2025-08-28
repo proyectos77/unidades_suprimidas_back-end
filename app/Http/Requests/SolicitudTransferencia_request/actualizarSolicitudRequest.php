@@ -25,10 +25,10 @@ class actualizarSolicitudRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'usuarioAprobo'     => 'required|integer',
-            'fechaFin'          => 'required|date',
-            'Observacion'       => 'required|string',
-            'estado'            => 'required|integer'
+            'usuarioAprobo'     => 'nullable|integer',
+            'fechaFin'          => 'nullable|date',
+            'Observacion'       => 'nullable|string',
+            'estado'            => 'nullable|integer'
         ];
 
     }

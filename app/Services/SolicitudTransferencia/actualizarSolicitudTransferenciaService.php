@@ -10,6 +10,14 @@ class actualizarSolicitudTransferenciaService
 
     public function actualizarSolicitud($data, $idSolicitud){
         try {
+
+            if ($data['estado_solicitud_transferencia'] === 3) {
+                $validarSolicitud = $this->validarSolicitud($idSolicitud);
+                $validarSolicitud->update(['estado_solicitud_transferencia' => 3, 'id_usuario_revisor_solicitud_transferencia' => null, 'fecha_fin_solicitud_transferencia' => null, 'fecha_inicio_solicitud_transferencia' => now()]);
+                $validarSolicitud->save();
+                return Responses::success(200, 'Actualizado', 'Solicitud enviada de nuevo a revisión.', 'success', $validarSolicitud);
+            }
+
             $validarSolicitud = $this->validarSolicitud($idSolicitud);
             $validarSolicitud->fill($data);
             $validarSolicitud->save();

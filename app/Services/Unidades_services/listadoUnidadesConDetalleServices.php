@@ -5,13 +5,17 @@
 use App\Http\Resources\Unidades\listSelectUnidadesConDetalleRosource;
 use App\Http\Responses\Responses;
 use App\Models\Unidades\UnidadesModel;
+use App\Models\Usuarios\UsuariosModel;
 
     class listadoUnidadesConDetalleServices
     {
-        public function listadoUnidadesConDetalle(){
+        public function listadoUnidadesConDetalle($idDependencia) {
 
             try {
-                $unidades = UnidadesModel::has('detalleUnidad')->with('detalleUnidad')->get();
+
+                $usuariosIds = UsuariosModel::where('id_dependencia', $idDependencia)->pluck('id_usuario');
+
+                $unidades = UnidadesModel::has('detalleUnidad')->whereIn('id_usuario', $usuariosIds)->with('detalleUnidad')->get();
                 $data = new listSelectUnidadesConDetalleRosource($unidades);
 
                 return Responses::success(200, 'Consulta realizada', 'Consulta realizada con exito', 'succes', $data);

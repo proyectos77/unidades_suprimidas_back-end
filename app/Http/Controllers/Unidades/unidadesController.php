@@ -69,16 +69,16 @@ class unidadesController extends Controller
         //
     }
 
-    public function selectListUnidades(){
-        return $this->selectUnidad->listadoCompletoUnidades();
+    public function selectListUnidades($idDependencia){
+        return $this->selectUnidad->listadoCompletoUnidades($idDependencia);
     }
 
-    public function selectListUnidadesConDetalle(){
-        return $this->selectUndiadesConDetalle->listadoUnidadesConDetalle();
+    public function selectListUnidadesConDetalle($idDependencia){
+        return $this->selectUndiadesConDetalle->listadoUnidadesConDetalle($idDependencia);
     }
 
-    public function selectListUnidadesArchivo(){
-        return $this->selectUnidadesArchivo->gatAllUnidadesArchivo();
+    public function selectListUnidadesArchivo($idDependencia){
+        return $this->selectUnidadesArchivo->gatAllUnidadesArchivo($idDependencia);
     }
 
     public function getAllUnidadesPorDependencia($idDependencia)

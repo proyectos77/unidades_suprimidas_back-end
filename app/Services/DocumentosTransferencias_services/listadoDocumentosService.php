@@ -11,10 +11,10 @@ class listadoDocumentosService
     public function listarDocumentos($idTransferencia)
     {
         try {
-            $documentos = DocumentoTransferenciaModel::where('id_transferencia', $idTransferencia)->with('documento')->get();
+            $documentos = DocumentoTransferenciaModel::where(['id_transferencia' => $idTransferencia, 'id_estado' => 1])->with('documento')->get();
 
             if ($documentos->isEmpty()) {
-                throw new \Exception('No se encontraron documentos para la transferencia especificada.');
+                return Responses::success('200', 'Consulta realizada', 'No se encontraron documentos para la transferencia especificada', 'success');
             }
 
             $data = new DocumentosTransferenciasResource($documentos);

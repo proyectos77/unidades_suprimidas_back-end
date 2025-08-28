@@ -11,7 +11,7 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
         public function listadoDetalle($idTransferencia){
 
             try {
-                $detalle = DetalleTransferenciaModel::where(['id_transferencia' => $idTransferencia, 'id_estado' => 1])->with(['serie', 'subserie','transferencia.archivo'])->get();
+                $detalle = DetalleTransferenciaModel::where(['id_transferencia' => $idTransferencia, 'id_estado' => 1])->with(['serie', 'subserie','transferencia.archivo', 'transferencia.solicitudes'])->get();
 
                 if($detalle->isEmpty()){
                     throw new \Exception('No se encontraron detalles para la transferencia especificada.');
