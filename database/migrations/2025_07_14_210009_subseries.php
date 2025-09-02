@@ -17,8 +17,6 @@ return new class extends Migration
             $table->text('nombre_subserie');
             $table->unsignedInteger('id_serie')->default(1);
             $table->foreign('id_serie')->references('id_serie')->on('series')->onDelete('cascade');
-            $table->datetime('fecha_creacion_subserie')->useCurrent();
-            $table->datetime('fecha_actualizacion_subserie')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });

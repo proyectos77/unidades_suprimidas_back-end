@@ -760,8 +760,139 @@ class Subseries extends Seeder
             ['codigo_subserie' => '90.3', 'nombre_subserie' => 'Reporte de Seguridad Social Personal NO uniformado', 'id_serie' => 90],
 
             ['codigo_subserie' => '91.1', 'nombre_subserie' => 'Distritales', 'id_serie' => 91],
-            ['codigo_subserie' => '91.2', 'nombre_subserie' => 'Nacionales', 'id_serie' => 91]
-            // ... y así sucesivamente para todas las demás series y subseries del documento.
+            ['codigo_subserie' => '91.2', 'nombre_subserie' => 'Nacionales', 'id_serie' => 91],
+
+
+            /************************ SUBSERIES ACTUALES ********************************************/
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Acción de Cumplimiento', 'id_serie' => 92],
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Acción de Nulidad y Restablecimiento del Derecho', 'id_serie' => 92],
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Acción de Reparación', 'id_serie' => 92],
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Acción de Reparación Directa', 'id_serie' => 92],
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Acción de Tutela', 'id_serie' => 92],
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Acción Popular', 'id_serie' => 92],
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Derechos de Peticion', 'id_serie' => 92],
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Habeas Corpus', 'id_serie' => 92],
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Habeas Data', 'id_serie' => 92],
+            ['codigo_subserie' => '1', 'nombre_subserie' => 'Requerimientos de Justicia', 'id_serie' => 92],
+
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas Asignacion', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas Compromiso', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas Conciliación Saldos Cuentas Holding Account', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Capacitación', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Entrega', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Grado', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Eliminación Documental', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Informe de Gestión', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Investigación y Desarrollo', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Posesión', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Reserva', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Reuniones de Trabajo', 'id_serie' => 93],
+            ['codigo_subserie' => '2', 'nombre_subserie' => 'Actas de Revista', 'id_serie' => 93],
+
+            ['codigo_subserie' => '3', 'nombre_subserie' => 'Acuerdos', 'id_serie' => 94],
+            ['codigo_subserie' => '3', 'nombre_subserie' => 'Acuerdo de cooperacion Internacional', 'id_serie' => 94],
+            ['codigo_subserie' => '3', 'nombre_subserie' => 'Acuerdo de cooperacion Nacional', 'id_serie' => 94],
+
+            ['codigo_subserie' => '5', 'nombre_subserie' => 'Administracion Capellanias', 'id_serie' => 95],
+
+            ['codigo_subserie' => '6', 'nombre_subserie' => 'Administracion del Fondo de Defensa Nacional', 'id_serie' => 96],
+
+            ['codigo_subserie' => '8', 'nombre_subserie' => 'Proyecto de Inversión Nacional', 'id_serie' => 97],
+            ['codigo_subserie' => '8', 'nombre_subserie' => 'Anteproyecto', 'id_serie' => 97],
+            ['codigo_subserie' => '8', 'nombre_subserie' => 'Marco de Gasto Mediano Plazo', 'id_serie' => 97],
+            ['codigo_subserie' => '8', 'nombre_subserie' => 'Proyectos de Funcionamiento', 'id_serie' => 97],
+
+            ['codigo_subserie' => '9', 'nombre_subserie' => 'Bienes Raices', 'id_serie' => 98],
+
+            ['codigo_subserie' => '10', 'nombre_subserie' => 'Boletines', 'id_serie' => 99],
+
+            ['codigo_subserie' => '11', 'nombre_subserie' => 'Caja Menor', 'id_serie' => 100],
+
+            ['codigo_subserie' => '12', 'nombre_subserie' => 'Certificados', 'id_serie' => 101],
+            ['codigo_subserie' => '12', 'nombre_subserie' => 'Certificado de Bono Pensional', 'id_serie' => 101],
+            ['codigo_subserie' => '12', 'nombre_subserie' => 'Certificado de Cancelación Matrícula', 'id_serie' => 101],
+            ['codigo_subserie' => '12', 'nombre_subserie' => 'Certificado de Derechos Humanos', 'id_serie' => 101],
+            ['codigo_subserie' => '12', 'nombre_subserie' => 'Certificado de Prestación de Servicios', 'id_serie' => 101],
+
+            ['codigo_subserie' => '13', 'nombre_subserie' => 'Circulares', 'id_serie' => 102],
+
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Conceptos Juridicos', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto Administrativo', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto Contable', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto de Defensa Institucional', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto de Derechos Humanos', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto de Inteligencia o Contrainteligencia', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto de Planeación', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto de Política Exterior', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto Financiero', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto Presupuestal', 'id_serie' => 103],
+            ['codigo_subserie' => '15', 'nombre_subserie' => 'Concepto Técnico', 'id_serie' => 103],
+
+            ['codigo_subserie' => '16', 'nombre_subserie' => 'Concursos', 'id_serie' => 104],
+
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato de Arrendamiento', 'id_serie' => 105],
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato de Bienes o Servicios', 'id_serie' => 105],
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato de Comodato', 'id_serie' => 105],
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato de Compraventa', 'id_serie' => 105],
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato de Consultoría', 'id_serie' => 105],
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato de Enajenación y Tenencia', 'id_serie' => 105],
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato de Obra', 'id_serie' => 105],
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato de Prestación de Servicios', 'id_serie' => 105],
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato Interadministrativo', 'id_serie' => 105],
+            ['codigo_subserie' => '17', 'nombre_subserie' => 'Contrato trabajador Oficial', 'id_serie' => 105],
+
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Acreedores Varios', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Cuenta Única Nacional', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Cuota de Compensación Militar', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Depósitos Especiales', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Dineros sujetos a devolución', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Fondo de Defensa', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Fondos Especiales Oficiales', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Fondos Especiales Particulares', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Fondos Internos', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Gastos Generales', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Gastos de Personal', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Gastos Reservados', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Pensiones', 'id_serie' => 106],
+            ['codigo_subserie' => '18', 'nombre_subserie' => 'Plan Especial', 'id_serie' => 106],
+
+            ['codigo_subserie' => '19', 'nombre_subserie' => 'Cuenta Fiscal de Gastos Reservados', 'id_serie' => 107],
+            ['codigo_subserie' => '19', 'nombre_subserie' => 'Cuenta Fiscal Recompensas', 'id_serie' => 107],
+            ['codigo_subserie' => '19', 'nombre_subserie' => 'Cuenta Fiscal de Bienes', 'id_serie' => 107],
+
+            ['codigo_subserie' => '20', 'nombre_subserie' => 'Declaraciones de Exportación', 'id_serie' => 108],
+            ['codigo_subserie' => '20', 'nombre_subserie' => 'Acinpro', 'id_serie' => 108],
+            ['codigo_subserie' => '20', 'nombre_subserie' => 'Declaraciones de Importación', 'id_serie' => 108],
+            ['codigo_subserie' => '20', 'nombre_subserie' => 'Ministerio de Comunicaciones', 'id_serie' => 108],
+            ['codigo_subserie' => '20', 'nombre_subserie' => 'Sayco', 'id_serie' => 108],
+
+            ['codigo_subserie' => '21', 'nombre_subserie' => 'Canonicos', 'id_serie' => 109],
+            ['codigo_subserie' => '21', 'nombre_subserie' => 'Modificación y Reposición Sacramentos', 'id_serie' => 109],
+
+            ['codigo_subserie' => '23', 'nombre_subserie' => 'Directiva Permanente', 'id_serie' => 110],
+            ['codigo_subserie' => '23', 'nombre_subserie' => 'Directiva Transitoria', 'id_serie' => 110],
+
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudios', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio Criminológico', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Área', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Cooperantes', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Costos', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Desmovilizados', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio estrategico de bienestar', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Estandarización', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Gestión Ambiental', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Planeación', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Política Exterior', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Redes de Comunicación', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Seguridad a Vías', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Seguridad de Documentos', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio de Suelos', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio Investigación Secuestro y Extorsión', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio Seguridad  a Personas', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio Seguridad a Unidades', 'id_serie' => 111],
+            ['codigo_subserie' => '24', 'nombre_subserie' => 'Estudio Técnico de Automotores', 'id_serie' => 111],
+
+
         ]);
     }
 }

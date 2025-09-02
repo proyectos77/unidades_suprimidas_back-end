@@ -17,8 +17,7 @@ return new class extends Migration
             $table->integer('codigo_serie');
             $table->integer('anio_inicio_serie');
             $table->integer('anio_fin_serie');
-            $table->datetime('fecha_creacion_serie')->useCurrent();
-            $table->datetime('fecha_actualizacion_serie')->useCurrent()->useCurrentOnUpdate();
+            
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });

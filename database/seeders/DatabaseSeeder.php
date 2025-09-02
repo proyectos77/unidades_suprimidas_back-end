@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             Dependencias::class,
             Usuarios::class,
             departamentosMunicipios::class,
+            Series::class,
+            Subseries::class,
 
         ]);
     }
