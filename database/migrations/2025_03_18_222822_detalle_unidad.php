@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('fecha_desactivacion_unidad_detalle');
             $table->string('puesto_mando_adelantado_detalle')->nullable();
             $table->string('puesto_mando_atrasado_detalle')->nullable();
-            $table->text('plan_reorganizacion_diorg_detalle');
+            $table->text('plan_reorganizacion_diorg_detalle')->nullable();
             $table->text('observacion_detalle');
             $table->unsignedInteger('id_unidad')->default(1);
             $table->foreign('id_unidad')->references('id_unidad')->on('unidades')->onDelete('cascade');

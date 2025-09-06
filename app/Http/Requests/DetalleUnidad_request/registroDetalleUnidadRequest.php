@@ -31,7 +31,7 @@ class registroDetalleUnidadRequest extends FormRequest
             'fechaDesactivacionUnidad'          =>  'required|date',
             'puestoMandoAdelantado'             =>  'nullable|string',
             'puestoMandoAtrasado'               =>  'nullable|string',
-            'planReorganizacionDiorg'           =>  'required|string',
+            'planReorganizacionDiorg'           =>  'nullable|string',
             'observacion'                       =>  'required|string',
             'idUnidad'                          =>  'required|numeric|unique:detalle_unidad,id_unidad',
         ];
