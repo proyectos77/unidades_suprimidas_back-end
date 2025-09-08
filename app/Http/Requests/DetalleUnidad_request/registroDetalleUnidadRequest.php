@@ -59,7 +59,7 @@ class registroDetalleUnidadRequest extends FormRequest
             'fechaCreacionUnidad.date'                  =>  'El atributo fecha creacion unidad espera una fecha',
             'fechaDesactivacionUnidad.required'         =>  'El atributo fecha desactivacion unidad es requerido',
             'fechaDesactivacionUnidad.date'             =>  'El atributo fecha desactivacion unidad espera una fecha',
-            'planReorganizacionDiorg.required'         =>  'El atributo plan de reorganizacion diorg es requerido',
+            'planReorganizacionDiorg.required'          =>  'El atributo plan de reorganizacion diorg es requerido',
             'observacion.required'                      =>  'El atributo observacion es requerido',
             'idUnidad.required'                         =>  'El atributo id unidad es requerido',
             'idUnidad.unique'                           =>  'Ya existe detalle para esta unidad',
