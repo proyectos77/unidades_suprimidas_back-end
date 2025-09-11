@@ -7,6 +7,7 @@ use App\Http\Requests\SolicitudTransferencia_request\actualizarSolicitudRequest;
 use App\Services\SolicitudTransferencia\actualizarSolicitudTransferenciaService;
 use App\Services\SolicitudTransferencia\getInformacionSolicitudTransferencia;
 use App\Services\SolicitudTransferencia\listadoSolicitudesTransferencia;
+use App\Services\SolicitudTransferencia\notificacionesTransferenciaService;
 use Illuminate\Http\Request;
 
 class solicitudTransferencia extends Controller
@@ -14,11 +15,13 @@ class solicitudTransferencia extends Controller
     private $listadoSolicitudes;
     private $actualizarSolicitud;
     private $informacionSolicitud;
+    private $notificaciones;
 
-    public function __construct(listadoSolicitudesTransferencia $listadoSolicitudes, actualizarSolicitudTransferenciaService $actualizarSolicitud, getInformacionSolicitudTransferencia $informacionSolicitud) {
+    public function __construct(listadoSolicitudesTransferencia $listadoSolicitudes, actualizarSolicitudTransferenciaService $actualizarSolicitud, getInformacionSolicitudTransferencia $informacionSolicitud, notificacionesTransferenciaService$notificaciones) {
         $this->listadoSolicitudes = $listadoSolicitudes;
         $this->actualizarSolicitud = $actualizarSolicitud;
         $this->informacionSolicitud = $informacionSolicitud;
+        $this->notificaciones = $notificaciones;
     }
 
     public function index()
@@ -60,5 +63,9 @@ class solicitudTransferencia extends Controller
 
     public function listadoDeSolicitudesPorUsuario(String $idUsuario, String $idTipoUsuario) {
         return $this->listadoSolicitudes->getListadoSolicitudesTransferencias($idUsuario, $idTipoUsuario);
+    }
+
+    public function listadoNotificaciones(){
+        return $this->notificaciones->notificaciones();
     }
 }

@@ -4,6 +4,7 @@
 
 use App\Models\Archivo\ArchivoModel;
 use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
+use App\Models\Transferencias\TransferenciasModel;
 
     class detalleDeTransferenciaService
     {
@@ -12,10 +13,12 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
 
 
                 $archivo = $this->validarArchivo($transferencia->id_archivo);
+                $transferenciaConsulta = $this->consultaTransferencia($archivo->id_archivo);
 
+                $registro = null;
                 foreach ($data as $value) {
 
-                    $data['porcentaje_detalle_transferencia'] =  $this->calcularPorcentaje($transferencia->id_transferencia, $archivo, $value
+                    $data['porcentaje_detalle_transferencia'] =  $this->calcularPorcentaje($transferenciaConsulta->id_transferencia, $archivo, $value
                     ['cantidad_cajas'], $value['cantidad_carpetas'], $value['cantidad_folios'],
                     $value['cantidad_otros'], $value['cantidad_tomos']);
 
@@ -58,15 +61,19 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
             return $archivo;
         }
 
+        private function consultaTransferencia($idArchivo){
+            return TransferenciasModel::where('id_archivo', $idArchivo)->first();
+        }
+
         private function calcularPorcentaje($idTransferencia, $cantidades, $cantidadCajasTransferencia, $cantidadCarpetas, $cantidadFolios, $cantidadOtros, $cantidadTomos){
             // 1. Validar Cajas y calcular porcentaje, manejando la división por cero.
             $solicitudes = DetalleTransferenciaModel::where('id_transferencia', $idTransferencia)->get();
 
-            $totalCajas = $solicitudes->sum('cantidad_cajas_transferencia');
-            $totalCarpetas = $solicitudes->sum('cantidad_carpetas_transferencia');
-            $totalFolios = $solicitudes->sum('cantidad_folios_transferencia');
-            $totalOtros = $solicitudes->sum('cantidad_otros_transferencia');
-            $totalTomos = $solicitudes->sum('cantidad_tomos_transferencia');
+            $totalCajas = $solicitudes->sum('cantidad_cajas_detalle_transferencia');
+            $totalCarpetas = $solicitudes->sum('cantidad_carpetas_detalle_transferencia');
+            $totalFolios = $solicitudes->sum('cantidad_folios_detalle_transferencia');
+            $totalOtros = $solicitudes->sum('cantidad_otros_detalle_transferencia');
+            $totalTomos = $solicitudes->sum('cantidad_tomos_detalle_transferencia');
 
              $sumaTransferida = $cantidadCajasTransferencia + $cantidadCarpetas + $cantidadFolios + $cantidadOtros;
 
@@ -76,7 +83,7 @@ use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
 
             /* $porcentaje = ($cantidadCajasTransferencia / $cantidades->numero_cajas_archivos) * 100; */
             if (($cantidadCajasTransferencia + $totalCajas ) > $cantidades->numero_cajas_archivos) {
-                throw new \Exception("La cantidad de cajas ({$cantidadCajasTransferencia}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de cajas ({$cantidades->numero_cajas_archivos}).");
+                throw new \Exception("La cantidad de cajas ({$cantidadCajasTransferencia}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de cajas ({$cantidades->numero_cajas_archivos}), total de cajas en solicitudes y transferencias aprobadas: {$totalCajas}.");
             }
 
             // 2. Validar Carpetas

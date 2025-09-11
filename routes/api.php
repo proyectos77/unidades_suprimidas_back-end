@@ -65,19 +65,20 @@ use Illuminate\Support\Facades\Route;
 
 
 
-        Route::get('series/{anio}', [serieController::class, 'listadoSeriesPorAnio']);
-        Route::get('subseries/{idSerie}', [subserieController::class, 'listadoSubSeriesPorSerie']);
-        Route::get('selectUnidades/{idDependencia}', [unidadesController::class, 'selectListUnidades']);
-        Route::get('selectUnidadConDetalle/{idDependencia}', [unidadesController::class, 'selectListUnidadesConDetalle']);
-        Route::get('selectUnidadesArchivo/{idDependencia}', [unidadesController::class, 'selectListUnidadesArchivo']);
-        Route::get('anios', [utilController::class, 'listAnio']);
+    Route::get('series/{anio}', [serieController::class, 'listadoSeriesPorAnio']);
+    Route::get('subseries/{idSerie}', [subserieController::class, 'listadoSubSeriesPorSerie']);
+    Route::get('selectUnidades/{idDependencia}', [unidadesController::class, 'selectListUnidades']);
+    Route::get('selectUnidadConDetalle/{idDependencia}', [unidadesController::class, 'selectListUnidadesConDetalle']);
+    Route::get('selectUnidadesArchivo/{idDependencia}', [unidadesController::class, 'selectListUnidadesArchivo']);
+    Route::get('anios', [utilController::class, 'listAnio']);
     Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'listArchivoPorUnidad']);
     Route::get('archivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'archivoPorUnidad']);
-        Route::get('listadoTransferenciasPorArchivo/{idArchivo}', [transferenciasController::class, 'listadoTransferenciaPorArchivo']);
+    Route::get('listadoTransferenciasPorArchivo/{idArchivo}', [transferenciasController::class, 'listadoTransferenciaPorArchivo']);
     Route::get('listadoSolicitudes/{idUsuario}/{idTipoUsuario}', [solicitudTransferencia::class, 'listadoDeSolicitudesPorUsuario']);
-        Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
-        Route::get('municipios/{idDepartamento}', [municipiosController::class, 'getAllMunicipios']);
-        Route::get('unidadesPorDependencia/{idDependencia}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
+    Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
+    Route::get('municipios/{idDepartamento}', [municipiosController::class, 'getAllMunicipios']);
+    Route::get('unidadesPorDependencia/{idDependencia}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
+    Route::get('notificaciones', [solicitudTransferencia::class, 'listadoNotificaciones']);
 
 
         Route::middleware('auth:sanctum')->group(function () {
