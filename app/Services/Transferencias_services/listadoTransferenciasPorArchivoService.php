@@ -12,7 +12,7 @@ use App\Models\Transferencias\TransferenciasModel;
         function getAllTransferencias($idArchivo) {
 
             try {
-                $transferencias = TransferenciasModel::with('detalleTransferencias')->where('id_archivo', $idArchivo)->whereHas('solicitudes', function ($query) {
+                $transferencias = TransferenciasModel::with(['detalleTransferencias', 'detalleTransferencias.serie','detalleTransferencias.subserie'])->where('id_archivo', $idArchivo)->whereHas('solicitudes', function ($query) {
                     $query->where('estado_solicitud_transferencia', 4);
                 })->paginate(10);
 
@@ -22,7 +22,7 @@ use App\Models\Transferencias\TransferenciasModel;
                 return Responses::successListado(200, 'Consulta realizada', 'Consulta realizada con éxito', $data, $dataPaginacion);
 
             } catch (\Exception $e) {
-                return Responses::error(500, 'Error en la consulta', 'Error al realizar la consulta', $e);
+                return Responses::error(500, 'Error en la consulta', 'Error al realizar la consulta', $e->getMessage());
             }
 
 
