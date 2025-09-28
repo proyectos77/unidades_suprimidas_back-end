@@ -20,7 +20,11 @@ class authController extends Controller
         }
 
         $usuario = UsuariosModel::with('tipoUsuario')->where('user_usuario', $request['user_usuario'])->firstOrFail();
-        $token = $usuario->createToken('auth_token')->plainTextToken;
+        $tokenResult = $usuario->createToken('auth_token');
+        $token = $tokenResult->plainTextToken;
+        // Guardar expiración de token (10 minutos)
+        $tokenResult->accessToken->expires_at = now()->addMinutes(10);
+        $tokenResult->accessToken->save();
 
         return response()->json([
             'mensaje' => 'Bienbenido ' . $usuario->nombre_usuario,
@@ -33,7 +37,6 @@ class authController extends Controller
                 'rol' => $usuario->tipoUsuario->nombre_tipo_usuario,
                 'idTipoUsuario' => $usuario->tipoUsuario->id_tipo_usuario,
                 'idDependencia' => $usuario->id_dependencia,
-
             ]
         ]);
     }

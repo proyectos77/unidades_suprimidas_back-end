@@ -38,7 +38,7 @@
                 'data'          => $data
             ];
 
-            return response()->json($respuesta);
+            return response()->json($respuesta, $statusCode);
         }
 
         static function successSesion($statusCode, $titulo, $icono, $data, $token){
