@@ -14,19 +14,19 @@ class listadoUnidadesResource extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return $this->collection->map(function ($unidades){
+        return $this->collection->map(function ($unidad){
             return [
-                'id_unidad'         => $unidades->id_unidad,
-                'nombre'            => $unidades->nombre_unidad,
-                'unidad_superior_jerarquicamente'          => $unidades->unidad_superior_jerarquicamente_unidad,
-                'sigla'             => $unidades->sigla_unidad,
-                'unidad_que_asume_archivo_unidad'             => $unidades->unidad_que_asume_archivo_unidad,
-                'departamento'      => $unidades->municipio->departamentos->nombre_departamento,
-                'idDepartamento'    => $unidades->municipio->departamentos->id_departamento,
-                'municipio'         => $unidades->municipio->nombre_municipio,
-                'idMunicipio'       => $unidades->municipio->id_municipio,
-                'estado'            => $unidades->estados->nombre_estado,
-                'idEstado'          => $unidades->estados->id_estado
+                'id_unidad'         => $unidad->id_unidad,
+                'nombre'            => $unidad->nombre_unidad,
+                'unidad_superior_jerarquicamente'          => $unidad->unidad_superior_jerarquicamente_unidad,
+                'sigla'             => $unidad->sigla_unidad,
+                'unidad_que_asume_archivo_unidad'             => $unidad->unidad_que_asume_archivo_unidad,
+                'departamento'      => $unidad->municipio->departamentos->nombre_departamento,
+                'idDepartamento'    => $unidad->municipio->departamentos->id_departamento,
+                'municipio'         => $unidad->municipio->nombre_municipio,
+                'idMunicipio'       => $unidad->municipio->id_municipio,
+                'estado'            => $unidad->estados->nombre_estado,
+                'idEstado'          => $unidad->estados->id_estado
 
             ];
         })->toArray();

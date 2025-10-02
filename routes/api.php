@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 
 
     Route::post('login', [authController::class, 'login']); //login
-
+    Route::get('observacion/{observacion}/{idDependencia}', [detalleUnidadController::class, 'buscarObservacion']);
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         Route::apiResource('usuarios', usuarioController::class); //Usuarios
 
@@ -77,6 +77,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('municipios/{idDepartamento}', [municipiosController::class, 'getAllMunicipios']);
         Route::get('unidadesPorDependencia/{idDependencia}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
         Route::get('notificaciones', [solicitudTransferencia::class, 'listadoNotificaciones']);
+
 
 
         Route::get('logout', [authController::class, 'logout']);

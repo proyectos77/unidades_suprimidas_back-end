@@ -8,6 +8,7 @@ use App\Http\Requests\DetalleUnidad_request\updateDetalleUnidadRequest;
 use App\Services\DetalleUnidad_services\actualizarDetalleUnidadServices;
 use App\Services\DetalleUnidad_services\gestionDetalleUnidadServices;
 use App\Services\DetalleUnidad_services\registroDetalleUnidadServices;
+use App\Services\Unidades_services\buscarUnidadesObservacionService;
 use Illuminate\Http\Request;
 
 class detalleUnidadController extends Controller
@@ -15,10 +16,12 @@ class detalleUnidadController extends Controller
 
     protected $registroDetalle;
     protected $updateDetalle;
+    protected $buscarPorObservacion;
 
-    public function __construct(registroDetalleUnidadServices $registroDetalle, actualizarDetalleUnidadServices $updateDetalle) {
+    public function __construct(registroDetalleUnidadServices $registroDetalle, actualizarDetalleUnidadServices $updateDetalle, buscarUnidadesObservacionService $buscarPorObservacion) {
         $this->registroDetalle = $registroDetalle;
         $this->updateDetalle = $updateDetalle;
+        $this->buscarPorObservacion = $buscarPorObservacion;
     }
 
     public function index(){
@@ -40,6 +43,10 @@ class detalleUnidadController extends Controller
 
     public function destroy(string $id){
         //
+    }
+
+    public function buscarObservacion(string $observacion, string $idDependencia){ {
+        return $this->buscarPorObservacion->buscarObservacion($observacion, $idDependencia);
     }
 
 
