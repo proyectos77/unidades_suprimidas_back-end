@@ -30,6 +30,7 @@ class registroTransferenciaRequest extends FormRequest
             'detalles.*.cantidad_carpetas' => 'required|numeric',
             'detalles.*.cantidad_folios'   => 'required|numeric',
             'detalles.*.cantidad_otros'    => 'nullable|numeric',
+            'detalles.*.descripcion_otro'  => 'nullable|string',
             'detalles.*.cantidad_tomos'    => 'nullable|numeric',
 
             'documentos' => 'required|array|min:1',

@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             departamentosMunicipios::class,
             Series::class,
             Subseries::class,
+            otros::class,
 
         ]);
     }

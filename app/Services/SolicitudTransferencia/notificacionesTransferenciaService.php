@@ -12,7 +12,7 @@ use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
             try {
 
                 //LOCAL
-                $conteo = SolicitudTransferenciaModel::selectRaw('
+                /* $conteo = SolicitudTransferenciaModel::selectRaw('
                                 COUNT(CASE
                                         WHEN estado_solicitud_transferencia = 3
                                         AND fecha_inicio_solicitud_transferencia = CURDATE()
@@ -31,10 +31,10 @@ use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
                                         THEN 1
                                     END) as total_mes
                             ')
-                            ->first();
+                            ->first(); */
 
                     //PRODUCCION
-                    /* $conteo = SolicitudTransferenciaModel::selectRaw("
+                    $conteo = SolicitudTransferenciaModel::selectRaw("
                         COUNT(CASE
                             WHEN estado_solicitud_transferencia = 3
                             AND TRUNC(fecha_inicio_solicitud_transferencia) = TRUNC(SYSDATE)
@@ -54,7 +54,7 @@ use App\Models\SolicitudTransferencia\SolicitudTransferenciaModel;
                                 BETWEEN ADD_MONTHS(TRUNC(SYSDATE), -1) AND TRUNC(SYSDATE)
                             THEN 1
                         END) as total_mes
-                    ")->first(); */
+                    ")->first();
                 $data = new notificacionesResource($conteo);
 
                 return Responses::success(200, 'Consulta realizada', 'Consulta realiza con exito', 'success', $data);

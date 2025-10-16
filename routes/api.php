@@ -10,6 +10,7 @@ use App\Http\Controllers\DetalleUnidad\detalleUnidadController;
 use App\Http\Controllers\Documentos\documentoController;
 use App\Http\Controllers\Documentos\documentosTransferenciaController;
 use App\Http\Controllers\Municipios\municipiosController;
+use App\Http\Controllers\Otros\otrosController;
 use App\Http\Controllers\Serie\serieController;
 use App\Http\Controllers\SolicitudTransferencia\solicitudTransferencia;
 use App\Http\Controllers\Subserie\subserieController;
@@ -39,7 +40,7 @@ use Illuminate\Support\Facades\Route;
 
 
     Route::post('login', [authController::class, 'login']); //login
-    Route::get('observacion/{observacion}/{idDependencia}', [detalleUnidadController::class, 'buscarObservacion']);
+
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         Route::apiResource('usuarios', usuarioController::class); //Usuarios
 
@@ -63,6 +64,8 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiResource('dependencias', dependenciasController::class);
 
+        Route::apiResource('otros', otrosController::class);
+
         Route::get('series/{anio}', [serieController::class, 'listadoSeriesPorAnio']);
         Route::get('subseries/{idSerie}', [subserieController::class, 'listadoSubSeriesPorSerie']);
         Route::get('selectUnidades/{idDependencia}', [unidadesController::class, 'selectListUnidades']);
@@ -78,7 +81,7 @@ use Illuminate\Support\Facades\Route;
         Route::get('unidadesPorDependencia/{idDependencia}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
         Route::get('notificaciones', [solicitudTransferencia::class, 'listadoNotificaciones']);
 
-
+        Route::get('observacion/{observacion}/{idDependencia}', [detalleUnidadController::class, 'buscarObservacion']);
 
         Route::get('logout', [authController::class, 'logout']);
         Route::apiResource('transferencia', transferenciasController::class);

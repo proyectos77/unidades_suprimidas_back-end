@@ -28,6 +28,7 @@ class DetalleTransferenciaModel extends Model
         'cantidad_carpetas_detalle_transferencia',
         'cantidad_folios_detalle_transferencia',
         'cantidad_tomos_detalle_transferencia',
+        'descripcion_otro_detalle_transferencia',
         'cantidad_otros_detalle_transferencia',
         'porcentaje_detalle_transferencia',
         'id_estado',

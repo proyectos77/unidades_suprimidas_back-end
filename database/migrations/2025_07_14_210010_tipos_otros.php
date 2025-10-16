@@ -11,13 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('series', function (Blueprint $table) {
-            $table->unsignedInteger('id_serie')->autoIncrement();
-            $table->text('nombre_serie');
-            $table->integer('codigo_serie');
-            $table->integer('anio_inicio_serie');
-            $table->integer('anio_fin_serie');
-
+        Schema::create('tipos_otros', function (Blueprint $table) {
+            $table->unsignedInteger('id_tipo_otro')->autoIncrement();
+            $table->string('nombre_tipo_otro', 100);
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
         });
@@ -28,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('series');
+        //
     }
 };

@@ -45,7 +45,7 @@ class detalleUnidadController extends Controller
         //
     }
 
-    public function buscarObservacion(string $observacion, string $idDependencia){ {
+    public function buscarObservacion(string $observacion, string $idDependencia){
         return $this->buscarPorObservacion->buscarObservacion($observacion, $idDependencia);
     }
 

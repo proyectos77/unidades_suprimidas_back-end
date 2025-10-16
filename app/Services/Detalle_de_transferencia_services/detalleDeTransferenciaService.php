@@ -34,6 +34,7 @@ use App\Models\Transferencias\TransferenciasModel;
                         'cantidad_carpetas_detalle_transferencia'   => $value['cantidad_carpetas'] ?? 0,
                         'cantidad_folios_detalle_transferencia'     => $value['cantidad_folios'] ?? 0,
                         'cantidad_otros_detalle_transferencia'      => $value['cantidad_otros'] ?? 0,
+                        'descripcion_otro_detalle_transferencia'    => $value['descripcion_otro'] ?? null,
                         'cantidad_tomos_detalle_transferencia'      => $value['cantidad_tomos'] ?? 0,
                         'porcentaje_detalle_transferencia'          => $data['porcentaje_detalle_transferencia'] ?? 0,
                     ]);

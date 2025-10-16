@@ -65,6 +65,7 @@ class solicitudesTransferenciasResource extends ResourceCollection
                 'totalFolios' => $totales['cantidadFolios'],
                 'totalPorcentajeTransferencia' => $totales['porcentajeTransferencia'],
                 'totalOtros' => $totales['otros'],
+                'descripcionOtros' => $solicitud->transferencia?->detalletransferencia->descripcion_otro_detalle_transferencia ?? null,
                 // Si quieres mostrar todas las secciones, series y subseries involucradas
                 'secciones' => array_unique($secciones),
                 'series' => array_unique($series),
