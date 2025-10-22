@@ -27,7 +27,10 @@ class UnidadesModel extends Model
         'unidad_que_asume_archivo_unidad',
         'id_municipio',
         'id_estado',
-        'id_usuario'
+        'id_usuario',
+        'padre_unidad',
+        'codigo_unidad_activa',
+
     ];
 
     public function estados() {

@@ -14,17 +14,18 @@ return new class extends Migration
         Schema::create('unidades', function (Blueprint $table) {
             $table->unsignedInteger('id_unidad')->autoIncrement();
             $table->string('nombre_unidad');
-            $table->string('unidad_superior_jerarquicamente_unidad');
+            $table->string('unidad_superior_jerarquicamente_unidad')->nullable();
             $table->string('sigla_unidad', 20);
-            $table->string('unidad_que_asume_archivo_unidad');
-            $table->unsignedInteger('id_municipio')->default(1);
+            $table->string('unidad_que_asume_archivo_unidad')->nullable();
+
+            $table->unsignedInteger('id_municipio')->nullable();
             $table->foreign('id_municipio')->references('id_municipio')->on('municipios')->onDelete('cascade');
 
+            $table->unsignedInteger('id_usuario')->nullable();
+            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->onDelete('cascade')->nullable();
 
-            $table->unsignedInteger('id_usuario');
-            $table->foreign('id_usuario')->references('id_usuario')->on('usuarios')->onDelete('cascade');
-
-
+            $table->integer('padre_unidad')->nullable();
+            $table->string('codigo_unidad_activa')->unique()->nullable();
             $table->datetime('fecha_creacion_unidad')->useCurrent();
             $table->datetime('fecha_actualizacion_unidad')->useCurrent()->useCurrentOnUpdate();
             $table->unsignedInteger('id_estado')->default(1);
