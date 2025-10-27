@@ -34,7 +34,7 @@ class actualizarUnidadRequest extends FormRequest
             $reglas = [
                 'nombre'            => 'required|string',
                 'sigla'             => 'required|unique:unidades,sigla_unidad,' . $id . ',id_unidad',
-                'padreUnidad'       => 'required|string',
+                'padreUnidad'       => 'sometimes',
                 'idMunicipio'       => 'required|numeric',
             ];
         }elseif ($method === 'PATCH') {
@@ -74,8 +74,7 @@ class actualizarUnidadRequest extends FormRequest
             'sigla.required'                => 'El atributo sigla es requerido',
             'sigla.unique'                  => 'La sigla ya se encuentra registrada',
 
-            'padreUnidad.required'          => 'El atributo padre unidad es requerido',
-            'padreUnidad.string'            => 'El atributo padre unidad',
+
 
             'idMunicipio.required'          => 'El municipio es obligatorio',
             'idMunicipio.numeric'           => 'El municipio solo acepta numero'

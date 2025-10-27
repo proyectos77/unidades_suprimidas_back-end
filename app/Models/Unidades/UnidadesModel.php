@@ -48,4 +48,12 @@ class UnidadesModel extends Model
     public function usuario() {
         return $this->belongsTo(UsuariosModel::class, 'id_usuario', 'id_usuario');
     }
+
+    public function padre(){
+        return $this->belongsTo(self::class, 'padre_unidad', 'id_unidad');
+    }
+
+    public function hijos(){
+        return $this->hasMany(self::class, 'padre_unidad', 'id_unidad');
+    }
 }

@@ -12,7 +12,7 @@ class getInformacionUnidad
     public function informacionUnidad($id)
     {
         try {
-            $informacion = UnidadesModel::with(["detalleUnidad.archivo", "municipio.departamentos"])->find($id);
+            $informacion = UnidadesModel::with(["detalleUnidad.archivo", "municipio.departamentos", "padre"],)->find($id);
             $respuesta = $this->validarData($informacion);
             return $respuesta;
         } catch (\Exception $e) {

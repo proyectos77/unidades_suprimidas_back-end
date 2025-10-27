@@ -19,6 +19,7 @@ use App\Http\Controllers\Transferencias\transferenciasController;
 use App\Http\Controllers\Unidades\unidadesController;
 use App\Http\Controllers\Usuarios\usuarioController;
 use App\Http\Controllers\Utilidades\utilController;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,6 +42,8 @@ use Illuminate\Support\Facades\Route;
 
     Route::post('login', [authController::class, 'login']); //login
 
+
+
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         Route::apiResource('usuarios', usuarioController::class); //Usuarios
 
@@ -48,7 +51,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiResource('cargos', cargosController::class); //tipoUsuarios
 
-        Route::apiResource('unidades', unidadesController::class);
+
 
         Route::apiResource('solicitudesTransferencias', solicitudTransferencia::class);
 
@@ -66,6 +69,11 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiResource('otros', otrosController::class);
 
+        Route::get('listadoUnidadesActivas/{filtro?}', [unidadesController::class, 'listadoUnidadesActivas']);
+        Route::get('listadoUnidadesSuprimidas/{filtro?}', [unidadesController::class, 'listadoUnidadesSuprimidas']);
+        Route::get('unidadesPorDependencia/{idDependencia}/{filtro?}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
+        Route::apiResource('unidades', unidadesController::class);
+
         Route::get('series/{anio}', [serieController::class, 'listadoSeriesPorAnio']);
         Route::get('subseries/{idSerie}', [subserieController::class, 'listadoSubSeriesPorSerie']);
         Route::get('selectUnidades/{idDependencia}', [unidadesController::class, 'selectListUnidades']);
@@ -80,7 +88,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('municipios/{idDepartamento}', [municipiosController::class, 'getAllMunicipios']);
         Route::get('unidadesPorDependencia/{idDependencia}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
         Route::get('notificaciones', [solicitudTransferencia::class, 'listadoNotificaciones']);
-
         Route::get('observacion/{observacion}/{idDependencia}', [detalleUnidadController::class, 'buscarObservacion']);
 
         Route::get('logout', [authController::class, 'logout']);

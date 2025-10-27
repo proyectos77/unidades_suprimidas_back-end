@@ -21,12 +21,12 @@ class listadoUnidadesResource extends ResourceCollection
                 'unidad_superior_jerarquicamente'          => $unidad->unidad_superior_jerarquicamente_unidad,
                 'sigla'             => $unidad->sigla_unidad,
                 'unidad_que_asume_archivo_unidad'             => $unidad->unidad_que_asume_archivo_unidad,
-                'departamento'      => $unidad->municipio->departamentos->nombre_departamento,
-                'idDepartamento'    => $unidad->municipio->departamentos->id_departamento,
-                'municipio'         => $unidad->municipio->nombre_municipio,
-                'idMunicipio'       => $unidad->municipio->id_municipio,
-                'estado'            => $unidad->estados->nombre_estado,
-                'idEstado'          => $unidad->estados->id_estado
+                'departamento'      => $unidad->municipio?->departamentos?->nombre_departamento,
+                'idDepartamento'    => $unidad->municipio?->departamentos?->id_departamento,
+                'municipio'         => $unidad->municipio?->nombre_municipio,
+                'idMunicipio'       => $unidad->municipio?->id_municipio,
+                'estado'            => $unidad->estados?->nombre_estado,
+                'idEstado'          => $unidad->estados?->id_estado
 
             ];
         })->toArray();

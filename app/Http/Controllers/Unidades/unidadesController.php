@@ -7,6 +7,7 @@ use App\Http\Requests\Unidades_request\actualizarUnidadRequest;
 use App\Http\Requests\Unidades_request\registroUnidadRequest;
 use App\Services\Unidades_services\getAllUnidadesPorDependenciaService;
 use App\Services\Unidades_services\getInformacionUnidad;
+use App\Services\Unidades_services\listadoUnidadesActivasService;
 use App\Services\Unidades_services\listadoUnidadesArchivoSevice;
 use App\Services\Unidades_services\listadoUnidadesConDetalleServices;
 use App\Services\Unidades_services\listadoUnidadesServices;
@@ -24,6 +25,8 @@ class unidadesController extends Controller
     protected $selectUndiadesConDetalle;
     protected $selectUnidadesArchivo;
     protected $getAllUnidadesPorDependencia;
+    protected $listadoUnidadesActivas;
+
     public function __construct(
         registroUnidadesServices $registroUnidades,
         listadoUnidadesServices $listadoUnidades,
@@ -32,7 +35,8 @@ class unidadesController extends Controller
         getInformacionUnidad $informacionUnidad,
         listadoUnidadesConDetalleServices $selectUndiadesConDetalle,
         listadoUnidadesArchivoSevice $selectUnidadesArchivo,
-        getAllUnidadesPorDependenciaService $getAllUnidadesPorDependencia
+        getAllUnidadesPorDependenciaService $getAllUnidadesPorDependencia,
+        listadoUnidadesActivasService $listadoUnidadesActivas
     ) {
         $this->registroUnidades = $registroUnidades;
         $this->listadoUnidades = $listadoUnidades;
@@ -42,11 +46,12 @@ class unidadesController extends Controller
         $this->selectUndiadesConDetalle = $selectUndiadesConDetalle;
         $this->selectUnidadesArchivo = $selectUnidadesArchivo;
         $this->getAllUnidadesPorDependencia = $getAllUnidadesPorDependencia;
+        $this->listadoUnidadesActivas = $listadoUnidadesActivas;
     }
 
     public function index()
     {
-        return $this->listadoUnidades->getAllUnidades();
+
     }
 
     public function store(registroUnidadRequest $request)
@@ -84,6 +89,15 @@ class unidadesController extends Controller
     public function getAllUnidadesPorDependencia($idDependencia)
     {
         return $this->getAllUnidadesPorDependencia->getAllUnidadesDependencia($idDependencia);
+    }
 
+    public function listadoUnidadesActivas($filtro = null)
+    {
+        return $this->listadoUnidadesActivas->getListadoUnidadesActivas($filtro);
+    }
+
+    public function listadoUnidadesSuprimidas($filtro = null)
+    {
+        return $this->listadoUnidades->getAllUnidades($filtro);
     }
 }

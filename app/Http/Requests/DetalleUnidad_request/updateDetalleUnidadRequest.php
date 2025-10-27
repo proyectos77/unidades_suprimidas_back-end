@@ -37,9 +37,8 @@ class updateDetalleUnidadRequest extends FormRequest
                 'actoAdministrativoDesactivacion'   => 'required|string',
                 'fechaCreacionUnidad'               => 'required|date',
                 'fechaDesactivacionUnidad'          => 'required|date',
-                'puestoMandoAdelantado'             => 'required|string',
-                'puestoMandoAtrasado'               => 'required|string',
                 'observacion'                       => 'required|string',
+                'planReorganizacionDiorg'                  => 'required|string'
             ];
         }elseif ($method === 'PATCH') {
             return [
@@ -47,8 +46,7 @@ class updateDetalleUnidadRequest extends FormRequest
                 'actoAdministrativoDesactivacion'    => 'sometimes|string',
                 'fechaCreacionUnidad'                => 'sometimes|date',
                 'fechaDesactivacionUnidad'           => 'sometimes|date',
-                'puestoMandoAdelantado'              => 'sometimes|string',
-                'puestoMandoAtrasado'                => 'sometimes|string',
+                'planReorganizacionDiorg'             => 'sometimes|string',
                 'observacion'                        => 'sometimes|string',
             ];
         }
@@ -63,7 +61,8 @@ class updateDetalleUnidadRequest extends FormRequest
             'fecha_desactivacion_unidad_detalle' => $this->fechaDesactivacionUnidad ?? null,
             'puesto_mando_adelantado_detalle' => $this->puestoMandoAdelantado ?? null,
             'puesto_mando_atrasado_detalle' => $this->puestoMandoAtrasado ?? null,
-            'observacion_detalle' => $this->observacion ?? null
+            'observacion_detalle' => $this->observacion ?? null,
+            'plan_reorganizacion_diorg_detalle' => $this->planReorganizacionDiorg ?? null
         ];
 
         $this->merge(array_filter($data, function ($value) {
@@ -85,12 +84,6 @@ class updateDetalleUnidadRequest extends FormRequest
 
             'fechaDesactivacionUnidad.required'                 => 'El atributo fecha desactivacion unidad es requerido',
             'fechaDesactivacionUnidad.date'                     => 'El atributo fehca desactivacion no tiene un formato de fecha valido',
-
-            'puestoMandoAdelantado.string'                      => 'El atributo puesto de m ando adelantado solo acepta letras',
-            'puestoMandoAdelantado.required'                    => 'El atributo puesto de m ando adelantado es requerido',
-
-            'puestoMandoAtrasado.string'                        => 'El atributo puesto de m ando atrasado solo acepta letras',
-            'puestoMandoAtrasado.required'                      => 'El atributo puesto de m ando atrasado es requerido',
 
             'observacion.string'                                => 'El atributo observacion solo acepta letras',
             'observacion.required'                              => 'El atributo observacion es requerido',
