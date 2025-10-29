@@ -9,7 +9,7 @@ use App\Models\Unidades\UnidadesModel;
 
     class listadoUnidadesActivasService
     {
-        public function getListadoUnidadesActivas($filtro = null)
+        public function getListadoUnidadesActivas($filtro = null, $idUnidadPadre = null)
         {
             try {
 
@@ -26,7 +26,15 @@ use App\Models\Unidades\UnidadesModel;
                     });
                     $unidadesActivas = $query->get();
                     $dataPaginacion = null;
-                } else {
+                }elseif ($idUnidadPadre) {
+                    $unidadesActivas = UnidadesModel::where('padre_unidad', $idUnidadPadre)->where('id_estado', 1)->paginate(10);
+                    $dataPaginacion = generalHelper::infoPagination(
+                        $unidadesActivas->total(),
+                        $unidadesActivas->perPage(),
+                        $unidadesActivas->currentPage(),
+                        $unidadesActivas->lastPage()
+                    );
+                }else {
                     $unidadesActivas = $query->paginate(10);
                     $dataPaginacion = generalHelper::infoPagination(
                         $unidadesActivas->total(),

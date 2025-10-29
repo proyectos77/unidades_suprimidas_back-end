@@ -48,4 +48,5 @@ class DetalleUnidadModel extends Model
     public function unidad() {
         return $this->belongsTo(UnidadesModel::class, 'id_unidad', 'id_unidad');
     }
+
 }

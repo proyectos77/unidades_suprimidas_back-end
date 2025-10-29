@@ -7,9 +7,12 @@ use App\Http\Requests\Unidades_request\actualizarUnidadRequest;
 use App\Http\Requests\Unidades_request\registroUnidadRequest;
 use App\Services\Unidades_services\getAllUnidadesPorDependenciaService;
 use App\Services\Unidades_services\getInformacionUnidad;
+use App\Services\Unidades_services\getRutaUnidadActivaService;
 use App\Services\Unidades_services\listadoUnidadesActivasService;
 use App\Services\Unidades_services\listadoUnidadesArchivoSevice;
 use App\Services\Unidades_services\listadoUnidadesConDetalleServices;
+use App\Services\Unidades_services\listadoUnidadesHijasActivas;
+use App\Services\Unidades_services\listadoUnidadesPadreActivas;
 use App\Services\Unidades_services\listadoUnidadesServices;
 use App\Services\Unidades_services\registroUnidadesServices;
 use App\Services\Unidades_services\selectUnidadesServices;
@@ -26,6 +29,9 @@ class unidadesController extends Controller
     protected $selectUnidadesArchivo;
     protected $getAllUnidadesPorDependencia;
     protected $listadoUnidadesActivas;
+    protected $rutaArchivoUnidadActiva;
+    protected $listadoUnidadesPadreActivas;
+    protected $listadoUnidadesHijasActivas;
 
     public function __construct(
         registroUnidadesServices $registroUnidades,
@@ -36,7 +42,10 @@ class unidadesController extends Controller
         listadoUnidadesConDetalleServices $selectUndiadesConDetalle,
         listadoUnidadesArchivoSevice $selectUnidadesArchivo,
         getAllUnidadesPorDependenciaService $getAllUnidadesPorDependencia,
-        listadoUnidadesActivasService $listadoUnidadesActivas
+        listadoUnidadesActivasService $listadoUnidadesActivas,
+        getRutaUnidadActivaService $rutaArchivoUnidadActiva,
+        listadoUnidadesPadreActivas $listadoUnidadesPadreActivas,
+        listadoUnidadesHijasActivas $listadoUnidadesHijasActivas
     ) {
         $this->registroUnidades = $registroUnidades;
         $this->listadoUnidades = $listadoUnidades;
@@ -47,6 +56,9 @@ class unidadesController extends Controller
         $this->selectUnidadesArchivo = $selectUnidadesArchivo;
         $this->getAllUnidadesPorDependencia = $getAllUnidadesPorDependencia;
         $this->listadoUnidadesActivas = $listadoUnidadesActivas;
+        $this->rutaArchivoUnidadActiva = $rutaArchivoUnidadActiva;
+        $this->listadoUnidadesPadreActivas = $listadoUnidadesPadreActivas;
+        $this->listadoUnidadesHijasActivas = $listadoUnidadesHijasActivas;
     }
 
     public function index()
@@ -99,5 +111,25 @@ class unidadesController extends Controller
     public function listadoUnidadesSuprimidas($filtro = null)
     {
         return $this->listadoUnidades->getAllUnidades($filtro);
+    }
+
+    public function rutaUnidadActiva($idUnidad)
+    {
+        return $this->rutaArchivoUnidadActiva->getRuta($idUnidad);
+    }
+
+    public function listadoUnidadesPadreActivas()
+    {
+        return $this->listadoUnidadesPadreActivas->getListadoUnidadesPadreActivas();
+    }
+
+    public function listadoUnidadesActivasPorPadre($idUnidadPadre)
+    {
+        return $this->listadoUnidadesActivas->getListadoUnidadesActivas('', $idUnidadPadre);
+    }
+
+    public function listadoUnidadesHijasActivas($idUnidadPadre){
+        return $this->listadoUnidadesHijasActivas->getListadoUnidadesHijasActivas($idUnidadPadre);
+
     }
 }

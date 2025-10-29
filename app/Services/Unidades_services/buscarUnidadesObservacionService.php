@@ -13,7 +13,7 @@ use App\Models\DetalleUnidad\DetalleUnidadModel;
         function buscarObservacion($observacion, $idDependencia) {
 
             try {
-                $unidades = DetalleUnidadModel::where('observacion_detalle', 'LIKE', "%$observacion%")->with(['unidad', 'unidad.estados', 'unidad.municipio.departamentos'])->paginate(10);
+                $unidades = DetalleUnidadModel::where([['observacion_detalle', 'LIKE', "%$observacion%"], ['id_estado', '=', 6]])->with(['unidad', 'unidad.estados', 'unidad.municipio.departamentos'])->paginate(10);
 
                 if ($unidades->isEmpty()) {
                     return Responses::warning(404, 'No hay ressultados', 'No se encontraron unidades con la observación proporcionada.', []);

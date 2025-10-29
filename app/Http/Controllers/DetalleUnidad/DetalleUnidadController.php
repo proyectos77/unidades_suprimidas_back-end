@@ -8,6 +8,7 @@ use App\Http\Requests\DetalleUnidad_request\updateDetalleUnidadRequest;
 use App\Services\DetalleUnidad_services\actualizarDetalleUnidadServices;
 use App\Services\DetalleUnidad_services\gestionDetalleUnidadServices;
 use App\Services\DetalleUnidad_services\registroDetalleUnidadServices;
+use App\Services\Unidades_services\buscarUnidadesActivasObservacionService;
 use App\Services\Unidades_services\buscarUnidadesObservacionService;
 use Illuminate\Http\Request;
 
@@ -17,11 +18,18 @@ class detalleUnidadController extends Controller
     protected $registroDetalle;
     protected $updateDetalle;
     protected $buscarPorObservacion;
+    protected $busquedaUnidadActivaObservacion;
 
-    public function __construct(registroDetalleUnidadServices $registroDetalle, actualizarDetalleUnidadServices $updateDetalle, buscarUnidadesObservacionService $buscarPorObservacion) {
+    public function __construct(
+        registroDetalleUnidadServices $registroDetalle,
+        actualizarDetalleUnidadServices $updateDetalle,
+        buscarUnidadesObservacionService $buscarPorObservacion,
+        buscarUnidadesActivasObservacionService $busquedaUnidadActivaObservacion
+    ) {
         $this->registroDetalle = $registroDetalle;
         $this->updateDetalle = $updateDetalle;
         $this->buscarPorObservacion = $buscarPorObservacion;
+        $this->busquedaUnidadActivaObservacion = $busquedaUnidadActivaObservacion;
     }
 
     public function index(){
@@ -47,6 +55,10 @@ class detalleUnidadController extends Controller
 
     public function buscarObservacion(string $observacion, string $idDependencia){
         return $this->buscarPorObservacion->buscarObservacion($observacion, $idDependencia);
+    }
+
+    public function buscarObservacionUnidadActiva(string $observacion){
+        return $this->busquedaUnidadActivaObservacion->buscarUnidadActivaObservacion($observacion);
     }
 
 

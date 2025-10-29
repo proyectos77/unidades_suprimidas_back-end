@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Archivo\archivoController;
+use App\Http\Controllers\ArchivoUnidadesActivas\ArchivoUnidadActivaController;
 use App\Http\Controllers\Auth\authController;
 use App\Http\Controllers\Cargos\cargosController;
 use App\Http\Controllers\Departamentos\departamentosController;
@@ -41,6 +42,16 @@ use Illuminate\Support\Facades\Route;
 
 
     Route::post('login', [authController::class, 'login']); //login
+
+    Route::apiResource('archivoUnidadesActivas', ArchivoUnidadActivaController::class); //archivoUnidadesActivas
+
+    Route::get('rutaunidadactiva/{idUnidad}', [unidadesController::class, 'rutaUnidadActiva']);
+    Route::get('observacionUnidadActiva/{observacion}', [detalleUnidadController::class, 'buscarObservacionUnidadActiva']);
+
+    Route::get('unidadPadreActivas', [unidadesController::class, 'listadoUnidadesPadreActivas']);
+    Route::get('listadoUnidadesActivasPorPadre/{idUnidadPadre}', [unidadesController::class, 'listadoUnidadesActivasPorPadre']);
+
+    Route::get('listadoUnidadesHijasActivas/{idPadre}', [unidadesController::class, 'listadoUnidadesHijasActivas']);
 
 
 
