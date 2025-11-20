@@ -31,6 +31,7 @@ class listadoUnidadesActivasResource extends ResourceCollection
                     'id_unidad'                             => $unidad->padre->id_unidad,
                     'nombre_unidad'                         => $unidad->padre->nombre_unidad,
                 ] : null,
+                'id_detalle'                                => $unidad->detalleUnidad?->id_detalle,
 
             ];
         })->toArray();

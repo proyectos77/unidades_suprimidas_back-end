@@ -53,7 +53,12 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('listadoUnidadesHijasActivas/{idPadre}', [unidadesController::class, 'listadoUnidadesHijasActivas']);
 
+    Route::get('unidadesPorDependencia/{idDependencia}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
+    Route::get('listadoUnidadesActivas/{filtro?}', [unidadesController::class, 'listadoUnidadesActivas']);
 
+    Route::get('selectUnidadesArchivo/{idDependencia}', [unidadesController::class, 'selectListUnidadesArchivo']);
+
+    Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'listArchivoPorUnidad']);
 
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         Route::apiResource('usuarios', usuarioController::class); //Usuarios
@@ -80,7 +85,7 @@ use Illuminate\Support\Facades\Route;
 
         Route::apiResource('otros', otrosController::class);
 
-        Route::get('listadoUnidadesActivas/{filtro?}', [unidadesController::class, 'listadoUnidadesActivas']);
+
         Route::get('listadoUnidadesSuprimidas/{filtro?}', [unidadesController::class, 'listadoUnidadesSuprimidas']);
         Route::get('unidadesPorDependencia/{idDependencia}/{filtro?}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
         Route::apiResource('unidades', unidadesController::class);
@@ -89,15 +94,15 @@ use Illuminate\Support\Facades\Route;
         Route::get('subseries/{idSerie}', [subserieController::class, 'listadoSubSeriesPorSerie']);
         Route::get('selectUnidades/{idDependencia}', [unidadesController::class, 'selectListUnidades']);
         Route::get('selectUnidadConDetalle/{idDependencia}', [unidadesController::class, 'selectListUnidadesConDetalle']);
-        Route::get('selectUnidadesArchivo/{idDependencia}', [unidadesController::class, 'selectListUnidadesArchivo']);
+
         Route::get('anios', [utilController::class, 'listAnio']);
-        Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'listArchivoPorUnidad']);
+
         Route::get('archivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'archivoPorUnidad']);
         Route::get('listadoTransferenciasPorArchivo/{idArchivo}', [transferenciasController::class, 'listadoTransferenciaPorArchivo']);
         Route::get('listadoSolicitudes/{idUsuario}/{idTipoUsuario}', [solicitudTransferencia::class, 'listadoDeSolicitudesPorUsuario']);
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
         Route::get('municipios/{idDepartamento}', [municipiosController::class, 'getAllMunicipios']);
-        Route::get('unidadesPorDependencia/{idDependencia}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
+
         Route::get('notificaciones', [solicitudTransferencia::class, 'listadoNotificaciones']);
         Route::get('observacion/{observacion}/{idDependencia}', [detalleUnidadController::class, 'buscarObservacion']);
 

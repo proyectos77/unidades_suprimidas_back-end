@@ -31,9 +31,11 @@ use App\Models\Usuarios\UsuariosModel;
                     $unidades = $query->get();
                     $dataPaginacion = null;
                 }else{
+
                     $unidades = $query->paginate(10);
-                    if ($unidades->isEmpty()) {
                         $dataPaginacion = generalHelper::infoPagination($unidades->total(), $unidades->perPage(), $unidades->currentPage(), $unidades->lastPage());
+                    if ($unidades->isEmpty()) {
+
                     }
                 }
 

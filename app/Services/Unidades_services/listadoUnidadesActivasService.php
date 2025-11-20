@@ -13,7 +13,7 @@ use App\Models\Unidades\UnidadesModel;
         {
             try {
 
-                $query = UnidadesModel::where('id_estado', 1)->with('padre');
+                $query = UnidadesModel::where('id_estado', 1)->with(['padre', 'detalleUnidad']);
 
                 if ($filtro) {
                     $filtro = strtolower($filtro);
@@ -27,7 +27,7 @@ use App\Models\Unidades\UnidadesModel;
                     $unidadesActivas = $query->get();
                     $dataPaginacion = null;
                 }elseif ($idUnidadPadre) {
-                    $unidadesActivas = UnidadesModel::where('padre_unidad', $idUnidadPadre)->where('id_estado', 1)->paginate(10);
+                    $unidadesActivas = UnidadesModel::where('padre_unidad', $idUnidadPadre)->where('id_estado', 1)->with(['padre', 'detalleUnidad'])->paginate(10);
                     $dataPaginacion = generalHelper::infoPagination(
                         $unidadesActivas->total(),
                         $unidadesActivas->perPage(),
