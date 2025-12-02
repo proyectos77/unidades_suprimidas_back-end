@@ -5,6 +5,7 @@
 use App\Http\Responses\Responses;
 use App\Models\Documentos\DocumentosModel;
 use App\Models\DocumentoTransferencia\DocumentoTransferenciaModel;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
     class registroDocumentosService
     {
@@ -61,7 +62,7 @@ use App\Models\DocumentoTransferencia\DocumentoTransferenciaModel;
             );
 
             if(!$documento){
-                throw new \Exception('No se puedo realizar el registro del documento.');
+                throw new HttpException(422,'No se puedo realizar el registro del documento.');
             }
 
             if ($op === 1) {

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->integer('cantidad_otros_detalle_transferencia')->nullable();
             $table->string('descripcion_otro_detalle_transferencia', 200)->nullable();
             $table->integer('cantidad_tomos_detalle_transferencia')->nullable();
+            $table->integer('cantidad_libros_detalle_transferencia')->nullable();
             $table->integer('cantidad_folios_detalle_transferencia');
             $table->decimal('porcentaje_detalle_transferencia', 10, 1);
             $table->datetime('fecha_creacion_detalle_transferencia')->useCurrent();

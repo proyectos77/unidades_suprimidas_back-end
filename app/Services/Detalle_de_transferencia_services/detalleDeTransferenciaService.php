@@ -2,9 +2,10 @@
 
     namespace App\Services\Detalle_de_transferencia_services;
 
-use App\Models\Archivo\ArchivoModel;
-use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
-use App\Models\Transferencias\TransferenciasModel;
+    use App\Models\Archivo\ArchivoModel;
+    use App\Models\DetalleTransferencia\DetalleTransferenciaModel;
+    use App\Models\Transferencias\TransferenciasModel;
+    use Symfony\Component\HttpKernel\Exception\HttpException;
 
     class detalleDeTransferenciaService
     {
@@ -40,7 +41,7 @@ use App\Models\Transferencias\TransferenciasModel;
                     ]);
 
                     if(!$registro){
-                        throw new \Exception('No se puedo realizar el registro.');
+                        throw new HttpException(422, 'No se puedo realizar el registro.');
                     }
 
 
@@ -56,7 +57,7 @@ use App\Models\Transferencias\TransferenciasModel;
             $archivo = ArchivoModel::find($idArchivo);
 
             if($archivo == null){
-                throw new \Exception('El archivo no existe.');
+                throw new HttpException(422, 'El archivo no existe.');
             }
 
             return $archivo;
@@ -84,27 +85,27 @@ use App\Models\Transferencias\TransferenciasModel;
 
             /* $porcentaje = ($cantidadCajasTransferencia / $cantidades->numero_cajas_archivos) * 100; */
             if (($cantidadCajasTransferencia + $totalCajas ) > $cantidades->numero_cajas_archivos) {
-                throw new \Exception("La cantidad de cajas ({$cantidadCajasTransferencia}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de cajas ({$cantidades->numero_cajas_archivos}), total de cajas en solicitudes y transferencias aprobadas: {$totalCajas}.");
+                throw new HttpException(422, "La cantidad de cajas ({$cantidadCajasTransferencia}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de cajas ({$cantidades->numero_cajas_archivos}), total de cajas en solicitudes y transferencias aprobadas: {$totalCajas}.");
             }
 
             // 2. Validar Carpetas
             if (($cantidadCarpetas + $totalCarpetas) > $cantidades->numero_carpetas_archivo) {
-                throw new \Exception("La cantidad de carpetas ({$cantidadCarpetas}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de carpetas ({$cantidades->numero_carpetas_archivo}).");
+                throw new HttpException(422, "La cantidad de carpetas ({$cantidadCarpetas}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de carpetas ({$cantidades->numero_carpetas_archivo}).");
             }
 
             // 3. Validar Folios
             if (($cantidadFolios + $totalFolios) > $cantidades->numero_folios_archivo) {
-                throw new \Exception("La cantidad de folios ({$cantidadFolios}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de folios ({$cantidades->numero_folios_archivo}).");
+                throw new HttpException(422, "La cantidad de folios ({$cantidadFolios}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de folios ({$cantidades->numero_folios_archivo}).");
             }
 
             // 4. Validar Otros (solo si ambos valores existen)
             if (!is_null($cantidades->numero_otros_archivo) && !is_null($cantidadOtros) && ($cantidadOtros + $totalOtros) > $cantidades->numero_otros_archivo) {
-                throw new \Exception("La cantidad de 'otros' ({$cantidadOtros}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de 'otros' ({$cantidades->numero_otros_archivo}).");
+                throw new HttpException(422, "La cantidad de 'otros' ({$cantidadOtros}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de 'otros' ({$cantidades->numero_otros_archivo}).");
             }
 
             // 5. Validar Tomos (solo si ambos valores existen)
             if (!is_null($cantidades->numero_tomos_archivo) && !is_null($cantidadTomos) && ($cantidadTomos + $totalTomos) > $cantidades->numero_tomos_archivo) {
-                throw new \Exception("La cantidad de 'tomos' ({$cantidadTomos}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de 'tomos' ({$cantidades->numero_tomos_archivo}).");
+                throw new HttpException(422, "La cantidad de 'tomos' ({$cantidadTomos}) sumadas a las solicitudes de transferencias y transferencias aprobadas supera el límite del archivo registrado de 'tomos' ({$cantidades->numero_tomos_archivo}).");
             }
 
             return round($porcentajeTotal, 2);

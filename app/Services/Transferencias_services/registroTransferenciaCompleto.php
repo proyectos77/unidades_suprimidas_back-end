@@ -7,6 +7,7 @@ use App\Services\Detalle_de_transferencia_services\detalleDeTransferenciaService
 use App\Services\Documentos_services\registroDocumentosService;
 use App\Services\DocumentosTransferencias_services\documentosTransferencias;
 use App\Services\SolicitudTransferencia\registroSolicitudTransferencia;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Support\Facades\DB;
 
     class registroTransferenciaCompleto{
@@ -47,9 +48,22 @@ use Illuminate\Support\Facades\DB;
                 DB::commit();
 
                 return Responses::success(200, 'Registro', 'Registro de transferencia exitoso', 'success', $documentos);
+            } catch (HttpException $e) {
+                DB::rollBack();
+                return Responses::warning(
+                    $e->getStatusCode(),  // <- Este sí devuelve 422
+                    'Cuidado',
+                    $e->getMessage(),
+                    $e->getMessage()
+                );
             } catch (\Exception $e) {
                 DB::rollBack();
-                return Responses::error(500, 'Error',  $e->getMessage(), $e->getMessage());
+                return Responses::error(
+                    500,
+                    'Error',
+                    $e->getMessage(),
+                    $e->getMessage()
+                );
             }
 
         }
