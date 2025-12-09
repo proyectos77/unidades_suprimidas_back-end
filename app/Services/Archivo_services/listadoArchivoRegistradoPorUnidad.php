@@ -13,7 +13,7 @@ use App\Models\Archivo\ArchivoModel;
 
             try {
 
-                $archivo = ArchivoModel::with(['detalleUnidad', 'transferencias.solicitudes', 'transferencias.detalleTransferencias'])->where('id_detalle', $idDetalle)->paginate(10);
+                $archivo = ArchivoModel::with(['detalleUnidad', 'transferencias.solicitudes', 'transferencias.detalleTransferencias'])->where('id_detalle', $idDetalle)->orderBy('anio_registro_archivo', 'asc')->paginate(10);
 
                 $data = new listadoArchivoPorUnidadResource($archivo);
                 $dataPaginacion = generalHelper::infoPagination($archivo->total(), $archivo->perPage(), $archivo->currentPage(), $archivo->lastPage());
