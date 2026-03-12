@@ -47,6 +47,12 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
             $nombreArchivo = pathinfo($data->getClientOriginalName(), PATHINFO_FILENAME);
             $extension = $data->getClientOriginalExtension();
 
+            // Validación de tamaño máximo (10 MB)
+            $maxSize = 10 * 1024 * 1024; // 10 MB en bytes
+            if ($data->getSize() > $maxSize) {
+                throw new HttpException(422, 'El archivo supera el tamaño máximo permitido de 10 MB.');
+            }
+
             // Agregar fecha y hora al nombre del archivo
             $fechaHora = date('Ymd_His');
             $nombrePersonalizado = $nombreArchivo . '_' . $fechaHora . '.' . $extension;

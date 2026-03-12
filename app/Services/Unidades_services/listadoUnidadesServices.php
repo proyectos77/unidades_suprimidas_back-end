@@ -23,7 +23,7 @@ use App\Models\Unidades\UnidadesModel;
                             ->orWhereRaw('LOWER(unidad_que_asume_archivo_unidad) LIKE ?', ["%{$filtro}%"]);
                     });
 
-                    $unidades = $query->get();
+                    $unidades = $query->get();  
                     $dataPaginacion = null;
                 }else{
                     $unidades = $query->paginate(10);

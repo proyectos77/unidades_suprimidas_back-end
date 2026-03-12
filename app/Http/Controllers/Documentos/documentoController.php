@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Documentos;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Documento\informacionDocumentoService;
+use App\Http\Responses\Responses;
 use App\Services\Documentos_services\registroDocumentosService;
 use Illuminate\Http\Request;
 
@@ -36,7 +37,18 @@ class documentoController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->registroDocumento->gestionRegistro($request, $op=1);
+        try {
+            return $this->registroDocumento->gestionRegistro($request, $op=1);
+        } catch (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
+            /* return response()->json([
+                'status' => 422,
+                'titulo' => 'Error de validación',
+                'mensaje' => $e->getMessage(),
+                'icono' => 'error',
+            ], 422); */
+
+            return Responses::error(422, 'Error de validación', $e->getMessage(), '');
+        }
     }
 
     /**
