@@ -7,78 +7,62 @@ use App\Http\Resources\Documento\informacionDocumentoService;
 use App\Http\Responses\Responses;
 use App\Services\Documentos_services\registroDocumentosService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class documentoController extends Controller
 {
-
     private $informacionDocumento;
     private $registroDocumento;
 
-    public function __construct(informacionDocumentoService $informacionDocumento, registroDocumentosService $registroDocumento) {
+    public function __construct(
+        informacionDocumentoService $informacionDocumento,
+        registroDocumentosService $registroDocumento
+    ) {
         $this->informacionDocumento = $informacionDocumento;
         $this->registroDocumento = $registroDocumento;
     }
 
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         try {
-            return $this->registroDocumento->gestionRegistro($request, $op=1);
+            return $this->registroDocumento->gestionRegistro($request, $op = 1);
         } catch (\Symfony\Component\HttpKernel\Exception\HttpException $e) {
-            /* return response()->json([
-                'status' => 422,
-                'titulo' => 'Error de validación',
-                'mensaje' => $e->getMessage(),
-                'icono' => 'error',
-            ], 422); */
-
             return Responses::error(422, 'Error de validación', $e->getMessage(), '');
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id){
+    public function show(string $id)
+    {
         return $this->informacionDocumento->verDocumento($id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function verDocumento($ruta)
     {
-        //
-    }
+        $disk = config('filesystems.default');
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if (!Storage::disk($disk)->exists($ruta)) {
+            return response()->json([
+                'error' => 'Archivo no encontrado'
+            ], 404);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // 🔥 RUTA REAL (SIN depender de Storage::path)
+        $fullPath = '/bodega/unidades-suprimidas/' . $ruta;
+
+        if (!file_exists($fullPath)) {
+            return response()->json([
+                'error' => 'Archivo no existe físicamente'
+            ], 404);
+        }
+
+        // 🔥 MIME con PHP
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $mime = finfo_file($finfo, $fullPath);
+        finfo_close($finfo);
+
+        return response()->file($fullPath, [
+            'Content-Type' => $mime,
+            'Content-Disposition' => 'inline',
+        ]);
     }
 }

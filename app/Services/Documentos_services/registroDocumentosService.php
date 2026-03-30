@@ -1,83 +1,104 @@
 <?php
 
-    namespace App\Services\Documentos_services;
+namespace App\Services\Documentos_services;
 
 use App\Http\Responses\Responses;
 use App\Models\Documentos\DocumentosModel;
 use App\Models\DocumentoTransferencia\DocumentoTransferenciaModel;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Illuminate\Support\Facades\Storage;
 
-    class registroDocumentosService
+class registroDocumentosService
+{
+    public function gestionRegistro($data, $op = null)
     {
-        public function gestionRegistro($data, $op= null){
-
-            if ($op === 1) {
-                $idTransferencia = $data->id_transferencia;
-                $data = $data->allFiles();
-
-            }
-
-            // Si es un solo archivo (UploadedFile), lo meto en un array
-            if ($data instanceof \Illuminate\Http\UploadedFile) {
-                $data = [$data];
-            }
-
-            // Si viene como array asociativo de archivos (ej: ["documento" => UploadedFile])
-            if (is_array($data) && !array_is_list($data)) {
-                $data = array_values($data); // reindexa el array a 0,1,2...
-            }
-
-            $documentos = [];
-
-            foreach ($data as $archivo) {
-                $documento = $this->registroDocumento($archivo, $op, $idTransferencia ?? null);
-                $documentos[] = $documento;
-            }
-
-            if ($op === 1) {
-                return Responses::success(200, 'Registro exitoso', 'Documentos registrados con éxito', 'success', $documentos);
-            }else{
-                return $documentos;
-            }
-
+        if ($op === 1) {
+            $idTransferencia = $data->id_transferencia;
+            $data = $data->allFiles();
         }
 
-        private function registroDocumento($data, $op, $idTransferencia = null){
-            $carpetaDestino = "documents";
-            $nombreArchivo = pathinfo($data->getClientOriginalName(), PATHINFO_FILENAME);
-            $extension = $data->getClientOriginalExtension();
+        if ($data instanceof \Illuminate\Http\UploadedFile) {
+            $data = [$data];
+        }
 
-            // Validación de tamaño máximo (10 MB)
-            $maxSize = 10 * 1024 * 1024; // 10 MB en bytes
-            if ($data->getSize() > $maxSize) {
-                throw new HttpException(422, 'El archivo supera el tamaño máximo permitido de 10 MB.');
-            }
+        if (is_array($data) && !array_is_list($data)) {
+            $data = array_values($data);
+        }
 
-            // Agregar fecha y hora al nombre del archivo
-            $fechaHora = date('Ymd_His');
-            $nombrePersonalizado = $nombreArchivo . '_' . $fechaHora . '.' . $extension;
+        $documentos = [];
 
-            $ruta = $data->storeAs($carpetaDestino, $nombrePersonalizado, 'public');
+        foreach ($data as $archivo) {
+            $documentos[] = $this->registroDocumento($archivo, $op, $idTransferencia ?? null);
+        }
 
-            $documento = DocumentosModel::create(
-                [
-                    'nombre_documento' => $nombrePersonalizado,
-                    'url_documento' => $ruta,
-                    'extension_documento' => $extension,
-                ]
+        if ($op === 1) {
+            return Responses::success(
+                200,
+                'Registro exitoso',
+                'Documentos registrados con éxito',
+                'success',
+                $documentos
             );
-
-            if(!$documento){
-                throw new HttpException(422,'No se puedo realizar el registro del documento.');
-            }
-
-            if ($op === 1) {
-                DocumentoTransferenciaModel::create([
-                    'id_transferencia' => $idTransferencia,
-                    'id_documento' => $documento->id_documento,
-                ]);
-            }
-
-            return $documento;
         }
+
+        return $documentos;
     }
+
+    private function registroDocumento($data, $op, $idTransferencia = null)
+    {
+        $carpetaDestino = "documents";
+
+        $nombreArchivo = pathinfo($data->getClientOriginalName(), PATHINFO_FILENAME);
+        $extension = $data->getClientOriginalExtension();
+
+        // 🔥 Validación de tamaño (10MB)
+        $maxSize = 10 * 1024 * 1024;
+        if ($data->getSize() > $maxSize) {
+            throw new HttpException(422, 'El archivo supera el tamaño máximo permitido de 10 MB.');
+        }
+
+        $fechaHora = date('Ymd_His');
+        $nombrePersonalizado = $nombreArchivo . '_' . $fechaHora . '.' . $extension;
+
+        // 🔥 DISK CONFIGURADO
+        $disk = config('filesystems.default');
+
+        // 🔥 GUARDAR ARCHIVO
+        $ruta = $data->storeAs(
+            $carpetaDestino,
+            $nombrePersonalizado,
+            $disk
+        );
+
+        // 🔴 VALIDACIÓN CRÍTICA (esto reemplaza el dd)
+        if (!$ruta) {
+            throw new HttpException(500, 'Error al guardar el archivo en el servidor (verifique permisos de la carpeta).');
+        }
+
+        // 🔥 VALIDAR QUE REALMENTE EXISTE
+        if (!Storage::disk($disk)->exists($ruta)) {
+            throw new HttpException(500, 'El archivo no se pudo verificar después de guardarse.');
+        }
+
+        // 🔥 GUARDAR EN BD
+        $documento = DocumentosModel::create([
+            'nombre_documento' => $nombrePersonalizado,
+            'url_documento' => $ruta,
+            'extension_documento' => $extension,
+        ]);
+
+        if (!$documento) {
+            throw new HttpException(422, 'No se pudo registrar el documento en la base de datos.');
+        }
+
+        // 🔥 RELACIÓN CON TRANSFERENCIA
+        if ($op === 1) {
+            DocumentoTransferenciaModel::create([
+                'id_transferencia' => $idTransferencia,
+                'id_documento' => $documento->id_documento,
+            ]);
+        }
+
+        return $documento;
+    }
+}

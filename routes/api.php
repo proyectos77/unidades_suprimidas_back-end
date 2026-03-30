@@ -60,6 +60,10 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'listArchivoPorUnidad']);
 
+    Route::get('/documentos/{ruta}', [documentoController::class, 'verDocumento'])
+    ->withoutMiddleware(['auth:sanctum', 'token.expiration'])
+    ->where('ruta', '.*');
+
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         Route::apiResource('usuarios', usuarioController::class); //Usuarios
 
@@ -80,6 +84,7 @@ use Illuminate\Support\Facades\Route;
         Route::apiResource('documentosTransferencia', documentosTransferenciaController::class);
 
         Route::apiResource('documento', documentoController::class);
+
 
         Route::apiResource('dependencias', dependenciasController::class);
 
