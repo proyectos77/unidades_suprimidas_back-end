@@ -22,6 +22,9 @@ class DatabaseSeeder extends Seeder
             Subseries::class,
             otros::class,
             UnidadesActivas::class,
+            CuerpoSeeder::class,
+            EstanteSeeder::class,
+            BaldaSeeder::class,
 
         ]);
     }
