@@ -17,18 +17,10 @@ class ArchivoUnidadActivaModel extends Model
 
     protected $fillable = [
         'id_unidad',
-        'anio_registro_archivo_unidad_activa',
-        'seccion_archivo_unidad_activa',
-        'id_serie',
-        'id_subserie',
-        'cantidad_cajas_archivo_unidad_activa',
-        'cantidad_carpetas_archivo_unidad_activa',
-        'cantidad_folios_archivo_unidad_activa',
-        'cantidad_tomos_archivo_unidad_activa',
-        'descripcion_otro_archivo_unidad_activa',
-        'cantidad_otros_archivo_unidad_activa',
-        'porcentaje_archivo_unidad_activa',
-        'id_estado',
-
+        'ubicacion_archivo_unidad_activa',
+        'direccion_archivo_unidad_activa',
+        'edificio_archivo_unidad_activa',
+        'piso_archivo_unidad_activa',
+        'bodega_archivo_unidad_activa',
     ];
 }

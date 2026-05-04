@@ -3,13 +3,18 @@
 use App\Http\Controllers\Archivo\archivoController;
 use App\Http\Controllers\ArchivoUnidadesActivas\ArchivoUnidadActivaController;
 use App\Http\Controllers\Auth\authController;
+use App\Http\Controllers\Balda\baldaController;
+use App\Http\Controllers\CajaUnidadActiva\CajaUnidadActivaController;
+use App\Http\Controllers\CarpetaUnidadActiva\CarpetaUnidadActivaController;
 use App\Http\Controllers\Cargos\cargosController;
+use App\Http\Controllers\Cuerpo\cuerpoController;
 use App\Http\Controllers\Departamentos\departamentosController;
 use App\Http\Controllers\Dependencias\dependenciasController;
 use App\Http\Controllers\DetalleTransferencia\detalleTransferenciaController;
 use App\Http\Controllers\DetalleUnidad\detalleUnidadController;
 use App\Http\Controllers\Documentos\documentoController;
 use App\Http\Controllers\Documentos\documentosTransferenciaController;
+use App\Http\Controllers\Estante\estanteController;
 use App\Http\Controllers\Municipios\municipiosController;
 use App\Http\Controllers\Otros\otrosController;
 use App\Http\Controllers\Serie\serieController;
@@ -44,6 +49,22 @@ use Illuminate\Support\Facades\Route;
     Route::post('login', [authController::class, 'login']); //login
 
     Route::apiResource('archivoUnidadesActivas', ArchivoUnidadActivaController::class); //archivoUnidadesActivas
+
+    Route::get('resumenAlmacenamiento/{idUnidad}', [ArchivoUnidadActivaController::class, 'obtenerResumenAlmacenamiento']);
+
+    Route::get('detalleEstructura/{idUnidad}', [ArchivoUnidadActivaController::class, 'obtenerDetalleEstructura']);
+
+    Route::get('estantesPorCuerpo/{idUnidad}/{idCuerpo}', [ArchivoUnidadActivaController::class, 'obtenerEstantesPorCuerpo']);
+
+    Route::get('baldasPorEstante/{idUnidad}/{idEstante}', [ArchivoUnidadActivaController::class, 'obtenerBaldasPorEstante']);
+
+    Route::get('cajasPorBaldaUnidad/{idUnidad}/{idBalda}', [ArchivoUnidadActivaController::class, 'obtenerCajasPorBalda']);
+
+    Route::get('infoCajaUnidad/{idUnidad}/{idCaja}', [ArchivoUnidadActivaController::class, 'obtenerInfoCaja']);
+
+    Route::get('carpetasPorCajaUnidad/{idUnidad}/{idCaja}', [ArchivoUnidadActivaController::class, 'obtenerCarpetasPorCaja']);
+
+    Route::get('infoCarpetaUnidad/{idUnidad}/{idCarpeta}', [ArchivoUnidadActivaController::class, 'obtenerInfoCarpeta']);
 
     Route::get('rutaunidadactiva/{idUnidad}', [unidadesController::class, 'rutaUnidadActiva']);
     Route::get('observacionUnidadActiva/{observacion}', [detalleUnidadController::class, 'buscarObservacionUnidadActiva']);
@@ -92,25 +113,60 @@ use Illuminate\Support\Facades\Route;
 
 
         Route::get('listadoUnidadesSuprimidas/{filtro?}', [unidadesController::class, 'listadoUnidadesSuprimidas']);
+
         Route::get('unidadesPorDependencia/{idDependencia}/{filtro?}', [unidadesController::class, 'getAllUnidadesPorDependencia']);
+
         Route::apiResource('unidades', unidadesController::class);
 
         Route::get('series/{anio}', [serieController::class, 'listadoSeriesPorAnio']);
+
         Route::get('subseries/{idSerie}', [subserieController::class, 'listadoSubSeriesPorSerie']);
+
         Route::get('selectUnidades/{idDependencia}', [unidadesController::class, 'selectListUnidades']);
+
         Route::get('selectUnidadConDetalle/{idDependencia}', [unidadesController::class, 'selectListUnidadesConDetalle']);
 
         Route::get('anios', [utilController::class, 'listAnio']);
 
         Route::get('archivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'archivoPorUnidad']);
+
         Route::get('listadoTransferenciasPorArchivo/{idArchivo}', [transferenciasController::class, 'listadoTransferenciaPorArchivo']);
+
         Route::get('listadoSolicitudes/{idUsuario}/{idTipoUsuario}', [solicitudTransferencia::class, 'listadoDeSolicitudesPorUsuario']);
+
         Route::get('departamentos', [departamentosController::class, 'getAllDepartamentos']);
+
         Route::get('municipios/{idDepartamento}', [municipiosController::class, 'getAllMunicipios']);
 
         Route::get('notificaciones', [solicitudTransferencia::class, 'listadoNotificaciones']);
+
         Route::get('observacion/{observacion}/{idDependencia}', [detalleUnidadController::class, 'buscarObservacion']);
 
+        Route::get('cuerpos', [cuerpoController::class, 'getAllCuerpo']);
+
+        Route::get('estantes/{idCuerpo}', [estanteController::class, 'getEstantePorCuerpo']);
+
+        Route::get('baldas/{idEstante}', [baldaController::class, 'getBaldaPorEstante']);
+
+        Route::apiResource('cajasUnidadesActivas', CajaUnidadActivaController::class);
+
+        Route::get('cajasPorArchivoUnidadActiva/{idArchivoUnidadActiva}', [CajaUnidadActivaController::class, 'getCajasPorIdArchivoUnidadActiva']);
+
+        Route::get('cajasPorBalda/{idBalda}', [CajaUnidadActivaController::class, 'getCajasPorBalda']);
+
+        Route::get('cajasPorCuerpo/{idCuerpo}', [CajaUnidadActivaController::class, 'getCajasPorCuerpo']);
+
+        Route::apiResource('carpetasUnidadesActivas', CarpetaUnidadActivaController::class);
+
+        Route::get('carpetasPorArchivoUnidadActiva/{idArchivoUnidadActiva}', [CarpetaUnidadActivaController::class, 'getCarpetasPorIdArchivoUnidadActiva']);
+
+        Route::get('carpetasPorCaja/{idCaja}', [CarpetaUnidadActivaController::class, 'getCarpetasPorCaja']);
+
+        Route::get('carpetasPorSubserie/{idSubserie}', [CarpetaUnidadActivaController::class, 'getCarpetasPorSubserie']);
+
+
+
         Route::get('logout', [authController::class, 'logout']);
+
         Route::apiResource('transferencia', transferenciasController::class);
     });

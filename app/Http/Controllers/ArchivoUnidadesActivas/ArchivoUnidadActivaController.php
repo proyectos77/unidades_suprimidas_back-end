@@ -5,19 +5,20 @@ namespace App\Http\Controllers\ArchivoUnidadesActivas;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ArchivoUnidadesActivas_request\registroArchivoUnidadesActivasRequest;
 use App\Services\Archivo_services\registroArchivoUnidadesActivasServices;
+use App\Services\ArchivosUnidadActiva_services\registroInformacionGeneralArchivoService;
 use Illuminate\Http\Request;
 
 class ArchivoUnidadActivaController extends Controller
 {
     private $registroArchivoUnidadesActivas;
 
-    public function __construct(registroArchivoUnidadesActivasServices $registroArchivoUnidadesActivas) {
+    public function __construct(registroInformacionGeneralArchivoService $registroArchivoUnidadesActivas) {
         $this->registroArchivoUnidadesActivas = $registroArchivoUnidadesActivas;
     }
 
     public function index()
     {
-        //
+        return $this->registroArchivoUnidadesActivas->obtenerTodosLosArchivos();
     }
 
     /**
@@ -33,15 +34,15 @@ class ArchivoUnidadActivaController extends Controller
      */
     public function store(registroArchivoUnidadesActivasRequest $request)
     {
-        return $this->registroArchivoUnidadesActivas->registroArchivoUnidadesActivas($request);
+        return $this->registroArchivoUnidadesActivas->registroInformacionGeneralArchivoUnidadActiva($request);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $idUnidad)
     {
-        //
+        return $this->registroArchivoUnidadesActivas->obtenerArchivoPorIdUnidad($idUnidad);
     }
 
     /**
@@ -66,5 +67,45 @@ class ArchivoUnidadActivaController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function obtenerResumenAlmacenamiento($idUnidad)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerResumenAlmacenimientoUnidad($idUnidad);
+    }
+
+    public function obtenerDetalleEstructura($idUnidad)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerDetalleEstructuraUnidad($idUnidad);
+    }
+
+    public function obtenerEstantesPorCuerpo($idUnidad, $idCuerpo)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerEstantesPorCuerpoUnidad($idUnidad, $idCuerpo);
+    }
+
+    public function obtenerBaldasPorEstante($idUnidad, $idEstante)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerBaldasPorEstanteUnidad($idUnidad, $idEstante);
+    }
+
+    public function obtenerCajasPorBalda($idUnidad, $idBalda)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerCajasPorBaldaUnidad($idUnidad, $idBalda);
+    }
+
+    public function obtenerCarpetasPorCaja($idUnidad, $idCaja)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerCarpetasPorCajaUnidad($idUnidad, $idCaja);
+    }
+
+    public function obtenerInfoCarpeta($idUnidad, $idCarpeta)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerInfoCarpetaUnidad($idUnidad, $idCarpeta);
+    }
+
+    public function obtenerInfoCaja($idUnidad, $idCaja)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerInfoCajaUnidad($idUnidad, $idCaja);
     }
 }

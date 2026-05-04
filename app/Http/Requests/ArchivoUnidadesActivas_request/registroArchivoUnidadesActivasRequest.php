@@ -17,44 +17,38 @@ class registroArchivoUnidadesActivasRequest extends FormRequest
     public function rules(): array
     {
         return [
-            '*.seccion'         => 'required|string',
-            '*.serie'           => 'required|integer',
-            '*.subserie'        => 'required|integer',
-            '*.cajas'           => 'required|integer',
-            '*.carpetas'        => 'required|integer',
-            '*.tomos'           => 'nullable|integer',
-            '*.folios'          => 'required|integer',
-            '*.anioRegistro'    => 'required|integer',
-            '*.tipoOtro'        => 'nullable|string',
-            '*.descripcionOtro' => 'nullable|string',
-            '*.otros'           => 'nullable|integer',
-            '*.idUnidad'        => 'required|integer',
+            'id_unidad'     => 'required|integer',
+            'ubicacion'     => 'required|string',
+            'direccion'     => 'required|string',
+            'edificio'      => 'required|string',
+            'piso'          => 'required|string',
+            'bodega'        => 'required|string',
+
         ];
     }
 
     protected function prepareForValidation()
     {
-        $data = $this->all();
-
-        // 🧠 Si el usuario envía un solo objeto, lo convertimos en un array de uno
-        if (isset($data['seccion'])) {
-            $data = [$data];
-        }
-
-        $this->replace($data);
+       $this->merge([
+            'id_unidad'                         => $this->id_unidad,
+            'ubicacion_archivo_unidad_activa'   => $this->ubicacion,
+            'direccion_archivo_unidad_activa'   => $this->direccion,
+            'edificio_archivo_unidad_activa'    => $this->edificio,
+            'piso_archivo_unidad_activa'        => $this->piso,
+            'bodega_archivo_unidad_activa'      => $this->bodega,
+        ]);
     }
 
     public function messages()
     {
         return [
-            '*.seccion.required' => 'El atributo sección es requerido',
-            '*.serie.required' => 'El atributo serie es requerido',
-            '*.subserie.required' => 'El atributo subserie es requerido',
-            '*.cajas.required' => 'El atributo cajas es requerido',
-            '*.carpetas.required' => 'El atributo carpetas es requerido',
-            '*.folios.required' => 'El atributo folios es requerido',
-            '*.anioRegistro.required' => 'El atributo año de registro es requerido',
-            '*.idUnidad.required' => 'El atributo id de unidad es requerido',
+            'id_unidad.required'    => 'El atributo unidad es requerido',
+            'ubicacion.required'    => 'El atributo ubicacion es requerido',
+            'direccion.required'    => 'El atributo direccion es requerido',
+            'edificio.required'     => 'El atributo edificio es requerido',
+            'piso.required'         => 'El atributo piso es requerido',
+            'bodega.required'       => 'El atributo bodega es requerido',
+
         ];
     }
 
