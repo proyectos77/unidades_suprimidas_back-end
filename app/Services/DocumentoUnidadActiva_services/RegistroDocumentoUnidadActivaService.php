@@ -69,6 +69,8 @@ class RegistroDocumentoUnidadActivaService
     {
         try {
             $documentos = DocumentoUnidadActivaModel::with([
+                'carpeta.serie',
+                'carpeta.subserie',
                 'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
                 'carpeta.cajaUnidadActiva.archivo',
                 'unidad',
@@ -100,6 +102,8 @@ class RegistroDocumentoUnidadActivaService
     {
         try {
             $documento = DocumentoUnidadActivaModel::with([
+                'carpeta.serie',
+                'carpeta.subserie',
                 'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
                 'carpeta.cajaUnidadActiva.archivo',
                 'unidad',
@@ -198,6 +202,8 @@ class RegistroDocumentoUnidadActivaService
     {
         try {
             $documentos = DocumentoUnidadActivaModel::with([
+                'carpeta.serie',
+                'carpeta.subserie',
                 'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
                 'carpeta.cajaUnidadActiva.archivo',
                 'unidad',
@@ -229,6 +235,8 @@ class RegistroDocumentoUnidadActivaService
     {
         try {
             $documentos = DocumentoUnidadActivaModel::with([
+                'carpeta.serie',
+                'carpeta.subserie',
                 'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
                 'carpeta.cajaUnidadActiva.archivo',
                 'unidad',
@@ -260,6 +268,8 @@ class RegistroDocumentoUnidadActivaService
     {
         try {
             $documentos = DocumentoUnidadActivaModel::with([
+                'carpeta.serie',
+                'carpeta.subserie',
                 'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
                 'carpeta.cajaUnidadActiva.archivo',
                 'unidad',
@@ -305,6 +315,8 @@ class RegistroDocumentoUnidadActivaService
             }
 
             $query = DocumentoUnidadActivaModel::with([
+                'carpeta.serie',
+                'carpeta.subserie',
                 'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
                 'carpeta.cajaUnidadActiva.archivo',
                 'unidad',
@@ -406,6 +418,20 @@ class RegistroDocumentoUnidadActivaService
                 'fecha_extrema_inicio' => $carpeta->fecha_extrema_inicio,
                 'fecha_extrema_fin' => $carpeta->fecha_extrema_fin,
             ];
+
+            if ($carpeta->serie) {
+                $data['resumen']['carpeta']['serie'] = [
+                    'id' => $carpeta->serie->id_serie ?? $carpeta->serie->id,
+                    'nombre' => $carpeta->serie->nombre_serie,
+                ];
+            }
+
+            if ($carpeta->subserie) {
+                $data['resumen']['carpeta']['subserie'] = [
+                    'id' => $carpeta->subserie->id_subserie ?? $carpeta->subserie->id,
+                    'nombre' => $carpeta->subserie->nombre_subserie,
+                ];
+            }
 
             if ($carpeta->cajaUnidadActiva) {
                 $caja = $carpeta->cajaUnidadActiva;
