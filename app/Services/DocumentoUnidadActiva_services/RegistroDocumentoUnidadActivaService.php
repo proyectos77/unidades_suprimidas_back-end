@@ -292,6 +292,18 @@ class RegistroDocumentoUnidadActivaService
     public function filtrarDocumentosUnidadActiva($filtros)
     {
         try {
+            $filtrosValidados = $this->validarYPrepararFiltros($filtros);
+
+            if (empty($filtrosValidados)) {
+                return Responses::error(
+                    400,
+                    'Filtros inválidos',
+                    'Debe proporcionar al menos un parámetro de búsqueda válido: numeroRadicado, asunto, firmante u observacion',
+                    'warning',
+                    null
+                );
+            }
+
             $query = DocumentoUnidadActivaModel::with([
                 'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
                 'carpeta.cajaUnidadActiva.archivo',
@@ -299,29 +311,36 @@ class RegistroDocumentoUnidadActivaService
                 'estado'
             ]);
 
-            if (isset($filtros['numeroRadicado']) && !empty($filtros['numeroRadicado'])) {
-                $query->where('numero_radicado', $filtros['numeroRadicado']);
-            }
-
-            if (isset($filtros['asunto']) && !empty($filtros['asunto'])) {
-                $query->where('asunto', 'like', '%' . $filtros['asunto'] . '%');
-            }
-
-            if (isset($filtros['firmante']) && !empty($filtros['firmante'])) {
-                $query->where('nombre_quien_firma', 'like', '%' . $filtros['firmante'] . '%');
-            }
-
-            if (isset($filtros['observacion']) && !empty($filtros['observacion'])) {
-                $query->where('observaciones', 'like', '%' . $filtros['observacion'] . '%');
+            foreach ($filtrosValidados as $campo => $valor) {
+                if ($campo === 'numeroRadicado') {
+                    $query->where('numero_radicado', $valor['valor']);
+                } elseif ($campo === 'asunto') {
+                    $query->where('asunto', 'like', '%' . $valor['valor'] . '%');
+                } elseif ($campo === 'firmante') {
+                    $query->where('nombre_quien_firma', 'like', '%' . $valor['valor'] . '%');
+                } elseif ($campo === 'observacion') {
+                    $query->where('observaciones', 'like', '%' . $valor['valor'] . '%');
+                }
             }
 
             $documentos = $query->get();
+
+            if ($documentos->isEmpty()) {
+                return Responses::success(
+                    200,
+                    'Sin resultados',
+                    'No se encontraron documentos que coincidan con los criterios de búsqueda',
+                    'info',
+                    []
+                );
+            }
+
             $documentosConResumen = $documentos->map(fn($doc) => $this->construirDocumentoConResumen($doc));
 
             return Responses::success(
                 200,
                 'Documentos filtrados',
-                'Se obtuvieron los documentos filtrados de unidades activas',
+                'Se obtuvieron ' . count($documentosConResumen) . ' documento(s) que coinciden con los criterios de búsqueda',
                 'success',
                 $documentosConResumen
             );
@@ -336,6 +355,41 @@ class RegistroDocumentoUnidadActivaService
                 $e->getMessage()
             );
         }
+    }
+
+    private function validarYPrepararFiltros($filtros)
+    {
+        $camposFiltro = [
+            'numeroRadicado' => 'numero_radicado',
+            'asunto' => 'asunto',
+            'firmante' => 'nombre_quien_firma',
+            'observacion' => 'observaciones'
+        ];
+
+        $filtrosValidados = [];
+
+        foreach ($camposFiltro as $campoEntrada => $campoDb) {
+            if (!isset($filtros[$campoEntrada])) {
+                continue;
+            }
+
+            $valor = $filtros[$campoEntrada];
+
+            if ($valor === null || $valor === '' || (is_string($valor) && trim($valor) === '')) {
+                continue;
+            }
+
+            $valor = is_string($valor) ? trim($valor) : $valor;
+
+            if (!empty($valor)) {
+                $filtrosValidados[$campoEntrada] = [
+                    'campo_db' => $campoDb,
+                    'valor' => $valor
+                ];
+            }
+        }
+
+        return $filtrosValidados;
     }
 
     private function construirDocumentoConResumen($documento)
