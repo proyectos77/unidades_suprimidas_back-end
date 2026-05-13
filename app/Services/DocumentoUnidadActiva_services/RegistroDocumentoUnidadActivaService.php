@@ -363,7 +363,10 @@ class RegistroDocumentoUnidadActivaService
                     'id' => $caja->id_caja_unidad_activa,
                     'codigo' => $caja->codigo_caja_unidad_activa,
                     'numero_consecutivo' => $caja->numero_consecutivo_bodega_unidad_activa,
+                    'numero_correlativo' => $caja->numero_correlativo_dependencia_unidad_activa,
+                    'anio' => $caja->anio_caja_unidad_activa,
                     'cantidad_carpetas' => $caja->cantidad_carpetas_unidad_activa,
+                    'cantidad_libros' => $caja->cantidad_libros_unidad_activa,
                     'suma_folios_caja' => $sumaFoliosCaja,
                 ];
 
@@ -373,9 +376,14 @@ class RegistroDocumentoUnidadActivaService
                         $q->where('id_balda', $balda->id_balda)
                     )->sum('cantidad_folios');
 
+                    $totalCajasBalda = \DB::table('cajas_unidad_activas')
+                        ->where('id_balda', $balda->id_balda)
+                        ->count();
+
                     $data['resumen']['balda'] = [
                         'id' => $balda->id_balda,
                         'nombre' => $balda->nombre_balda,
+                        'total_cajas' => $totalCajasBalda,
                         'suma_folios_balda' => $sumaFoliosBalda,
                     ];
 
@@ -385,9 +393,14 @@ class RegistroDocumentoUnidadActivaService
                             $q->where('id_estante', $estante->id_estante)
                         )->sum('cantidad_folios');
 
+                        $totalBaldas = \DB::table('baldas')
+                            ->where('id_estante', $estante->id_estante)
+                            ->count();
+
                         $data['resumen']['estante'] = [
                             'id' => $estante->id_estante,
                             'nombre' => $estante->nombre_estante,
+                            'cantidad_baldas' => $totalBaldas,
                             'suma_folios_estante' => $sumaFoliosEstante,
                         ];
 
@@ -397,9 +410,14 @@ class RegistroDocumentoUnidadActivaService
                                 $q->where('id_cuerpo', $cuerpo->id_cuerpo)
                             )->sum('cantidad_folios');
 
+                            $totalEstantes = \DB::table('estantes')
+                                ->where('id_cuerpo', $cuerpo->id_cuerpo)
+                                ->count();
+
                             $data['resumen']['cuerpo'] = [
                                 'id' => $cuerpo->id_cuerpo,
                                 'nombre' => $cuerpo->nombre_cuerpo,
+                                'cantidad_estantes' => $totalEstantes,
                                 'suma_folios_cuerpo' => $sumaFoliosCuerpo,
                             ];
                         }
@@ -408,10 +426,25 @@ class RegistroDocumentoUnidadActivaService
 
                 if ($caja->archivo) {
                     $archivo = $caja->archivo;
+                    $totalCarpetasArchivo = \DB::table('carpetas_unidad_activas')
+                        ->whereIn('id_caja_unidad_activa', \DB::table('cajas_unidad_activas')
+                            ->where('id_archivo_unidad_activa', $archivo->id_archivo_unidad_activa)
+                            ->pluck('id_caja_unidad_activa'))
+                        ->count();
+
+                    $sumaFoliosArchivo = DocumentoUnidadActivaModel::whereHas('carpeta.cajaUnidadActiva.archivo', fn($q) =>
+                        $q->where('id_archivo_unidad_activa', $archivo->id_archivo_unidad_activa)
+                    )->sum('cantidad_folios');
+
                     $data['resumen']['archivo'] = [
                         'id' => $archivo->id_archivo_unidad_activa,
                         'ubicacion' => $archivo->ubicacion_archivo_unidad_activa,
                         'direccion' => $archivo->direccion_archivo_unidad_activa,
+                        'edificio' => $archivo->edificio_archivo_unidad_activa,
+                        'piso' => $archivo->piso_archivo_unidad_activa,
+                        'bodega' => $archivo->bodega_archivo_unidad_activa,
+                        'total_carpetas' => $totalCarpetasArchivo,
+                        'suma_folios_archivo' => $sumaFoliosArchivo,
                     ];
                 }
             }
@@ -421,11 +454,23 @@ class RegistroDocumentoUnidadActivaService
             $unidad = $documento->unidad;
             $sumaFoliosUnidad = DocumentoUnidadActivaModel::where('id_unidad', $unidad->id_unidad)->sum('cantidad_folios');
 
+            $totalCarpetasUnidad = \DB::table('carpetas_unidad_activas')
+                ->whereIn('id_caja_unidad_activa', \DB::table('cajas_unidad_activas')
+                    ->whereIn('id_archivo_unidad_activa', \DB::table('archivo_unidades_activas')
+                        ->where('id_unidad', $unidad->id_unidad)
+                        ->pluck('id_archivo_unidad_activa'))
+                    ->pluck('id_caja_unidad_activa'))
+                ->count();
+
+            $totalCuerposUnidad = \DB::table('cuerpos')->count();
+
             $data['resumen']['unidad'] = [
                 'id' => $unidad->id_unidad,
                 'nombre' => $unidad->nombre_unidad,
                 'sigla' => $unidad->sigla_unidad,
-                'suma_folios_unidad' => $sumaFoliosUnidad,
+                'cantidad_cuerpos' => $totalCuerposUnidad,
+                'total_carpetas' => $totalCarpetasUnidad,
+                'total_folios' => $sumaFoliosUnidad,
             ];
         }
 
