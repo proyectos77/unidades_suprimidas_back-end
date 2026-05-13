@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             CuerpoSeeder::class,
             EstanteSeeder::class,
             BaldaSeeder::class,
+            TiposDocumentalSeeder::class,
 
         ]);
     }

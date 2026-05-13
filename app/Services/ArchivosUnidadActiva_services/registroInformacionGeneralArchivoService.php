@@ -58,7 +58,7 @@ use Illuminate\Support\Facades\DB;
                         COUNT(DISTINCT bal.id_balda) as cantidadBaldas,
                         COUNT(DISTINCT cua2.id_caja_unidad_activa) as sumaCajas,
                         COUNT(DISTINCT cua.id_carpeta_unidad_activa) as sumaCarpetas,
-                        SUM(DISTINCT cua.cantidad_folios) as sumaFolios
+                        SUM(cua.cantidad_folios) as sumaFolios
                     from carpetas_unidad_activas cua
                     inner join series s on s.id_serie = cua.id_serie
                     left join subseries s2 on s2.id_subserie = cua.id_subserie
@@ -201,6 +201,84 @@ use Illuminate\Support\Facades\DB;
 
             } catch (\Exception $e) {
                 return Responses::error(500, 'Error al obtener cajas', 'No se pudo obtener las cajas', 'error', $e->getMessage());
+            }
+        }
+
+        public function obtenerListadoCarpetasConCajaUnidad($idUnidad) {
+            try {
+                $resultado = DB::select(
+                    "select
+                        cua.id_carpeta_unidad_activa as idCarpeta,
+                        cua.numero_carpeta_unidad_activa as numeroCarpeta,
+                        cua.fecha_extrema_inicio as fechaExtremaInicio,
+                        cua.fecha_extrema_fin as fechaExtremaFin,
+                        cua.cantidad_folios as cantidadFolios,
+                        s.nombre_serie as nombreSerie,
+                        s2.nombre_subserie as nombreSubserie,
+                        cua2.id_caja_unidad_activa as idCaja,
+                        cua2.codigo_caja_unidad_activa as nombreCaja
+                    from carpetas_unidad_activas cua
+                    inner join series s on s.id_serie = cua.id_serie
+                    left join subseries s2 on s2.id_subserie = cua.id_subserie
+                    inner join cajas_unidad_activas cua2 on cua2.id_caja_unidad_activa = cua.id_caja_unidad_activa
+                    inner join baldas bal on bal.id_balda = cua2.id_balda
+                    inner join estantes est on est.id_estante = bal.id_estante
+                    inner join cuerpos c on c.id_cuerpo = est.id_cuerpo
+                    inner join archivo_unidades_activas aua on aua.id_archivo_unidad_activa = cua2.id_archivo_unidad_activa
+                    inner join unidades u on u.id_unidad = aua.id_unidad
+                    where u.id_unidad = ?
+                    order by cua.id_carpeta_unidad_activa",
+                    [$idUnidad]
+                );
+
+                if (empty($resultado)) {
+                    return Responses::success(200, 'Listado de carpetas con cajas', 'No hay carpetas para esta unidad', 'success', []);
+                }
+
+                return Responses::success(200, 'Listado de carpetas con cajas', 'Se obtuvo el listado de carpetas y sus cajas', 'success', $resultado);
+
+            } catch (\Exception $e) {
+                return Responses::error(500, 'Error al obtener carpetas con cajas', 'No se pudo obtener el listado de carpetas', 'error', $e->getMessage());
+            }
+        }
+
+        public function obtenerCarpetaConCajaUnidad($idUnidad, $idCarpeta) {
+            try {
+                $resultado = DB::select(
+                    "select
+                        cua.id_carpeta_unidad_activa as idCarpeta,
+                        cua.numero_carpeta_unidad_activa as numeroCarpeta,
+                        cua.fecha_extrema_inicio as fechaExtremaInicio,
+                        cua.fecha_extrema_fin as fechaExtremaFin,
+                        cua.cantidad_folios as cantidadFolios,
+                        s.nombre_serie as nombreSerie,
+                        s2.nombre_subserie as nombreSubserie,
+                        cua2.id_caja_unidad_activa as idCaja,
+                        cua2.codigo_caja_unidad_activa as nombreCaja,
+                        cua2.numero_consecutivo_bodega_unidad_activa as numeroConsecutivoBodega,
+                        cua2.numero_correlativo_dependencia_unidad_activa as numeroCorrelativoDependencia,
+                        cua2.anio_caja_unidad_activa as anioCaja
+                    from carpetas_unidad_activas cua
+                    inner join series s on s.id_serie = cua.id_serie
+                    left join subseries s2 on s2.id_subserie = cua.id_subserie
+                    inner join cajas_unidad_activas cua2 on cua2.id_caja_unidad_activa = cua.id_caja_unidad_activa
+                    inner join baldas bal on bal.id_balda = cua2.id_balda
+                    inner join estantes est on est.id_estante = bal.id_estante
+                    inner join cuerpos c on c.id_cuerpo = est.id_cuerpo
+                    inner join archivo_unidades_activas aua on aua.id_archivo_unidad_activa = cua2.id_archivo_unidad_activa
+                    inner join unidades u on u.id_unidad = aua.id_unidad
+                    where u.id_unidad = ? and cua.id_carpeta_unidad_activa = ?",
+                    [$idUnidad, $idCarpeta]
+                );
+
+                if (empty($resultado)) {
+                    return Responses::success(200, 'Carpeta con caja', 'La carpeta no existe en esta unidad', 'success', []);
+                }
+
+                return Responses::success(200, 'Carpeta con caja', 'Se obtuvo la información de la carpeta y su caja', 'success', $resultado[0]);
+
+            } catch (\Exception $e) {
+                return Responses::error(500, 'Error al obtener carpeta con caja', 'No se pudo obtener la información de la carpeta', 'error', $e->getMessage());
             }
         }
 

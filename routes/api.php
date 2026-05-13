@@ -7,6 +7,7 @@ use App\Http\Controllers\Balda\baldaController;
 use App\Http\Controllers\CajaUnidadActiva\CajaUnidadActivaController;
 use App\Http\Controllers\CarpetaUnidadActiva\CarpetaUnidadActivaController;
 use App\Http\Controllers\Cargos\cargosController;
+use App\Http\Controllers\DocumentoUnidadActiva\DocumentoUnidadActivaController;
 use App\Http\Controllers\Cuerpo\cuerpoController;
 use App\Http\Controllers\Departamentos\departamentosController;
 use App\Http\Controllers\Dependencias\dependenciasController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\Otros\otrosController;
 use App\Http\Controllers\Serie\serieController;
 use App\Http\Controllers\SolicitudTransferencia\solicitudTransferencia;
 use App\Http\Controllers\Subserie\subserieController;
+use App\Http\Controllers\TipoDocumental\TipoDocumentalController;
 use App\Http\Controllers\TiposUsuarios\tipoUsuariosController;
 use App\Http\Controllers\Transferencias\transferenciasController;
 use App\Http\Controllers\Unidades\unidadesController;
@@ -48,6 +50,8 @@ use Illuminate\Support\Facades\Route;
 
     Route::post('login', [authController::class, 'login']); //login
 
+    Route::apiResource('tiposDocumentales', TipoDocumentalController::class);
+
     Route::apiResource('archivoUnidadesActivas', ArchivoUnidadActivaController::class); //archivoUnidadesActivas
 
     Route::get('resumenAlmacenamiento/{idUnidad}', [ArchivoUnidadActivaController::class, 'obtenerResumenAlmacenamiento']);
@@ -65,6 +69,10 @@ use Illuminate\Support\Facades\Route;
     Route::get('carpetasPorCajaUnidad/{idUnidad}/{idCaja}', [ArchivoUnidadActivaController::class, 'obtenerCarpetasPorCaja']);
 
     Route::get('infoCarpetaUnidad/{idUnidad}/{idCarpeta}', [ArchivoUnidadActivaController::class, 'obtenerInfoCarpeta']);
+
+    Route::get('carpetaConCaja/{idUnidad}/{idCarpeta}', [ArchivoUnidadActivaController::class, 'obtenerCarpetaConCaja']);
+
+    Route::get('listadoCarpetasConCaja/{idUnidad}', [ArchivoUnidadActivaController::class, 'obtenerListadoCarpetasConCaja']);
 
     Route::get('rutaunidadactiva/{idUnidad}', [unidadesController::class, 'rutaUnidadActiva']);
     Route::get('observacionUnidadActiva/{observacion}', [detalleUnidadController::class, 'buscarObservacionUnidadActiva']);
@@ -84,6 +92,12 @@ use Illuminate\Support\Facades\Route;
     Route::get('/documentos/{ruta}', [documentoController::class, 'verDocumento'])
     ->withoutMiddleware(['auth:sanctum', 'token.expiration'])
     ->where('ruta', '.*');
+
+    Route::apiResource('documentosUnidadesActivas', DocumentoUnidadActivaController::class);
+
+    Route::get('documentosPorUnidad/{idUnidad}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorUnidad']);
+
+    Route::get('documentosPorCarpeta/{idUnidad}/{idCarpeta}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorCarpeta']);
 
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         Route::apiResource('usuarios', usuarioController::class); //Usuarios
@@ -159,6 +173,12 @@ use Illuminate\Support\Facades\Route;
         Route::apiResource('carpetasUnidadesActivas', CarpetaUnidadActivaController::class);
 
         Route::get('carpetasPorArchivoUnidadActiva/{idArchivoUnidadActiva}', [CarpetaUnidadActivaController::class, 'getCarpetasPorIdArchivoUnidadActiva']);
+
+
+
+        Route::get('documentosPorCarpeta/{idCarpeta}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorCarpeta']);
+
+        Route::get('documentosPorUnidad/{idUnidad}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorUnidad']);
 
         Route::get('carpetasPorCaja/{idCaja}', [CarpetaUnidadActivaController::class, 'getCarpetasPorCaja']);
 

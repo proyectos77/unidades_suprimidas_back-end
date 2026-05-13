@@ -108,4 +108,14 @@ class ArchivoUnidadActivaController extends Controller
     {
         return $this->registroArchivoUnidadesActivas->obtenerInfoCajaUnidad($idUnidad, $idCaja);
     }
+
+    public function obtenerCarpetaConCaja($idUnidad, $idCarpeta)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerCarpetaConCajaUnidad($idUnidad, $idCarpeta);
+    }
+
+    public function obtenerListadoCarpetasConCaja($idUnidad)
+    {
+        return $this->registroArchivoUnidadesActivas->obtenerListadoCarpetasConCajaUnidad($idUnidad);
+    }
 }
