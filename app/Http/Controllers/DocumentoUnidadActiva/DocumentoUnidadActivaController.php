@@ -50,4 +50,10 @@ class DocumentoUnidadActivaController extends Controller
     {
         return $this->documentoUnidadActiva->obtenerDocumentosPorCarpetaUnidad($idUnidad, $idCarpeta);
     }
+
+    public function filtrar(Request $request)
+    {
+        $filtros = $request->all();
+        return $this->documentoUnidadActiva->filtrarDocumentosUnidadActiva($filtros);
+    }
 }

@@ -2,6 +2,10 @@
 
 namespace App\Models\DocumentoUnidadActiva;
 
+use App\Models\CarpetaUnidadActiva\CarpetaUnidadActivaModel;
+use App\Models\CajaUnidadActiva\CajaUnidadActivaModel;
+use App\Models\Unidades\UnidadesModel;
+use App\Models\Estados\EstadosModell;
 use Illuminate\Database\Eloquent\Model;
 
 class DocumentoUnidadActivaModel extends Model
@@ -28,4 +32,19 @@ class DocumentoUnidadActivaModel extends Model
         'observaciones',
         'id_estado'
     ];
+
+    public function carpeta()
+    {
+        return $this->belongsTo(CarpetaUnidadActivaModel::class, 'id_carpeta_unidad_activa');
+    }
+
+    public function unidad()
+    {
+        return $this->belongsTo(UnidadesModel::class, 'id_unidad');
+    }
+
+    public function estado()
+    {
+        return $this->belongsTo(EstadosModell::class, 'id_estado');
+    }
 }

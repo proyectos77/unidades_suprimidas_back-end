@@ -95,6 +95,8 @@ use Illuminate\Support\Facades\Route;
 
     Route::apiResource('documentosUnidadesActivas', DocumentoUnidadActivaController::class);
 
+    Route::post('documentosUnidadesActivas/filtrar/search', [DocumentoUnidadActivaController::class, 'filtrar']);
+
     Route::get('documentosPorUnidad/{idUnidad}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorUnidad']);
 
     Route::get('documentosPorCarpeta/{idUnidad}/{idCarpeta}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorCarpeta']);

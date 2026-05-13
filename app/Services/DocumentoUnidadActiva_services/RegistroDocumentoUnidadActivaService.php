@@ -68,14 +68,21 @@ class RegistroDocumentoUnidadActivaService
     public function listadoDocumentoUnidadActiva()
     {
         try {
-            $documentos = DocumentoUnidadActivaModel::all();
+            $documentos = DocumentoUnidadActivaModel::with([
+                'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
+                'carpeta.cajaUnidadActiva.archivo',
+                'unidad',
+                'estado'
+            ])->get();
+
+            $documentosConResumen = $documentos->map(fn($doc) => $this->construirDocumentoConResumen($doc));
 
             return Responses::success(
                 200,
                 'Listado de documentos',
                 'Se obtuvo la lista de documentos de unidades activas',
                 'success',
-                $documentos
+                $documentosConResumen
             );
 
         } catch (\Exception $e) {
@@ -92,14 +99,21 @@ class RegistroDocumentoUnidadActivaService
     public function obtenerDocumentoUnidadActiva($id)
     {
         try {
-            $documento = DocumentoUnidadActivaModel::findOrFail($id);
+            $documento = DocumentoUnidadActivaModel::with([
+                'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
+                'carpeta.cajaUnidadActiva.archivo',
+                'unidad',
+                'estado'
+            ])->findOrFail($id);
+
+            $documentoConResumen = $this->construirDocumentoConResumen($documento);
 
             return Responses::success(
                 200,
                 'Documento de unidad activa obtenido',
                 'Se obtuvo el documento de unidad activa',
                 'success',
-                $documento
+                $documentoConResumen
             );
 
         } catch (\Exception $e) {
@@ -183,14 +197,21 @@ class RegistroDocumentoUnidadActivaService
     public function obtenerDocumentosPorCarpeta($idCarpeta)
     {
         try {
-            $documentos = DocumentoUnidadActivaModel::where('id_carpeta_unidad_activa', $idCarpeta)->get();
+            $documentos = DocumentoUnidadActivaModel::with([
+                'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
+                'carpeta.cajaUnidadActiva.archivo',
+                'unidad',
+                'estado'
+            ])->where('id_carpeta_unidad_activa', $idCarpeta)->get();
+
+            $documentosConResumen = $documentos->map(fn($doc) => $this->construirDocumentoConResumen($doc));
 
             return Responses::success(
                 200,
                 'Listado de documentos por carpeta',
                 'Se obtuvo la lista de documentos de la carpeta',
                 'success',
-                $documentos
+                $documentosConResumen
             );
 
         } catch (\Exception $e) {
@@ -207,14 +228,21 @@ class RegistroDocumentoUnidadActivaService
     public function obtenerDocumentosPorUnidad($idUnidad)
     {
         try {
-            $documentos = DocumentoUnidadActivaModel::where('id_unidad', $idUnidad)->get();
+            $documentos = DocumentoUnidadActivaModel::with([
+                'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
+                'carpeta.cajaUnidadActiva.archivo',
+                'unidad',
+                'estado'
+            ])->where('id_unidad', $idUnidad)->get();
+
+            $documentosConResumen = $documentos->map(fn($doc) => $this->construirDocumentoConResumen($doc));
 
             return Responses::success(
                 200,
                 'Listado de documentos por unidad',
                 'Se obtuvo la lista de documentos de la unidad',
                 'success',
-                $documentos
+                $documentosConResumen
             );
 
         } catch (\Exception $e) {
@@ -231,16 +259,23 @@ class RegistroDocumentoUnidadActivaService
     public function obtenerDocumentosPorCarpetaUnidad($idUnidad, $idCarpeta)
     {
         try {
-            $documentos = DocumentoUnidadActivaModel::where('id_unidad', $idUnidad)
+            $documentos = DocumentoUnidadActivaModel::with([
+                'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
+                'carpeta.cajaUnidadActiva.archivo',
+                'unidad',
+                'estado'
+            ])->where('id_unidad', $idUnidad)
                 ->where('id_carpeta_unidad_activa', $idCarpeta)
                 ->get();
+
+            $documentosConResumen = $documentos->map(fn($doc) => $this->construirDocumentoConResumen($doc));
 
             return Responses::success(
                 200,
                 'Listado de documentos por carpeta',
                 'Se obtuvo la lista de documentos de la carpeta',
                 'success',
-                $documentos
+                $documentosConResumen
             );
 
         } catch (\Exception $e) {
@@ -252,5 +287,155 @@ class RegistroDocumentoUnidadActivaService
                 $e->getMessage()
             );
         }
+    }
+
+    public function filtrarDocumentosUnidadActiva($filtros)
+    {
+        try {
+            $query = DocumentoUnidadActivaModel::with([
+                'carpeta.cajaUnidadActiva.balda.estante.cuerpo',
+                'carpeta.cajaUnidadActiva.archivo',
+                'unidad',
+                'estado'
+            ]);
+
+            if (isset($filtros['numeroRadicado']) && !empty($filtros['numeroRadicado'])) {
+                $query->where('numero_radicado', $filtros['numeroRadicado']);
+            }
+
+            if (isset($filtros['asunto']) && !empty($filtros['asunto'])) {
+                $query->where('asunto', 'like', '%' . $filtros['asunto'] . '%');
+            }
+
+            if (isset($filtros['firmante']) && !empty($filtros['firmante'])) {
+                $query->where('nombre_quien_firma', 'like', '%' . $filtros['firmante'] . '%');
+            }
+
+            if (isset($filtros['observacion']) && !empty($filtros['observacion'])) {
+                $query->where('observaciones', 'like', '%' . $filtros['observacion'] . '%');
+            }
+
+            $documentos = $query->get();
+            $documentosConResumen = $documentos->map(fn($doc) => $this->construirDocumentoConResumen($doc));
+
+            return Responses::success(
+                200,
+                'Documentos filtrados',
+                'Se obtuvieron los documentos filtrados de unidades activas',
+                'success',
+                $documentosConResumen
+            );
+
+        } catch (\Exception $e) {
+            \Log::error('Error al filtrar documentos: ' . $e->getMessage());
+            return Responses::error(
+                500,
+                'Error al filtrar documentos',
+                'Error al obtener los documentos filtrados de unidades activas',
+                'error',
+                $e->getMessage()
+            );
+        }
+    }
+
+    private function construirDocumentoConResumen($documento)
+    {
+        $data = $documento->toArray();
+        $data['resumen'] = [];
+
+        if ($documento->carpeta) {
+            $carpeta = $documento->carpeta;
+            $data['resumen']['carpeta'] = [
+                'id' => $carpeta->id_carpeta_unidad_activa,
+                'numero' => $carpeta->numero_carpeta_unidad_activa,
+                'cantidad_folios' => $carpeta->cantidad_folios,
+                'fecha_extrema_inicio' => $carpeta->fecha_extrema_inicio,
+                'fecha_extrema_fin' => $carpeta->fecha_extrema_fin,
+            ];
+
+            if ($carpeta->cajaUnidadActiva) {
+                $caja = $carpeta->cajaUnidadActiva;
+                $sumaFoliosCaja = DocumentoUnidadActivaModel::whereHas('carpeta', fn($q) =>
+                    $q->where('id_caja_unidad_activa', $caja->id_caja_unidad_activa)
+                )->sum('cantidad_folios');
+
+                $data['resumen']['caja'] = [
+                    'id' => $caja->id_caja_unidad_activa,
+                    'codigo' => $caja->codigo_caja_unidad_activa,
+                    'numero_consecutivo' => $caja->numero_consecutivo_bodega_unidad_activa,
+                    'cantidad_carpetas' => $caja->cantidad_carpetas_unidad_activa,
+                    'suma_folios_caja' => $sumaFoliosCaja,
+                ];
+
+                if ($caja->balda) {
+                    $balda = $caja->balda;
+                    $sumaFoliosBalda = DocumentoUnidadActivaModel::whereHas('carpeta.cajaUnidadActiva', fn($q) =>
+                        $q->where('id_balda', $balda->id_balda)
+                    )->sum('cantidad_folios');
+
+                    $data['resumen']['balda'] = [
+                        'id' => $balda->id_balda,
+                        'nombre' => $balda->nombre_balda,
+                        'suma_folios_balda' => $sumaFoliosBalda,
+                    ];
+
+                    if ($balda->estante) {
+                        $estante = $balda->estante;
+                        $sumaFoliosEstante = DocumentoUnidadActivaModel::whereHas('carpeta.cajaUnidadActiva.balda', fn($q) =>
+                            $q->where('id_estante', $estante->id_estante)
+                        )->sum('cantidad_folios');
+
+                        $data['resumen']['estante'] = [
+                            'id' => $estante->id_estante,
+                            'nombre' => $estante->nombre_estante,
+                            'suma_folios_estante' => $sumaFoliosEstante,
+                        ];
+
+                        if ($estante->cuerpo) {
+                            $cuerpo = $estante->cuerpo;
+                            $sumaFoliosCuerpo = DocumentoUnidadActivaModel::whereHas('carpeta.cajaUnidadActiva.balda.estante', fn($q) =>
+                                $q->where('id_cuerpo', $cuerpo->id_cuerpo)
+                            )->sum('cantidad_folios');
+
+                            $data['resumen']['cuerpo'] = [
+                                'id' => $cuerpo->id_cuerpo,
+                                'nombre' => $cuerpo->nombre_cuerpo,
+                                'suma_folios_cuerpo' => $sumaFoliosCuerpo,
+                            ];
+                        }
+                    }
+                }
+
+                if ($caja->archivo) {
+                    $archivo = $caja->archivo;
+                    $data['resumen']['archivo'] = [
+                        'id' => $archivo->id_archivo_unidad_activa,
+                        'ubicacion' => $archivo->ubicacion_archivo_unidad_activa,
+                        'direccion' => $archivo->direccion_archivo_unidad_activa,
+                    ];
+                }
+            }
+        }
+
+        if ($documento->unidad) {
+            $unidad = $documento->unidad;
+            $sumaFoliosUnidad = DocumentoUnidadActivaModel::where('id_unidad', $unidad->id_unidad)->sum('cantidad_folios');
+
+            $data['resumen']['unidad'] = [
+                'id' => $unidad->id_unidad,
+                'nombre' => $unidad->nombre_unidad,
+                'sigla' => $unidad->sigla_unidad,
+                'suma_folios_unidad' => $sumaFoliosUnidad,
+            ];
+        }
+
+        if ($documento->estado) {
+            $data['resumen']['estado'] = [
+                'id' => $documento->estado->id_estado,
+                'nombre' => $documento->estado->nombre_estado,
+            ];
+        }
+
+        return $data;
     }
 }
