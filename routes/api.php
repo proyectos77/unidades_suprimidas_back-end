@@ -3,6 +3,7 @@
 use App\Http\Controllers\Archivo\archivoController;
 use App\Http\Controllers\ArchivoUnidadesActivas\ArchivoUnidadActivaController;
 use App\Http\Controllers\Auth\authController;
+use App\Http\Controllers\Auth\CaptchaController;
 use App\Http\Controllers\Balda\baldaController;
 use App\Http\Controllers\CajaUnidadActiva\CajaUnidadActivaController;
 use App\Http\Controllers\CarpetaUnidadActiva\CarpetaUnidadActivaController;
@@ -49,6 +50,8 @@ use Illuminate\Support\Facades\Route;
 
 
     Route::post('login', [authController::class, 'login']); //login
+    Route::get('captcha', [CaptchaController::class, 'generate']); //generar CAPTCHA
+    Route::post('captcha/validar', [CaptchaController::class, 'validar']); //validar CAPTCHA
 
     Route::apiResource('tiposDocumentales', TipoDocumentalController::class);
 
