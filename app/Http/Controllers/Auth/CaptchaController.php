@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 class CaptchaController extends Controller
 {
-    private const CAPTCHA_TTL = 300; // 5 minutos en segundos
+    private const CAPTCHA_TTL = 120; // 2 minutos en segundos
 
     /**
      * Generar código CAPTCHA aleatorio
@@ -60,9 +60,11 @@ class CaptchaController extends Controller
         if (now()->greaterThan($captchaExpiresAt)) {
             session()->forget(['captcha_code', 'captcha_timestamp', 'captcha_expires_at']);
             return response()->json([
-                'error' => 'El código de seguridad ha expirado',
-                'action' => 'refresh'
-            ], 400);
+                'error' => 'El código de seguridad ha expirado. Por favor, genera uno nuevo.',
+                'message' => 'El tiempo para ingresar el código se agotó. Se requiere un nuevo código de seguridad.',
+                'action' => 'refresh',
+                'statusCode' => 408
+            ], 408);
         }
 
         // CAPTCHA válido, eliminarlo de la sesión
