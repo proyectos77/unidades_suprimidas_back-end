@@ -25,6 +25,7 @@ class registroUsuarioRequest extends FormRequest
             'tipoUsuario'       => 'required|numeric',
             'cargo'             => 'required|numeric',
             'dependencia'       => 'required|numeric',
+            'permiso'           => 'required|numeric'
         ];
     }
 
@@ -38,7 +39,8 @@ class registroUsuarioRequest extends FormRequest
             'password_usuario'          => Hash::make($this->identificacion),
             'id_tipo_usuario'           => $this->tipoUsuario,
             'id_cargo'                  => $this->cargo,
-            'id_dependencia'            => $this->dependencia
+            'id_dependencia'            => $this->dependencia,
+            'id_permiso'                => $this->permiso
         ]);
     }
 
@@ -67,6 +69,9 @@ class registroUsuarioRequest extends FormRequest
 
             'dependencia.required'          => 'La dependencia del usuario es obligatoria',
             'dependencia.numeric'           => 'La dependencia solo acepta numero',
+
+            'permiso.required'              => 'El permiso del usuario es obligatorio',
+            'permiso.numeric'               => 'El permiso solo acepta numero',
         ];
     }
 

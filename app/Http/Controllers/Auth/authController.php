@@ -19,7 +19,7 @@ class authController extends Controller
                                     'usuario' => [], 401]);
         }
 
-        $usuario = UsuariosModel::with('tipoUsuario')->where('user_usuario', $request['user_usuario'])->firstOrFail();
+        $usuario = UsuariosModel::with('tipoUsuario', 'permisos')->where('user_usuario', $request['user_usuario'])->firstOrFail();
         $tokenResult = $usuario->createToken('auth_token');
         $token = $tokenResult->plainTextToken;
         // Guardar expiración de token (10 minutos)
@@ -37,6 +37,8 @@ class authController extends Controller
                 'rol' => $usuario->tipoUsuario->nombre_tipo_usuario,
                 'idTipoUsuario' => $usuario->tipoUsuario->id_tipo_usuario,
                 'idDependencia' => $usuario->id_dependencia,
+                'permiso' => $usuario->nombre_permiso, // Obtener solo los nombres de los permisos
+                'permiso_id' => $usuario->id_permiso // Obtener solo los IDs de los permisos
             ]
         ]);
     }

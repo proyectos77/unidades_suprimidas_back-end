@@ -5,6 +5,7 @@ namespace App\Models\Usuarios;
 use App\Models\Cargos\CargosModel;
 use App\Models\Denpendencias\Dependencias;
 use App\Models\Estados\EstadosModell;
+use App\Models\Permisos\Permisos;
 use App\Models\TipoUsuario\TipoUsuarioModell;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
@@ -76,6 +77,10 @@ class UsuariosModel extends Authenticatable
 
     public function dependencia() {
         return $this->belongsTo(Dependencias::class, 'id_dependencia', 'id_dependencia');
+    }
+
+    public function permisos() {
+        return $this->belongsToMany(Permisos::class, 'permisos_usuarios', 'id_usuario', 'id_permiso');
     }
 
 }

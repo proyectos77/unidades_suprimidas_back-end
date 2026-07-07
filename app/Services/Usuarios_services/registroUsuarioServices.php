@@ -5,7 +5,8 @@
     use App\Http\Requests\Usuarios_requests\registroUsuarioRequest;
     use App\Http\Responses\Responses;
     use App\Models\Usuarios\UsuariosModel;
-    use Exception;
+use App\Services\Permisos_services\permisoUsuariosService;
+use Exception;
     use Illuminate\Support\Facades\DB;
 
     class registroUsuarioServices
@@ -16,6 +17,14 @@
 
             try {
                     $usuario = UsuariosModel::create($request->all());
+
+                    $dataPermisoUsuario = [
+                        'id_usuario' => $usuario->id_usuario,
+                        'id_permiso' => $request->permiso
+                    ];
+
+                    $permisoUsuarioService = new permisoUsuariosService();
+                    $permisoUsuarioService->registroPermisoUsuario($dataPermisoUsuario);
 
                     DB::commit();
                     return Responses::success(200, 'Registro realizado', 'Se realizo el registro del usuario correctamente', 'success', $usuario);
