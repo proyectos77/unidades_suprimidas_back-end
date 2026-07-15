@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('numero_folios');
             $table->string('numero_soporte');
             $table->string('numero_frecuencia_consulta');
-            $table->string('notas');
+            $table->text('notas');
             $table->string('url_documento');
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');

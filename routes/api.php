@@ -8,6 +8,7 @@ use App\Http\Controllers\Balda\baldaController;
 use App\Http\Controllers\CajaUnidadActiva\CajaUnidadActivaController;
 use App\Http\Controllers\CarpetaUnidadActiva\CarpetaUnidadActivaController;
 use App\Http\Controllers\Cargos\cargosController;
+use App\Http\Controllers\DocumentoGeneralFuid\documentoGeneralFuidController;
 use App\Http\Controllers\DocumentoUnidadActiva\DocumentoUnidadActivaController;
 use App\Http\Controllers\Cuerpo\cuerpoController;
 use App\Http\Controllers\Departamentos\departamentosController;
@@ -57,6 +58,14 @@ use Illuminate\Support\Facades\Route;
     Route::apiResource('permisos', PermisosController::class); //Permisos
 
     Route::apiResource('usuarios', usuarioController::class); //Usuarios
+
+    Route::apiResource('documentoGeneralFuid', documentoGeneralFuidController::class);
+
+    Route::get('documentosFuidPorCarpeta/{idCarpeta}', [documentoGeneralFuidController::class, 'documentosPorCarpeta']);
+
+    Route::get('documentosFuidBuscar', [documentoGeneralFuidController::class, 'buscar']);
+
+    Route::post('documentoGeneralFuid/subirArchivoExcel', [documentoGeneralFuidController::class, 'subirArchivoExcel']);
 
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         /* Route::apiResource('usuarios', usuarioController::class); //Usuarios */
@@ -199,4 +208,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('documentosPorUnidad/{idUnidad}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorUnidad']);
 
         Route::get('documentosPorCarpeta/{idUnidad}/{idCarpeta}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorCarpeta']);
+
+
     });

@@ -220,9 +220,10 @@ class registroCarpetaUnidadActivaServices
     public function getCarpetasPorIdArchivoUnidadActiva($idArchivoUnidadActiva)
     {
         try {
-            $carpetas = CarpetaUnidadActivaModel::whereHas('caja', function ($query) use ($idArchivoUnidadActiva) {
-                $query->where('id_archivo_unidad_activa', $idArchivoUnidadActiva);
-            })->get();
+            $carpetas = CarpetaUnidadActivaModel::with(['cajaUnidadActiva.balda.estante.cuerpo'])
+                ->whereHas('caja', function ($query) use ($idArchivoUnidadActiva) {
+                    $query->where('id_archivo_unidad_activa', $idArchivoUnidadActiva);
+                })->get();
 
             return Responses::success(
                 200,

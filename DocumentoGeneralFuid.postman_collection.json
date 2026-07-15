@@ -1,0 +1,164 @@
+{
+  "info": {
+    "name": "Documento General FUID",
+    "description": "Colección de pruebas para la tabla documento_general_fuid con almacenamiento de archivos",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Registro con Solo Datos (JSON)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "description": "Token de autenticación (obtén esto del login)"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"numero_orden\": 1,\n  \"codigo\": 100,\n  \"nombre_serie_subserie_asunto\": \"Serie de Documentos Administrativos\",\n  \"fecha_extrema_inicio\": \"2020-01-15\",\n  \"fecha_extrema_fin\": \"2023-12-31\",\n  \"numero_caja\": \"CAJA-001\",\n  \"numero_carpeta\": \"CARPETA-001\",\n  \"numero_tomo\": \"TOMO-001\",\n  \"numero_otro\": \"OTRO-001\",\n  \"numero_folios\": \"250\",\n  \"numero_soporte\": \"SOPORTE-001\",\n  \"numero_frecuencia_consulta\": \"ALTA\",\n  \"notas\": \"Documento importante para archivo general\",\n  \"url_documento\": \"https://example.com/documentos/archivo-001.pdf\",\n  \"id_estado\": 1\n}"
+        },
+        "url": {
+          "raw": "{{base_url}}/api/documentoGeneralFuid",
+          "protocol": "https",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "documentoGeneralFuid"
+          ]
+        },
+        "description": "Crea un nuevo registro solo con datos (sin archivo)"
+      },
+      "response": []
+    },
+    {
+      "name": "Registro con Archivo (form-data)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer {{token}}",
+            "description": "Token de autenticación (obtén esto del login)"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "numero_orden",
+              "value": "2",
+              "type": "text"
+            },
+            {
+              "key": "codigo",
+              "value": "200",
+              "type": "text"
+            },
+            {
+              "key": "nombre_serie_subserie_asunto",
+              "value": "Serie de Documentos Legales",
+              "type": "text"
+            },
+            {
+              "key": "fecha_extrema_inicio",
+              "value": "2021-01-15",
+              "type": "text"
+            },
+            {
+              "key": "fecha_extrema_fin",
+              "value": "2024-12-31",
+              "type": "text"
+            },
+            {
+              "key": "numero_caja",
+              "value": "CAJA-002",
+              "type": "text"
+            },
+            {
+              "key": "numero_carpeta",
+              "value": "CARPETA-002",
+              "type": "text"
+            },
+            {
+              "key": "numero_tomo",
+              "value": "TOMO-002",
+              "type": "text"
+            },
+            {
+              "key": "numero_otro",
+              "value": "OTRO-002",
+              "type": "text"
+            },
+            {
+              "key": "numero_folios",
+              "value": "500",
+              "type": "text"
+            },
+            {
+              "key": "numero_soporte",
+              "value": "SOPORTE-002",
+              "type": "text"
+            },
+            {
+              "key": "numero_frecuencia_consulta",
+              "value": "MEDIA",
+              "type": "text"
+            },
+            {
+              "key": "notas",
+              "value": "Documento con archivo adjunto",
+              "type": "text"
+            },
+            {
+              "key": "id_estado",
+              "value": "1",
+              "type": "text"
+            },
+            {
+              "key": "archivo_documento",
+              "value": "",
+              "description": "Selecciona un archivo (pdf, doc, docx, xls, xlsx, jpg, jpeg, png, txt)",
+              "type": "file"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/api/documentoGeneralFuid",
+          "protocol": "https",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "documentoGeneralFuid"
+          ]
+        },
+        "description": "Crea un nuevo registro con archivo adjunto. Cambia 'archivo_documento' por tu archivo"
+      },
+      "response": []
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "localhost:8000",
+      "type": "string",
+      "description": "URL base de tu aplicación (ej: localhost:8000)"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string",
+      "description": "Token JWT obtenido del endpoint de login"
+    }
+  ]
+}

@@ -8,6 +8,7 @@ use App\Models\Subserie\SubserieModel;
 use App\Models\Estados\EstadosModell;
 use App\Models\Series\SeriesModel;
 use App\Models\Subseries\SubseriesModel;
+use App\Models\DocumentoGeneralFuid\DocumentoGeneralFuidModel;
 use Illuminate\Database\Eloquent\Model;
 
 class CarpetaUnidadActivaModel extends Model
@@ -61,5 +62,10 @@ class CarpetaUnidadActivaModel extends Model
     public function estado()
     {
         return $this->belongsTo(EstadosModell::class, 'id_estado');
+    }
+
+    public function documentosGeneralFuid()
+    {
+        return $this->hasMany(DocumentoGeneralFuidModel::class, 'id_carpeta_unidad_activa', 'id_carpeta_unidad_activa');
     }
 }
