@@ -124,14 +124,48 @@ class registroDocumentoGeneralFuidService
         }
     }
 
+    public function descargarDocumento($id)
+    {
+        try {
+            $documento = DocumentoGeneralFuidModel::findOrFail($id);
+
+            if (empty($documento->url_documento) || $documento->url_documento === 'sin-documento') {
+                throw new HttpException(404, 'Este documento no tiene un archivo asociado.');
+            }
+
+            $disk = config('filesystems.default');
+
+            if (!Storage::disk($disk)->exists($documento->url_documento)) {
+                throw new HttpException(404, 'El archivo no se encuentra en el servidor.');
+            }
+
+            return Storage::disk($disk)->download($documento->url_documento);
+        } catch (HttpException $e) {
+            return Responses::error($e->getStatusCode(), 'Error al descargar', $e->getMessage(), null);
+        } catch (\Exception $e) {
+            return Responses::error(500, 'Error al descargar', 'No se pudo descargar el documento', $e->getMessage());
+        }
+    }
+
     public function subirArchivoExcel($request)
     {
         try {
-            if (!$request->hasFile('archivo_excel')) {
-                throw new HttpException(422, 'Debe adjuntar el archivo Excel a almacenar.');
+            // Aceptar múltiples nombres de campos posibles
+            $camposPosibles = ['archivo_excel', 'archivo_documento', 'archivo', 'file', 'excel'];
+            $archivo = null;
+
+            foreach ($camposPosibles as $campo) {
+                if ($request->hasFile($campo)) {
+                    $archivo = $request->file($campo);
+                    break;
+                }
             }
 
-            $ruta = $this->almacenarDocumento($request->file('archivo_excel'));
+            if (!$archivo) {
+                throw new HttpException(422, 'Debe adjuntar el archivo Excel a almacenar. Campos aceptados: archivo_excel, archivo_documento, archivo, file, excel');
+            }
+
+            $ruta = $this->almacenarDocumento($archivo);
 
             return Responses::success(200, 'Archivo almacenado', 'El archivo Excel se almacenó correctamente', 'success', ['url_documento' => $ruta]);
         } catch (HttpException $e) {

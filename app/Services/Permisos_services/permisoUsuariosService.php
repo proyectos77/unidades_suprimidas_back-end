@@ -9,8 +9,6 @@ use App\Models\PermisosUsuario\PermisosUsuario;
     {
         public function registroPermisoUsuario(array $data) {
 
-            var_dump($data); // Agrega esta línea para verificar el contenido de $data
-
             try {
                 $permisoUsuario = PermisosUsuario::create([
                     'id_usuario' => $data['id_usuario'],

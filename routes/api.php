@@ -67,6 +67,8 @@ use Illuminate\Support\Facades\Route;
 
     Route::post('documentoGeneralFuid/subirArchivoExcel', [documentoGeneralFuidController::class, 'subirArchivoExcel']);
 
+    Route::get('documentoGeneralFuid/{id}/descargar', [documentoGeneralFuidController::class, 'descargar']);
+
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         /* Route::apiResource('usuarios', usuarioController::class); //Usuarios */
 
