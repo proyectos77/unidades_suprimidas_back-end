@@ -14,8 +14,7 @@ class registroDocumentoGeneralFuidService
     protected $carpetaDestino = 'documentosFUID';
     protected $maxSize = 10 * 1024 * 1024; // 10MB
 
-    public function registroDocumentoGeneralFuid($request)
-    {
+    public function registroDocumentoGeneralFuid($request){
         DB::beginTransaction();
         try {
             $datos = $request->all();
@@ -42,8 +41,7 @@ class registroDocumentoGeneralFuidService
         }
     }
 
-    public function documentosPorCarpeta($idCarpeta)
-    {
+    public function documentosPorCarpeta($idCarpeta){
         try {
             $documentos = DocumentoGeneralFuidModel::with('carpetaUnidadActiva')
                 ->where('id_carpeta_unidad_activa', $idCarpeta)
@@ -61,8 +59,7 @@ class registroDocumentoGeneralFuidService
         }
     }
 
-    public function buscarDocumentos($filtros)
-    {
+    public function buscarDocumentos($filtros){
         try {
             $query = DocumentoGeneralFuidModel::with('carpetaUnidadActiva');
 
@@ -124,8 +121,7 @@ class registroDocumentoGeneralFuidService
         }
     }
 
-    public function descargarDocumento($id)
-    {
+    public function descargarDocumento($id){
         try {
             $documento = DocumentoGeneralFuidModel::findOrFail($id);
 
@@ -147,8 +143,7 @@ class registroDocumentoGeneralFuidService
         }
     }
 
-    public function subirArchivoExcel($request)
-    {
+    public function subirArchivoExcel($request){
         try {
             // Aceptar múltiples nombres de campos posibles
             $camposPosibles = ['archivo_excel', 'archivo_documento', 'archivo', 'file', 'excel'];
@@ -175,8 +170,7 @@ class registroDocumentoGeneralFuidService
         }
     }
 
-    public function almacenarDocumento($archivo)
-    {
+    public function almacenarDocumento($archivo){
         // Validar tamaño del archivo
         if ($archivo->getSize() > $this->maxSize) {
             throw new HttpException(422, 'El archivo supera el tamaño máximo permitido de 10 MB.');
@@ -217,5 +211,14 @@ class registroDocumentoGeneralFuidService
         }
 
         return $ruta;
+    }
+
+    public function obtenerDataDocumentoFUID($idCarpeta){
+        try {
+            $documentos = DocumentoGeneralFuidModel::where('id_carpeta_unidad_activa', $idCarpeta)->get();
+            return Responses::success(200, 'Documentos obtenidos', 'Se obtuvieron los documentos correctamente', 'success', registroDocumentoGeneralFuidResource::collection($documentos));
+        } catch (\Exception $e) {
+            return Responses::error(500, 'Error al obtener documentos', 'Por favor intente más tarde', $e->getMessage());
+        }
     }
 }

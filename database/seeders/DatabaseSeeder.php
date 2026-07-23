@@ -26,7 +26,8 @@ class DatabaseSeeder extends Seeder
             EstanteSeeder::class,
             BaldaSeeder::class,
             TiposDocumentalSeeder::class,
-            PermisoSeeder::class
+            PermisoSeeder::class,
+            PermisosUsuarios::class,
 
         ]);
     }

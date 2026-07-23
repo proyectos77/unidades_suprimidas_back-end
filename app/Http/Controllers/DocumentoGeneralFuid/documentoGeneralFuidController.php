@@ -32,7 +32,7 @@ class documentoGeneralFuidController extends Controller
 
     public function show(string $id)
     {
-        //
+        return $this->registroDocumentoGeneralFuid->obtenerDataDocumentoFUID($id);
     }
 
     public function update(string $id)
