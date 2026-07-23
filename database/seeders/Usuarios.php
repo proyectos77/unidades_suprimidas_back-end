@@ -33,7 +33,7 @@ class Usuarios extends Seeder
             'password_usuario' => Hash::make('12345'),
             'id_tipo_usuario' => 1,
             'id_dependencia' => 1,
-            'id_cargo' => 1
+            'id_cargo' => 1,
         ]);
     }
 }

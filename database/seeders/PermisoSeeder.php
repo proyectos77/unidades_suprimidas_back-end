@@ -26,6 +26,12 @@ class PermisoSeeder extends Seeder
         ]);
 
         Permisos::create([
+            'nombre_permiso' => 'Estadisticas',
+            'descripcion_permiso' => 'Permiso para gestionar estadísticas',
+            'id_estado' => 1, // Asumiendo que 1 es el estado activo
+        ]);
+
+        Permisos::create([
             'nombre_permiso' => 'Todos Los Permisos',
             'descripcion_permiso' => 'Permiso para gestionar todos los permisos',
             'id_estado' => 1, // Asumiendo que 1 es el estado activo

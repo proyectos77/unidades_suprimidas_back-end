@@ -9,7 +9,7 @@ class PermisosUsuario extends Model
 {
     use HasFactory;
     protected $table = 'permisos_usuarios';
-    public $timestamps = true;
+    public $timestamps = false;
     protected $primaryKey = 'id_permiso_usuario';
 
     protected $fillable = [
