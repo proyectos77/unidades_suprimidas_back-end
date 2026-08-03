@@ -9,6 +9,7 @@ use App\Http\Controllers\CajaUnidadActiva\CajaUnidadActivaController;
 use App\Http\Controllers\CarpetaUnidadActiva\CarpetaUnidadActivaController;
 use App\Http\Controllers\Cargos\cargosController;
 use App\Http\Controllers\DocumentoGeneralFuid\documentoGeneralFuidController;
+use App\Http\Controllers\DocumentoGeneralFuid\detalleDocumentoGeneralFuidController;
 use App\Http\Controllers\DocumentoUnidadActiva\DocumentoUnidadActivaController;
 use App\Http\Controllers\Cuerpo\cuerpoController;
 use App\Http\Controllers\Departamentos\departamentosController;
@@ -61,13 +62,19 @@ use Illuminate\Support\Facades\Route;
 
     Route::apiResource('documentoGeneralFuid', documentoGeneralFuidController::class);
 
-    Route::get('documentosFuidPorCarpeta/{idCarpeta}', [documentoGeneralFuidController::class, 'documentosPorCarpeta']);
-
-    Route::get('documentosFuidBuscar', [documentoGeneralFuidController::class, 'buscar']);
+    Route::get('documentosFuidPorCaja/{idCaja}', [documentoGeneralFuidController::class, 'documentosPorCaja']);
 
     Route::post('documentoGeneralFuid/subirArchivoExcel', [documentoGeneralFuidController::class, 'subirArchivoExcel']);
 
     Route::get('documentoGeneralFuid/{id}/descargar', [documentoGeneralFuidController::class, 'descargar']);
+
+    Route::apiResource('detalleDocumentoGeneralFuid', detalleDocumentoGeneralFuidController::class);
+
+    Route::get('detalleDocumentoFuidPorDocumento/{idDocumentoGeneral}', [detalleDocumentoGeneralFuidController::class, 'detallesPorDocumento']);
+
+    Route::get('detalleDocumentoFuidPorCarpeta/{idCarpeta}', [detalleDocumentoGeneralFuidController::class, 'detallesPorCarpeta']);
+
+    Route::get('detalleDocumentoFuidBuscar', [detalleDocumentoGeneralFuidController::class, 'buscar']);
 
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         /* Route::apiResource('usuarios', usuarioController::class); //Usuarios */

@@ -6,9 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DocumentoGeneralFuid_request\registroDocumentoGeneralFuidRequest;
 use App\Services\DocumentoGeneralFuid_services\registroDocumentoGeneralFuidService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use App\Models\DocumentoGeneralFuid\DocumentoGeneralFuidModel;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class documentoGeneralFuidController extends Controller
 {
@@ -22,7 +19,7 @@ class documentoGeneralFuidController extends Controller
 
     public function index()
     {
-        //
+        return $this->registroDocumentoGeneralFuid->listarDocumentos();
     }
 
     public function store(registroDocumentoGeneralFuidRequest $request)
@@ -32,27 +29,22 @@ class documentoGeneralFuidController extends Controller
 
     public function show(string $id)
     {
-        return $this->registroDocumentoGeneralFuid->obtenerDataDocumentoFUID($id);
+        return $this->registroDocumentoGeneralFuid->obtenerDocumento($id);
     }
 
-    public function update(string $id)
+    public function update(registroDocumentoGeneralFuidRequest $request, string $id)
     {
-        //
+        return $this->registroDocumentoGeneralFuid->actualizarDocumento($id, $request);
     }
 
     public function destroy(string $id)
     {
-        //
+        return $this->registroDocumentoGeneralFuid->eliminarDocumento($id);
     }
 
-    public function documentosPorCarpeta($idCarpeta)
+    public function documentosPorCaja($idCaja)
     {
-        return $this->registroDocumentoGeneralFuid->documentosPorCarpeta($idCarpeta);
-    }
-
-    public function buscar(Request $request)
-    {
-        return $this->registroDocumentoGeneralFuid->buscarDocumentos($request->all());
+        return $this->registroDocumentoGeneralFuid->documentosPorCaja($idCaja);
     }
 
     public function subirArchivoExcel(Request $request)

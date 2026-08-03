@@ -14,6 +14,16 @@ class registroDocumentoGeneralFuidService
     protected $carpetaDestino = 'documentosFUID';
     protected $maxSize = 10 * 1024 * 1024; // 10MB
 
+    public function listarDocumentos(){
+        try {
+            $documentos = DocumentoGeneralFuidModel::with(['cajaUnidadActiva', 'estados'])->get();
+
+            return Responses::success(200, 'Listado de documentos', 'Se obtuvo la lista de documentos generales FUID', 'success', registroDocumentoGeneralFuidResource::collection($documentos));
+        } catch (\Exception $e) {
+            return Responses::error(500, 'Error al obtener documentos', 'Por favor intente más tarde', $e->getMessage());
+        }
+    }
+
     public function registroDocumentoGeneralFuid($request){
         DB::beginTransaction();
         try {
@@ -29,7 +39,7 @@ class registroDocumentoGeneralFuidService
             }
 
             $documento = DocumentoGeneralFuidModel::create($datos);
-            $documento->load('carpetaUnidadActiva');
+            $documento->load('cajaUnidadActiva');
             DB::commit();
             return Responses::success(200, 'Registro realizado', 'Se realizó el registro del documento general FUID correctamente', 'success', new registroDocumentoGeneralFuidResource($documento));
         } catch (HttpException $e) {
@@ -41,83 +51,64 @@ class registroDocumentoGeneralFuidService
         }
     }
 
-    public function documentosPorCarpeta($idCarpeta){
+    public function obtenerDocumento($id){
         try {
-            $documentos = DocumentoGeneralFuidModel::with('carpetaUnidadActiva')
-                ->where('id_carpeta_unidad_activa', $idCarpeta)
+            $documento = DocumentoGeneralFuidModel::with(['cajaUnidadActiva', 'estados', 'detalles.carpetaUnidadActiva'])->findOrFail($id);
+            return Responses::success(200, 'Documento obtenido', 'Se obtuvo el documento general FUID correctamente', 'success', new registroDocumentoGeneralFuidResource($documento));
+        } catch (\Exception $e) {
+            return Responses::error(500, 'Error al obtener el documento', 'Por favor intente más tarde', $e->getMessage());
+        }
+    }
+
+    public function actualizarDocumento($id, $request){
+        DB::beginTransaction();
+        try {
+            $documento = DocumentoGeneralFuidModel::findOrFail($id);
+            $datos = $request->all();
+
+            if ($request->hasFile('archivo_documento')) {
+                $archivo = $request->file('archivo_documento');
+                $datos['url_documento'] = $this->almacenarDocumento($archivo);
+            }
+
+            $documento->update($datos);
+            $documento->load('cajaUnidadActiva');
+            DB::commit();
+            return Responses::success(200, 'Actualización realizada', 'Se actualizó el documento general FUID correctamente', 'success', new registroDocumentoGeneralFuidResource($documento));
+        } catch (HttpException $e) {
+            DB::rollBack();
+            return Responses::error($e->getStatusCode(), 'Error de validación', $e->getMessage(), null);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return Responses::error(500, 'Error de actualización', 'Por favor intente más tarde', $e->getMessage());
+        }
+    }
+
+    public function eliminarDocumento($id){
+        try {
+            $documento = DocumentoGeneralFuidModel::findOrFail($id);
+            $documento->delete();
+            return Responses::success(200, 'Eliminación realizada', 'Se eliminó el documento general FUID correctamente', 'success', null);
+        } catch (\Exception $e) {
+            return Responses::error(500, 'Error al eliminar', 'Por favor intente más tarde', $e->getMessage());
+        }
+    }
+
+    public function documentosPorCaja($idCaja){
+        try {
+            $documentos = DocumentoGeneralFuidModel::with('cajaUnidadActiva')
+                ->where('id_caja_unidad_activa', $idCaja)
                 ->get();
 
             return Responses::success(
                 200,
                 'Listado de documentos',
-                'Se obtuvo la lista de documentos generales FUID de la carpeta',
+                'Se obtuvo la lista de documentos generales FUID de la caja',
                 'success',
                 registroDocumentoGeneralFuidResource::collection($documentos)
             );
         } catch (\Exception $e) {
-            return Responses::error(500, 'Error al obtener documentos', 'Error al obtener los documentos de la carpeta', $e->getMessage());
-        }
-    }
-
-    public function buscarDocumentos($filtros){
-        try {
-            $query = DocumentoGeneralFuidModel::with('carpetaUnidadActiva');
-
-            if (!empty($filtros['nombre_serie_subserie_asunto'])) {
-                $query->where('nombre_serie_subserie_asunto', 'like', '%' . $filtros['nombre_serie_subserie_asunto'] . '%');
-            }
-
-            if (!empty($filtros['numero_orden'])) {
-                $query->where('numero_orden', $filtros['numero_orden']);
-            }
-
-            if (!empty($filtros['codigo'])) {
-                $query->where('codigo', $filtros['codigo']);
-            }
-
-            if (!empty($filtros['numero_caja'])) {
-                $query->where('numero_caja', 'like', '%' . $filtros['numero_caja'] . '%');
-            }
-
-            if (!empty($filtros['numero_carpeta'])) {
-                $query->where('numero_carpeta', 'like', '%' . $filtros['numero_carpeta'] . '%');
-            }
-
-            if (!empty($filtros['numero_tomo'])) {
-                $query->where('numero_tomo', 'like', '%' . $filtros['numero_tomo'] . '%');
-            }
-
-            if (!empty($filtros['numero_soporte'])) {
-                $query->where('numero_soporte', 'like', '%' . $filtros['numero_soporte'] . '%');
-            }
-
-            if (!empty($filtros['notas'])) {
-                $query->where('notas', 'like', '%' . $filtros['notas'] . '%');
-            }
-
-            if (!empty($filtros['id_carpeta_unidad_activa'])) {
-                $query->where('id_carpeta_unidad_activa', $filtros['id_carpeta_unidad_activa']);
-            }
-
-            if (!empty($filtros['fecha_extrema_inicio'])) {
-                $query->whereDate('fecha_extrema_inicio', '>=', $filtros['fecha_extrema_inicio']);
-            }
-
-            if (!empty($filtros['fecha_extrema_fin'])) {
-                $query->whereDate('fecha_extrema_fin', '<=', $filtros['fecha_extrema_fin']);
-            }
-
-            $documentos = $query->get();
-
-            return Responses::success(
-                200,
-                'Resultados de búsqueda',
-                'Se obtuvieron los documentos que coinciden con la búsqueda',
-                'success',
-                registroDocumentoGeneralFuidResource::collection($documentos)
-            );
-        } catch (\Exception $e) {
-            return Responses::error(500, 'Error en la búsqueda', 'Ocurrió un error al buscar los documentos', $e->getMessage());
+            return Responses::error(500, 'Error al obtener documentos', 'Error al obtener los documentos de la caja', $e->getMessage());
         }
     }
 
@@ -211,14 +202,5 @@ class registroDocumentoGeneralFuidService
         }
 
         return $ruta;
-    }
-
-    public function obtenerDataDocumentoFUID($idCarpeta){
-        try {
-            $documentos = DocumentoGeneralFuidModel::where('id_carpeta_unidad_activa', $idCarpeta)->get();
-            return Responses::success(200, 'Documentos obtenidos', 'Se obtuvieron los documentos correctamente', 'success', registroDocumentoGeneralFuidResource::collection($documentos));
-        } catch (\Exception $e) {
-            return Responses::error(500, 'Error al obtener documentos', 'Por favor intente más tarde', $e->getMessage());
-        }
     }
 }

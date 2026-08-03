@@ -3,7 +3,8 @@
 namespace App\Models\DocumentoGeneralFuid;
 
 use App\Models\Estados\EstadosModell;
-use App\Models\CarpetaUnidadActiva\CarpetaUnidadActivaModel;
+use App\Models\CajaUnidadActiva\CajaUnidadActivaModel;
+use App\Models\DocumentoGeneralFuid\DetalleDocumentoGeneralFuidModel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -19,20 +20,8 @@ class DocumentoGeneralFuidModel extends Model
     const UPDATED_AT = 'fecha_actualizacion';
 
     protected $fillable = [
-        'id_carpeta_unidad_activa',
-        'numero_orden',
-        'codigo',
-        'nombre_serie_subserie_asunto',
-        'fecha_extrema_inicio',
-        'fecha_extrema_fin',
-        'numero_caja',
-        'numero_carpeta',
-        'numero_tomo',
-        'numero_otro',
-        'numero_folios',
-        'numero_soporte',
-        'numero_frecuencia_consulta',
-        'notas',
+        'id_caja_unidad_activa',
+        'nombre_documento_general',
         'url_documento',
         'id_estado',
     ];
@@ -42,8 +31,13 @@ class DocumentoGeneralFuidModel extends Model
         return $this->belongsTo(EstadosModell::class, 'id_estado', 'id_estado');
     }
 
-    public function carpetaUnidadActiva()
+    public function cajaUnidadActiva()
     {
-        return $this->belongsTo(CarpetaUnidadActivaModel::class, 'id_carpeta_unidad_activa', 'id_carpeta_unidad_activa');
+        return $this->belongsTo(CajaUnidadActivaModel::class, 'id_caja_unidad_activa', 'id_caja_unidad_activa');
+    }
+
+    public function detalles()
+    {
+        return $this->hasMany(DetalleDocumentoGeneralFuidModel::class, 'id_documento_general', 'id_documento_general');
     }
 }

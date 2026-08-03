@@ -13,22 +13,14 @@ return new class extends Migration
     {
         Schema::create('documento_general_fuid', function (Blueprint $table) {
             $table->unsignedInteger('id_documento_general')->autoIncrement();
-            $table->unsignedInteger('numero_orden');
-            $table->unsignedInteger('codigo');
-            $table->string('nombre_serie_subserie_asunto');
-            $table->date('fecha_extrema_inicio');
-            $table->date('fecha_extrema_fin');
-            $table->string('numero_caja');
-            $table->string('numero_carpeta');
-            $table->string('numero_tomo');
-            $table->string('numero_otro');
-            $table->string('numero_folios');
-            $table->string('numero_soporte');
-            $table->string('numero_frecuencia_consulta');
-            $table->text('notas');
-            $table->string('url_documento');
+            $table->unsignedInteger('id_caja_unidad_activa')->nullable();
+            $table->foreign('id_caja_unidad_activa')->references('id_caja_unidad_activa')->on('cajas_unidad_activas')->onDelete('set null');
+            $table->index('id_caja_unidad_activa');
+            $table->string('nombre_documento_general');
+            $table->string('url_documento')->nullable();
             $table->unsignedInteger('id_estado')->default(1);
             $table->foreign('id_estado')->references('id_estado')->on('estados')->onDelete('cascade');
+
             $table->datetime('fecha_creacion')->useCurrent();
             $table->datetime('fecha_actualizacion')->useCurrent()->useCurrentOnUpdate();
         });

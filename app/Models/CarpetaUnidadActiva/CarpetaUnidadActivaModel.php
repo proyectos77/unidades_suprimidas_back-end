@@ -8,7 +8,7 @@ use App\Models\Subserie\SubserieModel;
 use App\Models\Estados\EstadosModell;
 use App\Models\Series\SeriesModel;
 use App\Models\Subseries\SubseriesModel;
-use App\Models\DocumentoGeneralFuid\DocumentoGeneralFuidModel;
+use App\Models\DocumentoGeneralFuid\DetalleDocumentoGeneralFuidModel;
 use Illuminate\Database\Eloquent\Model;
 
 class CarpetaUnidadActivaModel extends Model
@@ -64,8 +64,8 @@ class CarpetaUnidadActivaModel extends Model
         return $this->belongsTo(EstadosModell::class, 'id_estado');
     }
 
-    public function documentosGeneralFuid()
+    public function detalleDocumentoGeneralFuid()
     {
-        return $this->hasMany(DocumentoGeneralFuidModel::class, 'id_carpeta_unidad_activa', 'id_carpeta_unidad_activa');
+        return $this->hasMany(DetalleDocumentoGeneralFuidModel::class, 'id_carpeta_unidad_activa', 'id_carpeta_unidad_activa');
     }
 }
