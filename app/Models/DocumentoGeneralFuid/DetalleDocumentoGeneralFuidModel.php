@@ -21,6 +21,7 @@ class DetalleDocumentoGeneralFuidModel extends Model
     protected $fillable = [
         'id_documento_general',
         'id_carpeta_unidad_activa',
+        'numero_pagina',
         'numero_orden',
         'codigo',
         'nombre_serie_subserie_asunto',

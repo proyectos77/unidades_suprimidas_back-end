@@ -135,7 +135,13 @@ class registroDocumentoGeneralFuidService
     }
 
     public function subirArchivoExcel($request){
+        DB::beginTransaction();
         try {
+            $idCajaUnidadActiva = $request->id_caja_unidad_activa;
+            if (empty($idCajaUnidadActiva)) {
+                throw new HttpException(422, 'Debe indicar la caja a la que pertenece el archivo Excel (id_caja_unidad_activa).');
+            }
+
             // Aceptar múltiples nombres de campos posibles
             $camposPosibles = ['archivo_excel', 'archivo_documento', 'archivo', 'file', 'excel'];
             $archivo = null;
@@ -153,10 +159,24 @@ class registroDocumentoGeneralFuidService
 
             $ruta = $this->almacenarDocumento($archivo);
 
-            return Responses::success(200, 'Archivo almacenado', 'El archivo Excel se almacenó correctamente', 'success', ['url_documento' => $ruta]);
+            $documento = DocumentoGeneralFuidModel::create([
+                'id_caja_unidad_activa'    => $idCajaUnidadActiva,
+                'nombre_documento_general' => pathinfo($archivo->getClientOriginalName(), PATHINFO_FILENAME),
+                'url_documento'            => $ruta,
+                'id_estado'                => 1,
+            ]);
+
+            DB::commit();
+
+            return Responses::success(200, 'Archivo almacenado', 'El archivo Excel se almacenó correctamente', 'success', [
+                'id_documento_general' => $documento->id_documento_general,
+                'url_documento'        => $ruta,
+            ]);
         } catch (HttpException $e) {
+            DB::rollBack();
             return Responses::error($e->getStatusCode(), 'Error al almacenar el archivo', $e->getMessage(), null);
         } catch (\Exception $e) {
+            DB::rollBack();
             return Responses::error(500, 'Error al almacenar el archivo', 'Por favor intente más tarde', $e->getMessage());
         }
     }

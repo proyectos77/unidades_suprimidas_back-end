@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('id_documento_general');
             $table->foreign('id_documento_general')->references('id_documento_general')->on('documento_general_fuid')->onDelete('cascade');
             $table->index('id_documento_general');
-            $table->unsignedInteger('id_carpeta_unidad_activa')->nullable()->after('id_documento_general');
+            $table->unsignedInteger('id_carpeta_unidad_activa')->nullable();
             $table->foreign('id_carpeta_unidad_activa')->references('id_carpeta_unidad_activa')->on('carpetas_unidad_activas')->onDelete('set null');
             $table->index('id_carpeta_unidad_activa');
             $table->unsignedInteger('numero_orden');

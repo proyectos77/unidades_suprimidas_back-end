@@ -5,7 +5,10 @@ namespace App\Services\DocumentoGeneralFuid_services;
 use App\Http\Resources\DocumentoGeneralFuid\registroDetalleDocumentoGeneralFuidResource;
 use App\Http\Responses\Responses;
 use App\Models\DocumentoGeneralFuid\DetalleDocumentoGeneralFuidModel;
+use App\Models\DocumentoGeneralFuid\DocumentoGeneralFuidModel;
+use App\Models\CarpetaUnidadActiva\CarpetaUnidadActivaModel;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class registroDetalleDocumentoGeneralFuidService
@@ -23,6 +26,8 @@ class registroDetalleDocumentoGeneralFuidService
     public function registroDetalleDocumentoGeneralFuid($request){
         DB::beginTransaction();
         try {
+            $this->validarCarpetaPerteneceACaja($request->id_documento_general, $request->id_carpeta_unidad_activa);
+
             $detalle = DetalleDocumentoGeneralFuidModel::create($request->all());
             $detalle->load('carpetaUnidadActiva');
             DB::commit();
@@ -32,7 +37,27 @@ class registroDetalleDocumentoGeneralFuidService
             return Responses::error($e->getStatusCode(), 'Error de validación', $e->getMessage(), null);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Error registrando detalle documento general FUID: ' . $e->getMessage(), [
+                'payload' => $request->all(),
+                'exception' => $e,
+            ]);
             return Responses::error(500, 'Error de registros', 'Por favor intente más tarde', $e->getMessage());
+        }
+    }
+
+    protected function validarCarpetaPerteneceACaja($idDocumentoGeneral, $idCarpeta){
+        $documento = DocumentoGeneralFuidModel::find($idDocumentoGeneral);
+        if (!$documento) {
+            throw new HttpException(422, "El documento general FUID con id {$idDocumentoGeneral} no existe.");
+        }
+
+        $carpeta = CarpetaUnidadActivaModel::find($idCarpeta);
+        if (!$carpeta) {
+            throw new HttpException(422, "La carpeta con id {$idCarpeta} no existe.");
+        }
+
+        if ((int) $carpeta->id_caja_unidad_activa !== (int) $documento->id_caja_unidad_activa) {
+            throw new HttpException(422, 'La carpeta seleccionada no pertenece a la caja del documento general FUID.');
         }
     }
 

@@ -20,6 +20,7 @@ class registroDetalleDocumentoGeneralFuidResource extends JsonResource
             'id_documento_general'          => $this->id_documento_general,
             'id_carpeta_unidad_activa'      => $this->id_carpeta_unidad_activa,
             'carpeta'                       => new CarpetaUnidadActivaResource($this->whenLoaded('carpetaUnidadActiva')),
+            'numero_pagina'                 => $this->numero_pagina,
             'numero_orden'                  => $this->numero_orden,
             'codigo'                        => $this->codigo,
             'nombre_serie_subserie_asunto'  => $this->nombre_serie_subserie_asunto,

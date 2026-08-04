@@ -27,8 +27,9 @@ class registroDetalleDocumentoGeneralFuidRequest extends FormRequest
         return [
             'id_documento_general'               => 'required|integer|exists:documento_general_fuid,id_documento_general',
             'id_carpeta_unidad_activa'            => 'required|integer|exists:carpetas_unidad_activas,id_carpeta_unidad_activa',
+            'numero_pagina'                        => 'required|integer|min:1',
             'numero_orden'                        => 'required|numeric',
-            'codigo'                               => 'required|numeric',
+            'codigo'                               => 'required|string',
             'nombre_serie_subserie_asunto'        => 'required|string',
             'fecha_extrema_inicio'                => 'required|date',
             'fecha_extrema_fin'                   => 'required|date|after_or_equal:fecha_extrema_inicio',
@@ -49,6 +50,7 @@ class registroDetalleDocumentoGeneralFuidRequest extends FormRequest
         $this->merge([
             'id_documento_general'          => $this->id_documento_general,
             'id_carpeta_unidad_activa'      => $this->id_carpeta_unidad_activa,
+            'numero_pagina'                 => $this->numero_pagina,
             'numero_orden'                  => $this->numero_orden,
             'codigo'                        => $this->codigo,
             'nombre_serie_subserie_asunto'  => $this->nombre_serie_subserie_asunto,
@@ -76,6 +78,10 @@ class registroDetalleDocumentoGeneralFuidRequest extends FormRequest
             'id_carpeta_unidad_activa.required'          => 'La carpeta a la que pertenece el detalle es requerida',
             'id_carpeta_unidad_activa.integer'           => 'El identificador de la carpeta debe ser numérico',
             'id_carpeta_unidad_activa.exists'            => 'La carpeta seleccionada no existe',
+
+            'numero_pagina.required'                     => 'El número de página es requerido',
+            'numero_pagina.integer'                       => 'El número de página debe ser un número entero',
+            'numero_pagina.min'                            => 'El número de página debe ser mayor o igual a 1',
 
             'numero_orden.required'                      => 'El atributo número de orden es requerido',
             'numero_orden.numeric'                       => 'El atributo número de orden solo acepta números',
