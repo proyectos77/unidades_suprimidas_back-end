@@ -38,6 +38,36 @@ class registroDetalleDocumentoGeneralFuidResource extends JsonResource
             'estado'                        => $this->estados,
             'fecha_creacion'                => $this->fecha_creacion,
             'fecha_actualizacion'           => $this->fecha_actualizacion,
+            'ubicacion'                     => $this->construirUbicacion(),
+        ];
+    }
+
+    /**
+     * IDs planos de toda la cadena carpeta -> caja -> balda -> estante -> cuerpo,
+     * y unidad -> archivo (independiente de la cadena de estante), para poder
+     * navegar directamente al árbol de la unidad correspondiente.
+     */
+    private function construirUbicacion(): ?array
+    {
+        $carpeta = $this->carpetaUnidadActiva;
+
+        if (!$carpeta || !$carpeta->relationLoaded('cajaUnidadActiva')) {
+            return null;
+        }
+
+        $caja = $carpeta->cajaUnidadActiva;
+        $balda = $caja && $caja->relationLoaded('balda') ? $caja->balda : null;
+        $estante = $balda && $balda->relationLoaded('estante') ? $balda->estante : null;
+        $cuerpo = $estante && $estante->relationLoaded('cuerpo') ? $estante->cuerpo : null;
+        $archivo = $caja && $caja->relationLoaded('archivo') ? $caja->archivo : null;
+
+        return [
+            'idUnidad'  => $archivo->id_unidad ?? null,
+            'idCuerpo'  => $cuerpo->id_cuerpo ?? null,
+            'idEstante' => $estante->id_estante ?? null,
+            'idBalda'   => $balda->id_balda ?? null,
+            'idCaja'    => $caja->id_caja_unidad_activa ?? null,
+            'idCarpeta' => $carpeta->id_carpeta_unidad_activa ?? null,
         ];
     }
 }

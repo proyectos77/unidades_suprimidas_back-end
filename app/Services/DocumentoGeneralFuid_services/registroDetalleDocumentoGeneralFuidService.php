@@ -135,7 +135,10 @@ class registroDetalleDocumentoGeneralFuidService
 
     public function buscarDetalles($filtros){
         try {
-            $query = DetalleDocumentoGeneralFuidModel::with('carpetaUnidadActiva');
+            $query = DetalleDocumentoGeneralFuidModel::with([
+                'carpetaUnidadActiva.cajaUnidadActiva.balda.estante.cuerpo',
+                'carpetaUnidadActiva.cajaUnidadActiva.archivo',
+            ]);
 
             if (!empty($filtros['nombre_serie_subserie_asunto'])) {
                 $query->where('nombre_serie_subserie_asunto', 'like', '%' . $filtros['nombre_serie_subserie_asunto'] . '%');
@@ -146,7 +149,7 @@ class registroDetalleDocumentoGeneralFuidService
             }
 
             if (!empty($filtros['codigo'])) {
-                $query->where('codigo', $filtros['codigo']);
+                $query->where('codigo', 'like', '%' . $filtros['codigo'] . '%');
             }
 
             if (!empty($filtros['numero_caja'])) {
