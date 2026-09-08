@@ -24,7 +24,7 @@ class authController extends Controller
         $tokenResult = $usuario->createToken('auth_token');
         $token = $tokenResult->plainTextToken;
         // Guardar expiración de token (10 minutos)
-        $tokenResult->accessToken->expires_at = now()->addMinutes(10);
+        $tokenResult->accessToken->expires_at = now()->addMinutes(20);
         $tokenResult->accessToken->save();
 
         return response()->json([
