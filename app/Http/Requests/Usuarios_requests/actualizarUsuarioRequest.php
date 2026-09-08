@@ -30,6 +30,8 @@ class actualizarUsuarioRequest extends FormRequest
                 'emailUsuario'      => 'required|email|unique:usuarios,email_usuario,' . $id . ',id_usuario',
                 'tipoUsuario'       => 'required|numeric',
                 'cargo'             => 'required|numeric',
+                'permiso'           => 'sometimes|array|min:1',
+                'permiso.*'         => 'numeric',
             ];
         } elseif ($method === 'PATCH') {
             return [
@@ -39,7 +41,9 @@ class actualizarUsuarioRequest extends FormRequest
                 'emailUsuario'      => 'sometimes|email|unique:usuarios,email_usuario,' . $id . ',id_usuario',
                 'tipoUsuario'       => 'sometimes|numeric',
                 'cargo'             => 'sometimes|numeric',
-                'estado'            => 'sometimes|numeric'
+                'estado'            => 'sometimes|numeric',
+                'permiso'           => 'sometimes|array|min:1',
+                'permiso.*'         => 'numeric',
             ];
         }
         return [];

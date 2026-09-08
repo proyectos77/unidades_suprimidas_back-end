@@ -39,7 +39,13 @@ class authController extends Controller
                 'idTipoUsuario' => $usuario->tipoUsuario->id_tipo_usuario,
                 'idDependencia' => $usuario->id_dependencia,
                 'permiso' => $permiso->nombre_permiso ?? null,
-                'permiso_id' => $permiso->id_permiso ?? null
+                'permiso_id' => $permiso->id_permiso ?? null,
+                'permisos' => $usuario->permisos->map(function ($permiso) {
+                    return [
+                        'id' => $permiso->id_permiso,
+                        'nombre' => $permiso->nombre_permiso
+                    ];
+                })
             ]
         ]);
     }

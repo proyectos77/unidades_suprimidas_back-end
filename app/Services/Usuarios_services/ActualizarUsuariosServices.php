@@ -18,6 +18,10 @@
                 $usuarioValidado->fill($request->all());
                 $usuarioValidado->save();
 
+                if ($request->has('permiso')) {
+                    $usuarioValidado->permisos()->sync($request->permiso);
+                }
+
                 DB::commit();
 
                 return Responses::success(200, 'Actualizado', 'Usuario actualizado correctamente', 'success', new actualizarUsuarioResource($usuarioValidado));

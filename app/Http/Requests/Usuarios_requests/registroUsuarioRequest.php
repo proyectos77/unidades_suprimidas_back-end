@@ -25,7 +25,8 @@ class registroUsuarioRequest extends FormRequest
             'tipoUsuario'       => 'required|numeric',
             'cargo'             => 'required|numeric',
             'dependencia'       => 'required|numeric',
-            'permiso'           => 'required|numeric'
+            'permiso'           => 'required|array|min:1',
+            'permiso.*'         => 'numeric'
         ];
     }
 
@@ -71,7 +72,9 @@ class registroUsuarioRequest extends FormRequest
             'dependencia.numeric'           => 'La dependencia solo acepta numero',
 
             'permiso.required'              => 'El permiso del usuario es obligatorio',
-            'permiso.numeric'               => 'El permiso solo acepta numero',
+            'permiso.array'                 => 'El permiso debe ser un arreglo de permisos',
+            'permiso.min'                   => 'Debe seleccionar al menos un permiso',
+            'permiso.*.numeric'             => 'Cada permiso debe ser un número',
         ];
     }
 

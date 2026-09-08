@@ -25,7 +25,13 @@ class listadoUsuariosResource extends ResourceCollection
                 'cargo'         => $usuario->cargos->nombre_cargo,
                 'idCargo'       => $usuario->cargos->id_cargo,
                 'tipoUsuario'   => $usuario->tipoUsuario->nombre_tipo_usuario,
-                'idTipoUsuario' => $usuario->tipoUsuario->id_tipo_usuario
+                'idTipoUsuario' => $usuario->tipoUsuario->id_tipo_usuario,
+                'permisos'      => $usuario->permisos->map(function ($permiso) {
+                    return [
+                        'id'     => $permiso->id_permiso,
+                        'nombre' => $permiso->nombre_permiso
+                    ];
+                })
             ];
         })->toArray();
     }

@@ -18,13 +18,16 @@ use Exception;
             try {
                     $usuario = UsuariosModel::create($request->all());
 
-                    $dataPermisoUsuario = [
-                        'id_usuario' => $usuario->id_usuario,
-                        'id_permiso' => $request->permiso
-                    ];
-
                     $permisoUsuarioService = new permisoUsuariosService();
-                    $permisoUsuarioService->registroPermisoUsuario($dataPermisoUsuario);
+
+                    foreach ($request->permiso as $idPermiso) {
+                        $dataPermisoUsuario = [
+                            'id_usuario' => $usuario->id_usuario,
+                            'id_permiso' => $idPermiso
+                        ];
+
+                        $permisoUsuarioService->registroPermisoUsuario($dataPermisoUsuario);
+                    }
 
                     DB::commit();
                     return Responses::success(200, 'Registro realizado', 'Se realizo el registro del usuario correctamente', 'success', $usuario);
