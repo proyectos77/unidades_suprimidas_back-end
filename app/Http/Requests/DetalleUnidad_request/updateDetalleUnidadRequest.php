@@ -24,32 +24,28 @@ class updateDetalleUnidadRequest extends FormRequest
      */
     public function rules(): array
     {
-
-
-        $id = request()->route('usuario'); // Capturar el ID de la ruta
-        /* dd($id); */
-
         $method = $this->method();
 
         if ($method === 'PUT') {
             return [
                 'actoAdministrativoCreacion'        => 'required|string',
-                'actoAdministrativoDesactivacion'   => 'required|string',
+                'actoAdministrativoDesactivacion'   => 'nullable|string',
                 'fechaCreacionUnidad'               => 'required|date',
-                'fechaDesactivacionUnidad'          => 'required|date',
+                'fechaDesactivacionUnidad'          => 'nullable|date',
                 'observacion'                       => 'required|string',
                 'planReorganizacionDiorg'                  => 'required|string'
             ];
-        }elseif ($method === 'PATCH') {
-            return [
-                'actoAdministrativoCreacion'         => 'sometimes|string',
-                'actoAdministrativoDesactivacion'    => 'sometimes|string',
-                'fechaCreacionUnidad'                => 'sometimes|date',
-                'fechaDesactivacionUnidad'           => 'sometimes|date',
-                'planReorganizacionDiorg'             => 'sometimes|string',
-                'observacion'                        => 'sometimes|string',
-            ];
         }
+
+        // PATCH (y cualquier otro método): validación parcial
+        return [
+            'actoAdministrativoCreacion'         => 'sometimes|string',
+            'actoAdministrativoDesactivacion'    => 'sometimes|string',
+            'fechaCreacionUnidad'                => 'sometimes|date',
+            'fechaDesactivacionUnidad'           => 'sometimes|date',
+            'planReorganizacionDiorg'             => 'sometimes|string',
+            'observacion'                        => 'sometimes|string',
+        ];
     }
 
     protected function prepareForValidation()
@@ -76,13 +72,13 @@ class updateDetalleUnidadRequest extends FormRequest
             'actoAdministrativoCreacion.string'                 => 'El atributo acto administrativo creacion solo acepta letras',
             'actoAdministrativoCreacion.required'               => 'El atributo acto administrativo creacion es requerido',
 
-            'actoAdministrativoDesactivacion.numeric'           => 'El atributo acto administrativo desactivacion solo acepta números',
-            'actoAdministrativoDesactivacion.required'          => 'El atributo acto administrativo desactivacion es requerido',
+            'actoAdministrativoDesactivacion.string'           => 'El atributo acto administrativo desactivacion solo acepta letras',
+            //'actoAdministrativoDesactivacion.required'          => 'El atributo acto administrativo desactivacion es requerido',
 
             'fechaCreacionUnidad.required'                      => 'El atributo fecha creacion unidad es requerido',
             'fechaCreacionUnidad.date'                          => 'El atributo fehca creacion no tiene un formato de fecha valido',
 
-            'fechaDesactivacionUnidad.required'                 => 'El atributo fecha desactivacion unidad es requerido',
+            //'fechaDesactivacionUnidad.required'                 => 'El atributo fecha desactivacion unidad es requerido',
             'fechaDesactivacionUnidad.date'                     => 'El atributo fehca desactivacion no tiene un formato de fecha valido',
 
             'observacion.string'                                => 'El atributo observacion solo acepta letras',

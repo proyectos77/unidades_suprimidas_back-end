@@ -26,9 +26,9 @@ class registroDetalleUnidadRequest extends FormRequest
     {
         return [
             'actoAdministrativoCreacion'        =>  'required|string',
-            'actoAdministrativoDesactivacion'   =>  'required|string',
+            'actoAdministrativoDesactivacion'   =>  'nullable|string',
             'fechaCreacionUnidad'               =>  'required|date',
-            'fechaDesactivacionUnidad'          =>  'required|date',
+            'fechaDesactivacionUnidad'          =>  'nullable|date',
             'puestoMandoAdelantado'             =>  'nullable|string',
             'puestoMandoAtrasado'               =>  'nullable|string',
             'planReorganizacionDiorg'           =>  'nullable|string',
@@ -54,10 +54,10 @@ class registroDetalleUnidadRequest extends FormRequest
     public function messages(){
         return [
             'actoAdministrativoCreacion.required'       => 'El atributo acto administrativo creacion es requerido',
-            'actoAdministrativoDesactivacion.required'  =>  'El atributo acto administrativo desactivacion es requerido',
+            //'actoAdministrativoDesactivacion.required'  =>  'El atributo acto administrativo desactivacion es requerido',
             'fechaCreacionUnidad.required'              =>  'El atributo fecha creacion unidad es requerido',
             'fechaCreacionUnidad.date'                  =>  'El atributo fecha creacion unidad espera una fecha',
-            'fechaDesactivacionUnidad.required'         =>  'El atributo fecha desactivacion unidad es requerido',
+            //'fechaDesactivacionUnidad.required'         =>  'El atributo fecha desactivacion unidad es requerido',
             'fechaDesactivacionUnidad.date'             =>  'El atributo fecha desactivacion unidad espera una fecha',
             'planReorganizacionDiorg.required'          =>  'El atributo plan de reorganizacion diorg es requerido',
             'observacion.required'                      =>  'El atributo observacion es requerido',

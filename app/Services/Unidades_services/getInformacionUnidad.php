@@ -25,9 +25,9 @@ class getInformacionUnidad
         $respuesta='';
 
         if(!$data){
-            $respuesta = Responses::error(404, 'Error consulta', 'No se encontró la unidad', []);
+            $respuesta = Responses::error(204, 'Error consulta', 'No se encontró la unidad', []);
         }elseif(!$data->detalleUnidad){
-            $respuesta = Responses::error(404, 'Unidad sin detalle', 'La unidad no tiene detalle asociado', []);
+            $respuesta = Responses::warning(200, 'Unidad sin detalle', 'La unidad no tiene detalle asociado', []);
         }else{
             $respuesta = Responses::success(200, 'Consulta realizada', 'La consulta se ha realizado con exito', 'success', new getInformacionUnidadResource($data));
         }
