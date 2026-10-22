@@ -11,6 +11,8 @@ use App\Http\Controllers\Cargos\cargosController;
 use App\Http\Controllers\DocumentoGeneralFuid\documentoGeneralFuidController;
 use App\Http\Controllers\DocumentoGeneralFuid\detalleDocumentoGeneralFuidController;
 use App\Http\Controllers\DocumentoUnidadActiva\DocumentoUnidadActivaController;
+use App\Http\Controllers\documentacionSistema\DocumentacionSistemaController;
+use App\Http\Controllers\TipoDocumentacionSistema\TipoDocumentacionSistemaController;
 use App\Http\Controllers\Cuerpo\cuerpoController;
 use App\Http\Controllers\Departamentos\departamentosController;
 use App\Http\Controllers\Dependencias\dependenciasController;
@@ -75,6 +77,10 @@ use Illuminate\Support\Facades\Route;
     Route::get('detalleDocumentoFuidPorCarpeta/{idCarpeta}', [detalleDocumentoGeneralFuidController::class, 'detallesPorCarpeta']);
 
     Route::get('detalleDocumentoFuidBuscar', [detalleDocumentoGeneralFuidController::class, 'buscar']);
+
+    Route::apiResource('documentacionSistema', DocumentacionSistemaController::class);
+
+    Route::apiResource('tipoDocumentacionSistema', TipoDocumentacionSistemaController::class);
 
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         /* Route::apiResource('usuarios', usuarioController::class); //Usuarios */
