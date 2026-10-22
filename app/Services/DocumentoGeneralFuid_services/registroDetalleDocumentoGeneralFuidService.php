@@ -137,7 +137,7 @@ class registroDetalleDocumentoGeneralFuidService
         try {
             $query = DetalleDocumentoGeneralFuidModel::with([
                 'carpetaUnidadActiva.cajaUnidadActiva.balda.estante.cuerpo',
-                'carpetaUnidadActiva.cajaUnidadActiva.archivo',
+                'carpetaUnidadActiva.cajaUnidadActiva.archivo.unidad',
             ]);
 
             if (!empty($filtros['nombre_serie_subserie_asunto'])) {
@@ -186,6 +186,18 @@ class registroDetalleDocumentoGeneralFuidService
 
             if (!empty($filtros['fecha_extrema_fin'])) {
                 $query->whereDate('fecha_extrema_fin', '<=', $filtros['fecha_extrema_fin']);
+            }
+
+            if (!empty($filtros['id_unidad'])) {
+                $query->whereHas('carpetaUnidadActiva.cajaUnidadActiva.archivo', function ($q) use ($filtros) {
+                    $q->where('id_unidad', $filtros['id_unidad']);
+                });
+            }
+
+            if (!empty($filtros['estado_unidad'])) {
+                $query->whereHas('carpetaUnidadActiva.cajaUnidadActiva.archivo.unidad', function ($q) use ($filtros) {
+                    $q->where('id_estado', $filtros['estado_unidad']);
+                });
             }
 
             $detalles = $query->get();

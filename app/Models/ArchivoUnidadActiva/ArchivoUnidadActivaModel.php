@@ -4,6 +4,7 @@ namespace App\Models\ArchivoUnidadActiva;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Unidades\UnidadesModel;
 
 class ArchivoUnidadActivaModel extends Model
 {
@@ -23,4 +24,9 @@ class ArchivoUnidadActivaModel extends Model
         'piso_archivo_unidad_activa',
         'bodega_archivo_unidad_activa',
     ];
+
+    public function unidad()
+    {
+        return $this->belongsTo(UnidadesModel::class, 'id_unidad', 'id_unidad');
+    }
 }

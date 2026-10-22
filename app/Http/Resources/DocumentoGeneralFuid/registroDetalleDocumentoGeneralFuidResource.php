@@ -68,6 +68,7 @@ class registroDetalleDocumentoGeneralFuidResource extends JsonResource
             'idBalda'   => $balda->id_balda ?? null,
             'idCaja'    => $caja->id_caja_unidad_activa ?? null,
             'idCarpeta' => $carpeta->id_carpeta_unidad_activa ?? null,
+            'nombreUnidad' => $archivo && $archivo->relationLoaded('unidad') ? ($archivo->unidad->nombre_unidad ?? null) : null,
         ];
     }
 }
