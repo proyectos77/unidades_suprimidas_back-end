@@ -22,6 +22,8 @@ class CajaUnidadActivaResource extends JsonResource
             'fechaCreacionArchivoUnidadActiva'          => $this->fecha_creacion_archivo_unidad_activa,
             'fechaActualizacionArchivoUnidadActiva'     => $this->fecha_actualizacion_archivo_unidad_activa,
             'idEstado'                                  => $this->id_estado,
+            'cantidadCarpetasRegistradas'               => $this->whenCounted('carpetas'),
+            'cajaCompleta'                              => $this->whenCounted('carpetas', fn ($registradas) => $registradas >= (int) $this->cantidad_carpetas_unidad_activa),
             'archivo'                                   => $this->whenLoaded('archivo'),
             'balda'                                     => $this->whenLoaded('balda'),
             'estado'                                    => $this->whenLoaded('estado'),

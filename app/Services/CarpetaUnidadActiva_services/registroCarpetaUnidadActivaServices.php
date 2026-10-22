@@ -4,6 +4,7 @@ namespace App\Services\CarpetaUnidadActiva_services;
 
 use App\Http\Resources\CarpetaUnidadActiva\CarpetaUnidadActivaResource;
 use App\Http\Responses\Responses;
+use App\Models\CajaUnidadActiva\CajaUnidadActivaModel;
 use App\Models\CarpetaUnidadActiva\CarpetaUnidadActivaModel;
 
 class registroCarpetaUnidadActivaServices
@@ -13,6 +14,11 @@ class registroCarpetaUnidadActivaServices
         try {
             $carpetas = $datos['carpetas'] ?? [];
             $carpetasCreadas = [];
+
+            $errorCapacidad = $this->validarCapacidadCajas($carpetas);
+            if ($errorCapacidad) {
+                return Responses::warning(422, 'Capacidad de caja', $errorCapacidad);
+            }
 
             foreach ($carpetas as $carpetaData) {
                 $carpetaTransformada = [
@@ -58,6 +64,41 @@ class registroCarpetaUnidadActivaServices
                 $e->getMessage()
             );
         }
+    }
+
+    /**
+     * Verifica que las carpetas a registrar no superen la cantidad declarada en cada caja
+     * y que no se repita un número de carpeta ya registrado (o duplicado en el mismo envío).
+     * Retorna el mensaje de error o null si todo es válido.
+     */
+    private function validarCapacidadCajas(array $carpetas): ?string
+    {
+        $carpetasPorCaja = collect($carpetas)->groupBy('cajaUnidadActiva');
+
+        foreach ($carpetasPorCaja as $idCaja => $nuevas) {
+            $caja = CajaUnidadActivaModel::find($idCaja);
+            if (!$caja) {
+                return "La caja {$idCaja} no existe.";
+            }
+
+            $numerosRegistrados = CarpetaUnidadActivaModel::where('id_caja_unidad_activa', $idCaja)
+                ->pluck('numero_carpeta_unidad_activa')
+                ->map(fn ($n) => (string) $n);
+            $numerosNuevos = $nuevas->pluck('numeroCarpeta')->map(fn ($n) => (string) $n);
+
+            $repetidos = $numerosNuevos->duplicates()->merge($numerosNuevos->intersect($numerosRegistrados))->unique();
+            if ($repetidos->isNotEmpty()) {
+                return "La caja {$caja->codigo_caja_unidad_activa} ya tiene registrada(s) la(s) carpeta(s): " . $repetidos->implode(', ') . '.';
+            }
+
+            $capacidad = (int) $caja->cantidad_carpetas_unidad_activa;
+            if ($numerosRegistrados->count() + $numerosNuevos->count() > $capacidad) {
+                $disponibles = max($capacidad - $numerosRegistrados->count(), 0);
+                return "La caja {$caja->codigo_caja_unidad_activa} admite {$capacidad} carpeta(s) y solo le quedan {$disponibles} por registrar.";
+            }
+        }
+
+        return null;
     }
 
     public function listadoCarpetaUnidadActiva()
@@ -220,7 +261,7 @@ class registroCarpetaUnidadActivaServices
     public function getCarpetasPorIdArchivoUnidadActiva($idArchivoUnidadActiva)
     {
         try {
-            $carpetas = CarpetaUnidadActivaModel::with(['cajaUnidadActiva.balda.estante.cuerpo'])
+            $carpetas = CarpetaUnidadActivaModel::with(['cajaUnidadActiva.balda.estante.cuerpo', 'serie', 'subserie'])
                 ->whereHas('caja', function ($query) use ($idArchivoUnidadActiva) {
                     $query->where('id_archivo_unidad_activa', $idArchivoUnidadActiva);
                 })->get();

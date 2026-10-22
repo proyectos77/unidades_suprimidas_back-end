@@ -5,6 +5,7 @@ namespace App\Models\CajaUnidadActiva;
 use App\Models\Balda\BaldaModel;
 use App\Models\ArchivoUnidadActiva\ArchivoUnidadActivaModel;
 use App\Models\Estados\EstadosModell;
+use App\Models\CarpetaUnidadActiva\CarpetaUnidadActivaModel;
 use Illuminate\Database\Eloquent\Model;
 
 class CajaUnidadActivaModel extends Model
@@ -47,5 +48,10 @@ class CajaUnidadActivaModel extends Model
     public function estado()
     {
         return $this->belongsTo(EstadosModell::class, 'id_estado');
+    }
+
+    public function carpetas()
+    {
+        return $this->hasMany(CarpetaUnidadActivaModel::class, 'id_caja_unidad_activa', 'id_caja_unidad_activa');
     }
 }

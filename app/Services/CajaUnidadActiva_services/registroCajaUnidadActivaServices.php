@@ -212,7 +212,9 @@ class registroCajaUnidadActivaServices
     public function getCajasPorIdArchivoUnidadActiva($idArchivoUnidadActiva)
     {
         try {
-            $cajas = CajaUnidadActivaModel::where('id_archivo_unidad_activa', $idArchivoUnidadActiva)->get();
+            $cajas = CajaUnidadActivaModel::where('id_archivo_unidad_activa', $idArchivoUnidadActiva)
+                ->withCount('carpetas')
+                ->get();
 
             return Responses::success(
                 200,
