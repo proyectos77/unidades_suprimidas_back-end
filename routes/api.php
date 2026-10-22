@@ -33,6 +33,7 @@ use App\Http\Controllers\Transferencias\transferenciasController;
 use App\Http\Controllers\Unidades\unidadesController;
 use App\Http\Controllers\Usuarios\usuarioController;
 use App\Http\Controllers\Utilidades\utilController;
+use App\Http\Controllers\OrganizacionTransferencia\OrganizacionTransferenciaController;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
@@ -223,6 +224,15 @@ use Illuminate\Support\Facades\Route;
         Route::get('documentosPorUnidad/{idUnidad}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorUnidad']);
 
         Route::get('documentosPorCarpeta/{idUnidad}/{idCarpeta}', [DocumentoUnidadActivaController::class, 'obtenerDocumentosPorCarpeta']);
+
+        /* Organización de transferencias de unidades suprimidas */
+        Route::get('organizacionTransferencia/vigencias/{idUnidad}', [OrganizacionTransferenciaController::class, 'vigencias']);
+
+        Route::get('organizacionTransferencia/series/{idUnidad}/{anio}', [OrganizacionTransferenciaController::class, 'seriesTransferidas']);
+
+        Route::post('organizacionTransferencia/cajas', [OrganizacionTransferenciaController::class, 'registrarCajas']);
+
+        Route::post('organizacionTransferencia/carpetas', [OrganizacionTransferenciaController::class, 'registrarCarpetas']);
 
 
     });
