@@ -79,10 +79,6 @@ use Illuminate\Support\Facades\Route;
 
     Route::get('detalleDocumentoFuidBuscar', [detalleDocumentoGeneralFuidController::class, 'buscar']);
 
-    Route::apiResource('documentacionSistema', DocumentacionSistemaController::class);
-
-    Route::apiResource('tipoDocumentacionSistema', TipoDocumentacionSistemaController::class);
-
     Route::middleware(['auth:sanctum', 'token.expiration'])->group(function () {
         /* Route::apiResource('usuarios', usuarioController::class); //Usuarios */
 
@@ -103,6 +99,17 @@ use Illuminate\Support\Facades\Route;
         Route::apiResource('documentosTransferencia', documentosTransferenciaController::class);
 
         Route::apiResource('documento', documentoController::class);
+
+        Route::get('documento/{id}/visualizar', [documentoController::class, 'visualizarDocumento']);
+
+        /* Documentación del sistema (manuales, presentaciones y videos) */
+        Route::get('documentacionSistema/activos', [DocumentacionSistemaController::class, 'activos']);
+
+        Route::get('documentacionSistema/{id}/visualizar', [DocumentacionSistemaController::class, 'visualizar']);
+
+        Route::apiResource('documentacionSistema', DocumentacionSistemaController::class)->except(['show']);
+
+        Route::apiResource('tipoDocumentacionSistema', TipoDocumentacionSistemaController::class)->only(['index']);
 
 
         Route::apiResource('dependencias', dependenciasController::class);
@@ -212,10 +219,6 @@ use Illuminate\Support\Facades\Route;
         Route::get('selectUnidadesArchivo/{idDependencia}', [unidadesController::class, 'selectListUnidadesArchivo']);
 
         Route::get('selectArchivoPorUnidad/{idDetalleUnidad}', [archivoController::class, 'listArchivoPorUnidad']);
-
-        Route::get('/documentos/{ruta}', [documentoController::class, 'verDocumento'])
-        ->withoutMiddleware(['auth:sanctum', 'token.expiration'])
-        ->where('ruta', '.*');
 
         Route::apiResource('documentosUnidadesActivas', DocumentoUnidadActivaController::class);
 

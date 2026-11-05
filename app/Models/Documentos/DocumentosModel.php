@@ -22,4 +22,10 @@ class DocumentosModel extends Model
         'extension_documento',
         'id_estado'
     ];
+
+    // La ruta física del archivo no se expone en las respuestas JSON;
+    // el archivo se consulta por id en documento/{id}/visualizar
+    protected $hidden = [
+        'url_documento'
+    ];
 }

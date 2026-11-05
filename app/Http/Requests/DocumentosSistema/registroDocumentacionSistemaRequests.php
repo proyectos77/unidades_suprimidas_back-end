@@ -26,8 +26,8 @@ class registroDocumentacionSistemaRequests extends FormRequest
     {
         return [
             'nombreDocumento' => 'required|string|max:255',
-            'tipoDocumento' => 'required|string|max:255',
-            'archivo' => 'required|file|mimes:pdf,docx,ods',
+            'tipoDocumento' => 'required|integer|exists:tipos_documentacion_sistema,id_tipo_documentacion_sistema',
+            'archivo' => 'required|file|mimes:pdf,doc,docx,xls,xlsx,ppt,pptx,txt,mp4|max:10240',
         ];
     }
 
@@ -46,11 +46,12 @@ class registroDocumentacionSistemaRequests extends FormRequest
             'nombreDocumento.string' => 'El nombre del documento debe ser una cadena de texto.',
             'nombreDocumento.max' => 'El nombre del documento no debe exceder los 255 caracteres.',
             'tipoDocumento.required' => 'El tipo de documento es obligatorio.',
-            'tipoDocumento.string' => 'El tipo de documento debe ser una cadena de texto.',
-            'tipoDocumento.max' => 'El tipo de documento no debe exceder los 255 caracteres.',
+            'tipoDocumento.integer' => 'El tipo de documento no es válido.',
+            'tipoDocumento.exists' => 'El tipo de documento seleccionado no existe.',
             'archivo.required' => 'El archivo es obligatorio.',
             'archivo.file' => 'El archivo debe ser un archivo válido.',
-            'archivo.mimes' => 'El archivo debe ser de tipo pdf, docx u ods.',
+            'archivo.mimes' => 'El archivo debe ser de tipo pdf, doc, docx, xls, xlsx, ppt, pptx, txt o mp4.',
+            'archivo.max' => 'El archivo no debe superar los 10 MB.',
         ];
     }
 

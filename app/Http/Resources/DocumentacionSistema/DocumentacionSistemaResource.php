@@ -9,6 +9,7 @@ class DocumentacionSistemaResource extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
+     * La ruta física del archivo no se expone: el archivo se consulta por id en documentacionSistema/{id}/visualizar
      *
      * @return array<int|string, mixed>
      */
@@ -21,7 +22,8 @@ class DocumentacionSistemaResource extends ResourceCollection
                 'descripcion_documentacion_sistema' => $documentacionSistema->tipoDocumentacionSistema->nombre_tipo_documento_sistema ??
                 null,
                 'id_tipo_documentacion_sistema' => $documentacionSistema->tipoDocumentacionSistema->id_tipo_documentacion_sistema ?? null,
-                'ruta_documentacion_sistema' => $documentacionSistema->ruta_documento_sistema,
+                'extension_documentacion_sistema' => strtolower(pathinfo($documentacionSistema->ruta_documento_sistema ?? '', PATHINFO_EXTENSION)),
+                'id_estado' => $documentacionSistema->id_estado,
                 'estado_documentacion_sistema' => $documentacionSistema->estados->nombre_estado ?? null,
             ];
         })->toArray();

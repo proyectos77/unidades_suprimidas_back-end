@@ -3,63 +3,24 @@
 namespace App\Http\Controllers\TipoDocumentacionSistema;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Responses\Responses;
+use App\Models\TiposDocumentacionSistema\TipoDocumentacionSistemaModel;
 
 class TipoDocumentacionSistemaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Listado de los tipos de documentación activos (para el select del formulario).
      */
     public function index()
     {
-        //
-    }
+        try {
+            $tipos = TipoDocumentacionSistemaModel::where('id_estado', 1)
+                ->orderBy('id_tipo_documentacion_sistema')
+                ->get(['id_tipo_documentacion_sistema', 'nombre_tipo_documento_sistema', 'descripcion_tipo_documento_sistema']);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return Responses::success(200, 'Consulta realizada', 'La consulta se ha realizado con exito', 'success', $tipos);
+        } catch (\Exception $e) {
+            return Responses::error(500, 'Error consulta', 'Error al realizar la consulta.', $e->getMessage());
+        }
     }
 }
